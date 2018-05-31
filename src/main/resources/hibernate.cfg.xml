@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.url">jdbc:mysql://localhost:3306</property>
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password">qwerty</property>
+        <property name="show_sql">true</property>
+        
+        <mapping class="com.springapp.mvc.domain.User"/>
+        
+        <mapping class="com.springapp.mvc.domain.order.Orders"/>
+        <mapping class="com.springapp.mvc.domain.manufacturer.Manufacturer"/>
+        
+        <mapping class="com.springapp.mvc.domain.lines.AutomatedLine"/>
+        <mapping class="com.springapp.mvc.domain.lines.AutomatedLineWorkpiece"/>
+          
+        <mapping class="com.springapp.mvc.domain.light.LightOffice"/>
+        <mapping class="com.springapp.mvc.domain.light.LightOfficeType"/>
+        <mapping class="com.springapp.mvc.domain.light.LightOfficePower"/>
+        <mapping class="com.springapp.mvc.domain.light.LightOfficeSize"/>
+  
+        <mapping class="com.springapp.mvc.domain.bearings.BearingsIndustrial"/>
+        <mapping class="com.springapp.mvc.domain.bearings.BearingsIndustrialType"/>
+        <mapping class="com.springapp.mvc.domain.bearings.BearingsIndustrialSubType"/>
+        <mapping class="com.springapp.mvc.domain.bearings.BearingsIndustrialManufacturer"/>
+        <mapping class="com.springapp.mvc.domain.bearings.BearingsIndustrialCountry"/>
+        <mapping class="com.springapp.mvc.domain.bearings.BearingsIndustrialInnerDiameter"/>
+        <mapping class="com.springapp.mvc.domain.bearings.BearingsIndustrialOuterDiameter"/>
+        <mapping class="com.springapp.mvc.domain.bearings.BearingsIndustrialWidth"/>
+ 
+    </session-factory>
+</hibernate-configuration>
