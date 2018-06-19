@@ -6,13 +6,22 @@
 package com.springapp.mvc.domain.lines;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -42,24 +51,17 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "AutomatedLine.findByMachineLocationEn", query = "SELECT l FROM AutomatedLine l WHERE l.machineLocationEn = :machineLocationEn"),
     @NamedQuery(name = "AutomatedLine.findByMachineLocationRu", query = "SELECT l FROM AutomatedLine l WHERE l.machineLocationRu = :machineLocationRu"),
     @NamedQuery(name = "AutomatedLine.findByYearOfManufacture", query = "SELECT l FROM AutomatedLine l WHERE l.yearOfManufacture = :yearOfManufacture"),
-    @NamedQuery(name = "AutomatedLine.findByWorkpieceEn", query = "SELECT l FROM AutomatedLine l WHERE l.workpieceEn = :workpieceEn"),
-    @NamedQuery(name = "AutomatedLine.findByWorkpieceRu", query = "SELECT l FROM AutomatedLine l WHERE l.workpieceRu = :workpieceRu"),
-    @NamedQuery(name = "AutomatedLine.findByWorkpieceWeight", query = "SELECT l FROM AutomatedLine l WHERE l.workpieceWeight = :workpieceWeight"),
-    @NamedQuery(name = "AutomatedLine.findByWorkpiecePhoto1", query = "SELECT l FROM AutomatedLine l WHERE l.workpiecePhoto1 = :workpiecePhoto1"),
-    @NamedQuery(name = "AutomatedLine.findByWorkpiecePhoto2", query = "SELECT l FROM AutomatedLine l WHERE l.workpiecePhoto2 = :workpiecePhoto2"),
     @NamedQuery(name = "AutomatedLine.findByLength", query = "SELECT l FROM AutomatedLine l WHERE l.length = :length"),
     @NamedQuery(name = "AutomatedLine.findByWidth", query = "SELECT l FROM AutomatedLine l WHERE l.width = :width"),
     @NamedQuery(name = "AutomatedLine.findByHight", query = "SELECT l FROM AutomatedLine l WHERE l.hight = :hight"),
     @NamedQuery(name = "AutomatedLine.findByWeight", query = "SELECT l FROM AutomatedLine l WHERE l.weight = :weight"),
-    @NamedQuery(name = "AutomatedLine.findByPrice", query = "SELECT l FROM AutomatedLine l WHERE l.price = :price"),
-    @NamedQuery(name = "AutomatedLine.findByPhoto1", query = "SELECT l FROM AutomatedLine l WHERE l.photo1 = :photo1"),
-    @NamedQuery(name = "AutomatedLine.findByPhoto2", query = "SELECT l FROM AutomatedLine l WHERE l.photo2 = :photo2"),
-    @NamedQuery(name = "AutomatedLine.findByPhoto3", query = "SELECT l FROM AutomatedLine l WHERE l.photo3 = :photo3")})
+    @NamedQuery(name = "AutomatedLine.findByPrice", query = "SELECT l FROM AutomatedLine l WHERE l.price = :price")})
 public class AutomatedLine implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Size(max = 255)
-    @Column(name = "id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "line_id")
     private String id;
     @Size(max = 255)
     @Column(name = "url")
@@ -148,35 +150,7 @@ public class AutomatedLine implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "year_of_manufacture")
-    private int yearOfManufacture;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "workpiece_en")
-    private String workpieceEn;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "workpiece_ru")
-    private String workpieceRu;
-    @Basic(optional = false)
-    @NotNull   
-    @Column(name = "workpiece_weight")
-    private String workpieceWeight;
-    @Size(max = 245)
-    @Column(name = "workpiece_photo1")
-    private String workpiecePhoto1;
-    @Size(max = 245)
-    @Column(name = "workpiece_photo2")
-    private String workpiecePhoto2;
-    @Lob
-    @Size(max = 65535)
-    @Column(name = "workpiece_description_en")
-    private String workpieceDescriptionEn;
-    @Lob
-    @Size(max = 65535)
-    @Column(name = "workpiece_description_ru")
-    private String workpieceDescriptionRu;
+    private int yearOfManufacture;   
     @Basic(optional = false)
     @NotNull   
     @Column(name = "line_length")
@@ -204,15 +178,18 @@ public class AutomatedLine implements Serializable {
     private String productivity;
     @Column(name = "price")
     private Integer price;
-    @Size(max = 245)
-    @Column(name = "photo1")
-    private String photo1;
-    @Size(max = 245)
-    @Column(name = "photo2")
-    private String photo2;
-    @Size(max = 245)
-    @Column(name = "photo3")
-    private String photo3;   
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER,
+            mappedBy = "line")
+    private Set<Photo> photos = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER,
+            mappedBy = "line")
+    private Set<Video> videos = new HashSet<>();
+    @ManyToOne   
+    @JoinColumn(name = "workpiece_id")
+    @NotNull
+    private AutomatedLineWorkpiece workpiece;
     @Lob
     @Size(max = 65535)
     @Column(name = "description_en")
@@ -232,8 +209,8 @@ public class AutomatedLine implements Serializable {
     public AutomatedLine(String modelEn, String modelRu, String typeEn,
             String manufacturerEn, String countryEn, String typeRu, String subTypeRu, 
             String manufacturerRu, String countryRu, String cncEn, String cncRu,
-            String cncFullEn, String cncFullRu,int yearOfManufacture, String workpieceEn, 
-            String workpieceRu, int length, int width, int hight, String weight, int numOfWorkingStaff,
+            String cncFullEn, String cncFullRu,int yearOfManufacture, 
+            int length, int width, int hight, String weight, int numOfWorkingStaff,
             String productivity) {
         this.modelEn = modelEn;
         this.modelRu = modelRu;
@@ -247,8 +224,6 @@ public class AutomatedLine implements Serializable {
         this.cncRu = cncRu;
         this.cncFullEn = cncFullEn;
         this.cncFullRu = cncFullRu;
-        this.workpieceEn = workpieceEn;
-        this.workpieceRu = workpieceRu;
         this.length = length;
         this.width = width;
         this.hight = hight;
@@ -409,63 +384,6 @@ public class AutomatedLine implements Serializable {
         this.yearOfManufacture = yearOfManufacture;
     }   
     
-    public String getWorkpieceEn() {
-        return workpieceEn;
-    }
-
-    public void setWorkpieceEn(String workpieceEn) {
-        this.workpieceEn = workpieceEn;
-    }
-    
-    public String getWorkpieceRu() {
-        return workpieceRu;
-    }
-
-    public void setWorkpieceRu(String workpieceRu) {
-        this.workpieceRu = workpieceRu;
-    }
-
-    public String getWorkpieceWeight() {
-        return workpieceWeight;
-    }
-
-    public void setWorkpieceWeight(String workpieceWeight) {
-        this.workpieceWeight = workpieceWeight;
-    }
-
-    public String getWorkpiecePhoto1() {
-        return "automated_lines/workpiece/" +   workpiecePhoto1;
-    }
-
-    public void setWorkpiecePhoto1(String workpiecePhoto1) {
-        this.workpiecePhoto1 = workpiecePhoto1;
-    }
-
-    public String getWorkpiecePhoto2() {
-        return "automated_lines/workpiece/" +   workpiecePhoto2;
-    }
-
-    public void setWorkpiecePhoto2(String workpiecePhoto2) {
-        this.workpiecePhoto2 = workpiecePhoto2;
-    }
-    
-    public String getWorkpieceDescriptionEn() {
-        return workpieceDescriptionEn;
-    }
-
-    public void setWorkpieceDescriptionEn(String workpieceDescriptionEn) {
-        this.workpieceDescriptionEn = workpieceDescriptionEn;
-    }
-    
-    public String getWorkpieceDescriptionRu() {
-        return workpieceDescriptionRu;
-    }
-
-    public void setWorkpieceDescriptionRu(String workpieceDescriptionRu) {
-        this.workpieceDescriptionRu = workpieceDescriptionRu;
-    }
-
-    
     public int getLength() {
         return length;
     }
@@ -522,28 +440,36 @@ public class AutomatedLine implements Serializable {
         this.price = price;
     }
 
-    public String getPhoto1() {
-        return "automated_lines/" +   photo1;
+    public Set<Photo> getPhotos() {
+        return photos;
     }
 
-    public void setPhoto1(String photo1) {
-        this.photo1 = photo1;
+    public void setPhotos(Set<Photo> photos) {
+        this.photos = photos;
+    }
+    
+    public void addPhoto(Photo photo) {
+        this.photos.add(photo);
+    }
+    
+    public Set<Video> getVideos() {
+        return videos;
     }
 
-    public String getPhoto2() {
-        return "automated_lines/" +   photo2;
+    public void setVideos(Set<Video> videos) {
+        this.videos = videos;
+    }
+    
+    public void addVideo(Video video) {
+        this.videos.add(video);
+    }
+    
+    public AutomatedLineWorkpiece getWorkpiece() {
+        return workpiece;
     }
 
-    public void setPhoto2(String photo2) {
-        this.photo2 = photo2;
-    }
-
-    public String getPhoto3() {
-        return "automated_lines/" +   photo3;
-    }
-
-    public void setPhoto3(String photo3) {
-        this.photo3 = photo3; 
+    public void setWorkpiece(AutomatedLineWorkpiece workpiece) {
+        this.workpiece = workpiece;
     }
 
     public String getDescriptionEn() {

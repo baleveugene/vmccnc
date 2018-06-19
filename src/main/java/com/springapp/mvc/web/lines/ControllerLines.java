@@ -39,7 +39,7 @@ public class ControllerLines extends PrintInFile {
         if(workpiece==null) {
             mv.addObject("listAutomatedLine", automatedLineService.getListAutomatedLine());
         }else{
-            mv.addObject("listAutomatedLine", automatedLineService.getListAutomatedLine (workpiece));
+            mv.addObject("listAutomatedLine", automatedLineService.getListAutomatedLine(workpiece));
         }               
         mv.addObject("listLineWorkpiece", automatedLineService.getListAutomatedLineWorkpiece());
         
@@ -53,7 +53,7 @@ public class ControllerLines extends PrintInFile {
         if (workpiece!=null && !workpiece.equals("")){
             str += "&workpiece="+workpiece;
         }     
-        session.setAttribute("currentpagewithpage", "/bearings?"+str);
+        session.setAttribute("currentpagewithpage", "/lines?"+str);
      
         return mv;
     }
@@ -63,7 +63,10 @@ public class ControllerLines extends PrintInFile {
     
         ModelAndView mv = new ModelAndView("lines/lines_one");
         AutomatedLine automatedLine = automatedLineService.getLineByUrl(url);
+        
         mv.addObject("automatedLine", automatedLine);
+        mv.addObject("listPhotos", automatedLine.getPhotos());
+        mv.addObject("listVideos", automatedLine.getVideos());
         
         mv.addObject("message", new Message("Automated Line " +automatedLine.getTypeEn() , automatedLine.getModelEn())); // it is need for feed back !!!!!!
         session.setAttribute("search", "line"); // for search

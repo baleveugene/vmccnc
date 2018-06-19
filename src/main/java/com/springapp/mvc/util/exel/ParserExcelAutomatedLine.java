@@ -2,7 +2,13 @@ package com.springapp.mvc.util.exel;
 
 //import com.springapp.mvc.domain.common.LanguageEntity;
 //import com.springapp.mvc.domain.Letter;
+import com.springapp.mvc.dao.HbmDAO;
 import com.springapp.mvc.domain.lines.AutomatedLine;
+import com.springapp.mvc.domain.lines.AutomatedLineWorkpiece;
+import com.springapp.mvc.domain.lines.Photo;
+import com.springapp.mvc.domain.lines.Video;
+import com.springapp.mvc.domain.lines.WorkpiecePhoto;
+import com.springapp.mvc.service.interfaces.PhotoService;
 
 //import com.springapp.mvc.domain.lathe.*;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -25,8 +31,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+
+
 
 public class ParserExcelAutomatedLine  {
+    
+    @Autowired  
+    private PhotoService photoService;
 
     private static Workbook getWorkbook(FileInputStream inputStream, String excelFilePath) throws IOException {
         Workbook workbook = null;
@@ -106,36 +118,72 @@ public class ParserExcelAutomatedLine  {
         automatedLine.setYearOfManufacture(intFromCell(rowIterator, df)); 
         
         curentRow = rowIterator.next();
-        automatedLine.setWorkpieceEn(df.formatCellValue(curentRow.getCell(1)).trim());
-        automatedLine.setWorkpieceRu(df.formatCellValue(curentRow.getCell(2)).trim());
-        printInFile("readAutomatedLine.txt", "11 setWorkpiece = " + automatedLine.getWorkpieceEn());        
-        System.out.println(automatedLine.getWorkpieceEn());      
-       
-        automatedLine.setWorkpieceWeight(df.formatCellValue(rowIterator.next().getCell(1)).trim());
-        
-        automatedLine.setWorkpiecePhoto1(df.formatCellValue(rowIterator.next().getCell(1)).trim());
-        automatedLine.setWorkpiecePhoto2(df.formatCellValue(rowIterator.next().getCell(1)).trim());
- 
+        AutomatedLineWorkpiece workpiece = new AutomatedLineWorkpiece(
+                df.formatCellValue(curentRow.getCell(1)).trim(), 
+                df.formatCellValue(curentRow.getCell(2)).trim(),
+                df.formatCellValue(rowIterator.next().getCell(1)).trim());
+        WorkpiecePhoto workpiecePhoto1 = new WorkpiecePhoto(df.formatCellValue(rowIterator.next().getCell(1)).trim());
+        WorkpiecePhoto workpiecePhoto2 = new WorkpiecePhoto(df.formatCellValue(rowIterator.next().getCell(1)).trim());        
+        if(workpiecePhoto1!=null && !workpiecePhoto1.equals("")){
+            workpiecePhoto1.setWorkpiece(workpiece);
+            workpiece.addPhoto(workpiecePhoto1);
+        }
+        if(workpiecePhoto2!=null && !workpiecePhoto1.equals("")){
+            workpiecePhoto2.setWorkpiece(workpiece);
+            workpiece.addPhoto(workpiecePhoto2);
+        }       
         curentRow = rowIterator.next();
-        automatedLine.setWorkpieceDescriptionEn(df.formatCellValue(curentRow.getCell(1)).trim());
-        automatedLine.setWorkpieceDescriptionRu(df.formatCellValue(curentRow.getCell(2)).trim());
+        workpiece.setWorkpieceDescriptionEn(df.formatCellValue(curentRow.getCell(1)).trim());
+        workpiece.setWorkpieceDescriptionRu(df.formatCellValue(curentRow.getCell(2)).trim());
+        workpiece.addLine(automatedLine);
+        automatedLine.setWorkpiece(workpiece);
+        printInFile("readAutomatedLine.txt", "11 setWorkpiece = " + workpiece.getWorkpieceEn());        
+        System.out.println(workpiece.getWorkpieceEn()); 
         
-         
         automatedLine.setLength(intFromCell(rowIterator, df)); 
         automatedLine.setWidth(intFromCell(rowIterator, df));
         automatedLine.setWeight(df.formatCellValue(rowIterator.next().getCell(1)).trim());
         automatedLine.setNumOfWorkingStaff(intFromCell(rowIterator, df));
         automatedLine.setProductivity(df.formatCellValue(rowIterator.next().getCell(1)).trim());
-        
-        automatedLine.setPhoto1(df.formatCellValue(rowIterator.next().getCell(1)).trim());
-        automatedLine.setPhoto2(df.formatCellValue(rowIterator.next().getCell(1)).trim());
-        automatedLine.setPhoto3(df.formatCellValue(rowIterator.next().getCell(1)).trim());
+               
+        Photo photo1 = new Photo(df.formatCellValue(rowIterator.next().getCell(1)).trim());
+        Photo photo2 = new Photo(df.formatCellValue(rowIterator.next().getCell(1)).trim());
+        Photo photo3 = new Photo(df.formatCellValue(rowIterator.next().getCell(1)).trim());
+        if(photo1!=null && !photo1.equals("")){
+            photo1.setLine(automatedLine);
+            automatedLine.addPhoto(photo1);
+        }
+        if(photo2!=null && !photo2.equals("")){
+            photo2.setLine(automatedLine);
+            automatedLine.addPhoto(photo2);
+        }
+        if(photo3!=null && !photo3.equals("")){
+            photo3.setLine(automatedLine);
+            automatedLine.addPhoto(photo3);
+        }
         
         automatedLine.setPrice(intFromCell(rowIterator, df));
         
         curentRow = rowIterator.next();
         automatedLine.setDescriptionEn(df.formatCellValue(curentRow.getCell(1)).trim());
         automatedLine.setDescriptionRu(df.formatCellValue(curentRow.getCell(2)).trim());
+        
+        Video video1 = new Video(df.formatCellValue(rowIterator.next().getCell(1)).trim());
+        Video video2 = new Video(df.formatCellValue(rowIterator.next().getCell(1)).trim());
+        Video video3 = new Video(df.formatCellValue(rowIterator.next().getCell(1)).trim());
+       
+        if(video1!=null && !video1.equals("")){
+            video1.setLine(automatedLine);
+            automatedLine.addVideo(video1);
+        }
+        if(video2!=null && !video2.equals("")){
+            video2.setLine(automatedLine);
+            automatedLine.addVideo(video2);
+        }
+        if(video3!=null && !video3.equals("")){
+            video3.setLine(automatedLine);
+            automatedLine.addVideo(video3);
+        }
        
         fis.close();
         return automatedLine;

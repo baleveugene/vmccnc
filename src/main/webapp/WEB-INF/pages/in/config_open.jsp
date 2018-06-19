@@ -3,7 +3,7 @@
 <div class="config open">
         <div class="config-options">
  
-<form:form action="${pageContext.request.contextPath}/contact" method="POST" commandName="message">
+<form:form action="${pageContext.request.contextPath}/contact" method="POST" modelAttribute="message">
 
    
     <p hidden> <form:input  class="le-input"  path="subject" name="subject" type="hidden"/> <br/> <form:errors style="color:red;" path="subject" cssClass="error" ></form:errors></p>

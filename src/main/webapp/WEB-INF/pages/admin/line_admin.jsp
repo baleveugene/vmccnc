@@ -125,7 +125,7 @@
               <td class="dragHandle">&nbsp;</td>
               <td class="checkbox"><input type="checkbox" name="" value="" /></td>
             
-              <td><a href="/bearings-${lines.url}">${lines.modelEn}</a></td>            
+              <td><a href="/line-${lines.url}">${lines.modelEn}</a></td>            
               <td>${lines.manufacturerEn}</td>                             
               <td>${lines.countryEn} </td>
               <td>${lines.length}x${lines.width}</td>

@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,12 +54,14 @@ public class AutomatedLineServiceImpl implements AutomatedLineService {
     }          
     
     @Override @Transactional
-    public List<AutomatedLine> getListAutomatedLine(String workpiece) {
+    public Set<AutomatedLine> getListAutomatedLine(String workpiece) { 
+        
         List<Criterion> restrictions = new ArrayList();
         if (workpiece != null && !workpiece.equals("")){
             restrictions.add(Restrictions.eq("workpieceEn", workpiece));                  
         }
-        return  hbmDAO.getAll(AutomatedLine.class, restrictions);
+        AutomatedLineWorkpiece lineWorkpiece = (AutomatedLineWorkpiece)hbmDAO.getAll(AutomatedLineWorkpiece.class, restrictions).iterator().next();
+        return  lineWorkpiece.getLines();
     }   
    
     @Override @Transactional

@@ -129,7 +129,7 @@
          
         <br/>
             <button class="le-button small">
-              <spring:message code="bearingsall.filter" text="Filter Bearings" /> 
+              <spring:message code="linesall.filter" text="Filter Lines" /> 
             </button>   
             
          </form:form>  
@@ -188,8 +188,8 @@
                             
                                 <div class="image">
                                     <!--<img alt="" src="../resources/assets/images/blank.gif" data-echo="../resources/assets/images/products/${vmc.photo1}" width="246" height="186" />-->
-                                    <a href="/bearings-${lines.url}">
-                                     <img alt="${lines.modelEn}" src="../resources/assets/images/blank.gif" data-echo="../resources/assets/images/products/${lines.photo1}" width="246" height="186" />
+                                    <a href="/line-${lines.url}">
+                                     <img alt="${lines.modelEn}" src="../resources/assets/images/blank.gif" data-echo="../resources/assets/images/products/${lines.getPhotos.next()}" width="246" height="186" />
                                     </a>
                                 </div>
                                 <div class="body">
@@ -293,7 +293,7 @@
                 <div class="no-margin col-xs-12 col-sm-4 image-holder">
                     <div class="image">
                         <a href="/lines-${lines.url}">
-                        <img alt="${lines.modelEn}" src="../resources/assets/images/blank.gif" data-echo="../resources/assets/images/products/${lines.photo1}"  width="246" height="186"/>
+                        <img alt="${lines.modelEn}" src="../resources/assets/images/blank.gif" data-echo="../resources/assets/images/products/${lines.getPhotos.next()}"  width="246" height="186"/>
                         </a>
                     </div>
                 </div><!-- /.image-holder -->

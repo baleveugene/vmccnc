@@ -17,7 +17,7 @@
 
     <!-- Менеджер транзакций -->
     <bean id="transactionManager"
-          class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+          class="org.springframework.orm.hibernate5.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
@@ -36,10 +36,18 @@
 
     <!-- Настройки фабрики сессий Хибернейта -->
     <bean id="sessionFactory"
-          class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+          class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
-        <property name="configLocation" value="classpath:hibernate.cfg.xml"/>
-        <property name="configurationClass" value="org.hibernate.cfg.AnnotationConfiguration"/>
+        <property name="packagesToScan">
+         <array>
+              <value>com.springapp.mvc.domain</value>
+              <value>com.springapp.mvc.domain.order</value>
+              <value>com.springapp.mvc.domain.manufacturer</value>
+              <value>com.springapp.mvc.domain.lines</value>
+              <value>com.springapp.mvc.domain.light</value>
+              <value>com.springapp.mvc.domain.bearings</value>
+         </array>
+        </property>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.show_sql">true</prop>
@@ -48,5 +56,4 @@
             </props>
         </property>
     </bean>
-
 </beans>

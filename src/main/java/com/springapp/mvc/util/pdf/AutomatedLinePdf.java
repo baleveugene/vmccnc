@@ -5,6 +5,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.springapp.mvc.domain.lines.AutomatedLine;
+import com.springapp.mvc.domain.lines.Photo;
 
 //import dao.vmc.Vmc;
 //import com.springapp.mvc.domain.hmc.Hmc;
@@ -137,22 +138,16 @@ public class AutomatedLinePdf {
         
         
 
-
+    for(Photo photo: lines.getPhotos()){
         try {
-            img = Image.getInstance(path + "/assets/images/products/" + lines.getPhoto1());
+            img = Image.getInstance(path + "/assets/images/products/" + photo.getName());
             img.setScaleToFitHeight(false);
             itemCells[0] = new PdfPCell(img, true);
         } catch (Exception e) {
             itemCells[0] = new PdfPCell(new Paragraph(""));
         }
+    }    
         
-        try {
-            img = Image.getInstance(path + "/assets/images/products/" + lines.getPhoto2());
-            img.setScaleToFitHeight(false);
-            itemCells[1] = new PdfPCell(img, true);
-        } catch (Exception e) {
-            itemCells[1] = new PdfPCell(new Paragraph(""));
-        }
         
         
 //        for (int i = 0; i < 2; i++) {
@@ -277,24 +272,7 @@ public class AutomatedLinePdf {
 //        for (int i = 0; i < 2; i++) {
 //            itemCells[i].setBorderColor(new BaseColor(22, 22, 22));
 //            itemTable.addCell(itemCells[i]);
-//        }
-        
-        
-                try {
-            img = Image.getInstance(path + "/assets/images/products/" + lines.getPhoto3());
-            img.setScaleToFitHeight(false);
-            itemCells[0] = new PdfPCell(img, true);
-        } catch (Exception e) {
-            itemCells[0] = new PdfPCell(new Paragraph(""));
-        }
-        
-//        try {
-//            img = Image.getInstance(path + "/assets/images/products/" + light.getPhoto4());
-//            img.setScaleToFitHeight(false);
-//            itemCells[1] = new PdfPCell(img, true);
-//        } catch (Exception e) {
-//            itemCells[1] = new PdfPCell(new Paragraph(""));
-//        }                         
+//        }                              
         return itemTable;
     }
 

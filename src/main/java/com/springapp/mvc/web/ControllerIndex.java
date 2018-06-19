@@ -1,4 +1,3 @@
-
 package com.springapp.mvc.web;
 
 
@@ -43,7 +42,7 @@ public class ControllerIndex  {
         
     ModelAndView mv = new ModelAndView("index_mc");
         
-  mv.addObject("nombersofquerys", ordersService.getAmountOfOrders());
+ mv.addObject("nombersofquerys", ordersService.getAmountOfOrders());
 
 
  mv.addObject("message", new Message()); // it is need for feed back !!!!!!

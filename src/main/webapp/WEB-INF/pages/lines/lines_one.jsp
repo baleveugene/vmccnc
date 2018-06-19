@@ -84,7 +84,7 @@
                         <!--</li>--> 
   
                              <li class="breadcrumb-item">
-                            <a href="/bearings?type=${automatedLine.typeEn}">Bearings - ${automatedLine.typeEn}</a>
+                            <a href="/lines?type=${automatedLine.typeEn}">Line - ${automatedLine.typeEn}</a>
                         </li> 
                         
                        <li class="breadcrumb-item current">
@@ -113,56 +113,35 @@
     <div class="container">
 
          <div class="no-margin col-xs-12 col-sm-6 col-md-5 gallery-holder">
-    <div class="product-item-holder size-big single-product-gallery small-gallery">
-
+    <div class="product-item-holder size-big single-product-gallery small-gallery">      
         <div id="owl-single-product">
-            <div class="single-product-gallery-item" id="slide1">         
-                <a data-rel="prettyphoto" href="../resources/assets/images/products/${automatedLine.photo1}">
-                    <img class="img-responsive" alt="${automatedLine.modelEn}" 
-                         src="../resources/assets/images/products/${automatedLine.photo1}" 
-                         data-echo="../resources/assets/images/products/${automatedLine.photo1}" />                       
+            <c:set var="i" value="${1}" scope="request"/>
+            <c:forEach items="${listPhotos}" var="photo">
+                <c:set var="i" value="${i + 1}"  scope="request" />
+                <div class="single-product-gallery-item" id="slide${i}">         
+                    <a data-rel="prettyphoto" href="../resources/assets/images/products/${photo.name}">
+                        <img class="img-responsive" alt="${automatedLine.modelEn}" 
+                         src="../resources/assets/images/products/${photo.name}" 
+                         data-echo="../resources/assets/images/products/${photo.name}" />                       
                          <!--src="../resources/assets/images/blank.gif"--> 
-                </a>
-            </div><!-- /.single-product-gallery-item -->
-            
-            <div class="single-product-gallery-item" id="slide2">
-                <a data-rel="prettyphoto" href="../resources/assets/images/products/${automatedLine.photo2}">
-                    <img class="img-responsive" alt="${automatedLine.modelEn}" 
-                         src="../resources/assets/images/products/${automatedLine.photo2}" 
-                         data-echo="../resources/assets/images/products/${automatedLine.photo2}" />
-                         <!--src="../resources/assets/images/blank.gif"--> 
-                </a>
-            </div><!-- /.single-product-gallery-item -->
-            
-           <div class="single-product-gallery-item" id="slide3">
-                <a data-rel="prettyphoto" href="../resources/assets/images/products/${automatedLine.photo3}">
-                    <img class="img-responsive" alt="${automatedLine.modelEn}" 
-                         src="../resources/assets/images/products/${automatedLine.photo3}" 
-                         data-echo="../resources/assets/images/products/${automatedLine.photo3}" />
-                         <!--src="../resources/assets/images/blank.gif"--> 
-                </a>
-            </div><!-- /.single-product-gallery-item -->
-        
+                    </a>
+                </div><!-- /.single-product-gallery-item -->
+            </c:forEach>     
         </div><!-- /.single-product-slider -->
 
         <div class="single-product-gallery-thumbs gallery-thumbs">
 
             <div id="owl-single-product-thumbnails">
                 <a class="horizontal-thumb active" data-target="#owl-single-product" data-slide="0" href="#slide1">                  
-                    <img width="67" alt="${automatedLine.modelEn}" src="../resources/assets/images/products/${automatedLine.photo1}" data-echo="../resources/assets/images/products/${automatedLine.photo1}" />
+                    <img width="67" alt="${automatedLine.modelEn}" src="../resources/assets/images/products/${photo.name}" data-echo="../resources/assets/images/products/${photo.name}" />
                 </a>
-
-   
-                <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="1" href="#slide2">
-                    <!--<img width="67" alt="" src="../resources/assets/images/blank.gif" data-echo="../resources/assets/images/products/bearingsIndustrialgallery-thumb-01.jpg" />-->
-                    <img width="67" alt="${automatedLine.modelEn}"  src="../resources/assets/images/products/${automatedLine.photo2}" data-echo="../resources/assets/images/products/${automatedLine.photo2}"  />
-                </a>
-
-                <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="2" href="#slide3">
-                    <!--<img width="67" alt="" src="../resources/assets/images/blank.gif" data-echo="../resources/assets/images/products/bearingsIndustrialbench${automatedLine.id}.jpg" />-->
-                    <img width="67" alt="${automatedLine.modelEn}"  src="../resources/assets/images/products/${automatedLine.photo3}" data-echo="../resources/assets/images/products/${automatedLine.photo3}"  />
-                </a>
-
+                <c:set var="i" value="${1}" scope="request"/>
+                <c:forEach items="${listPhotos}" var="photo">                   
+                    <c:set var="i" value="${i + 1}"  scope="request" />
+                        <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="${i}" href="#slide${i+1}}">
+                            <img width="67" alt="${automatedLine.modelEn}"  src="../resources/assets/images/products/${photo.name}" data-echo="../resources/assets/images/products/${photo.name}"  />
+                        </a>                   
+                </c:forEach>
             </div> 
                 <!--/#owl-single-product-thumbnails--> 
 
@@ -248,16 +227,14 @@
                 <!--<li><a href="#reviews" data-toggle="tab">Reviews (3)</a></li>-->
             </ul><!-- /.nav-tabs -->
 
-
             <div class="tab-content">
                 <div class="tab-pane active" id="description">
                     <p>${vmc.info1en}</p>
-                 
-                    
-   
-        
-            <iframe width="853" height="480" src="https://www.youtube.com/embed/mQ205po5vk4" frameborder="0" allowfullscreen></iframe>              
-     
+    <c:if test="${!empty listVideos}">
+        <c:forEach items="${listVideos}" var="video"> 
+            <iframe width="250" height="100" src="https://youtu.be/${video.name}" frameborder="0" allowfullscreen></iframe>              
+        </c:forEach>
+    </c:if> 
        
                     
                 </div> 
