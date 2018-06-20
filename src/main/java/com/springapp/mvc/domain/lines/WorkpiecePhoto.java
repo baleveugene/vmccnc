@@ -16,10 +16,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author Home
- */
 @Entity
 @Table(name="workpiece_photo", schema = "", catalog = "automated_lines")
 @XmlRootElement
@@ -38,9 +34,8 @@ public class WorkpiecePhoto implements Serializable {
     @Size(max = 255)
     @Column(name = "photo_name")
     private String name;   
-    @ManyToOne   
-    @JoinColumn(name = "workpiece_id")
-    @NotNull
+    @ManyToOne     
+    @JoinColumn(nullable = false, name="workpiece_workpiece_en")
     private AutomatedLineWorkpiece workpiece;
 
     public WorkpiecePhoto() {
@@ -50,6 +45,14 @@ public class WorkpiecePhoto implements Serializable {
         this.name = name;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+    
     public String getName() {
         return "automated_lines/workpiece/" + name;
     }

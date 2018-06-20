@@ -8,6 +8,7 @@ public interface HbmDAO <T, pk> {
     public void add(T t);
     public T getById(Class entityClass, pk key);
     public T getByUrl(Class entityClass, pk key);
+    public T getByNamedQueryName(Class entityClass, String param, String value, String namedQueryName);
     public List<T> getAll(Class entityClass);
     public List<T> getAll(Class entityClass, List<Criterion> restrictions);
     public void deleteFromDbById(Class entityClass, pk key);

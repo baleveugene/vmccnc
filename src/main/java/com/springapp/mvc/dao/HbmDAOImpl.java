@@ -60,6 +60,13 @@ public class HbmDAOImpl <T, pk extends Serializable>  implements HbmDAO <T, pk> 
         return (T)session.getNamedQuery(entityClass.getSimpleName()+".findByUrl")
                 .setParameter("url", url).uniqueResult();
     }
+    
+    @Override
+    public T getByNamedQueryName(Class entityClass, String param, String value, String namedQueryName) {
+        Session session = sessionFactory.getCurrentSession();       
+        return (T)session.getNamedQuery(entityClass.getSimpleName()+"."+namedQueryName)
+                .setParameter(param, value).uniqueResult();
+    }
 
     @Override
     public void deleteFromDbById (Class entityClass, pk key){

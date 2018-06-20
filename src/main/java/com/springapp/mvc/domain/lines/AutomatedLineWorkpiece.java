@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Home
  */
 @Entity
-@Table(name="line_workpiece", schema = "", catalog = "automated_lines")
+@Table(name="workpiece", schema = "", catalog = "automated_lines")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "AutomatedLineWorkpiece.findAll", query = "SELECT l FROM AutomatedLineWorkpiece l"),
@@ -62,13 +62,9 @@ public class AutomatedLineWorkpiece implements Serializable {
     @Size(max = 65535)
     @Column(name = "workpiece_description_ru")
     private String workpieceDescriptionRu;
-    @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER,
-            mappedBy = "workpiece")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "workpiece")   
     private Set<WorkpiecePhoto> photos = new HashSet<>();
-    @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER,
-            mappedBy = "workpiece")
+    @OneToMany( fetch = FetchType.EAGER, mappedBy = "workpiece")   
     private Set<AutomatedLine> lines = new HashSet<>();
 
     public AutomatedLineWorkpiece() {
@@ -80,6 +76,14 @@ public class AutomatedLineWorkpiece implements Serializable {
         this.workpieceWeight = workpieceWeight;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+    
     public String getWorkpieceEn() {
         return workpieceEn;
     }

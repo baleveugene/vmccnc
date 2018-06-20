@@ -93,7 +93,7 @@ final private String COMPARE_LINES = "compare-lines";
     CompareCartAutomatedLine compareCartAutomatedLine = (CompareCartAutomatedLine) session.getAttribute("compareCartAutomatedLine");
     if (compareCartAutomatedLine==null)  compareCartAutomatedLine = new CompareCartAutomatedLine();
     AutomatedLine automatedLine =  new AutomatedLine();
-    automatedLine.setId(id);
+    automatedLine.setId(Long.parseLong("id", 10));
 
     compareCartAutomatedLine.update(automatedLine, "0"); // delete from compare
     session.setAttribute("compareCartAutomatedLine", compareCartAutomatedLine);

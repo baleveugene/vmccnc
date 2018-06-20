@@ -23,8 +23,7 @@ int numberOfItems;
 
                         boolean newItem = true;
                         for (CompareCartItemAutomatedLine scItem : items) {
-                        if (scItem.getProduct().getId().
-                                                        equals(automatedLine.getId())) {
+                        if (scItem.getProduct().getId()==(automatedLine.getId())) {
                         newItem = false;
 //                        scItem.incrementQuantity();
                 }
@@ -45,8 +44,7 @@ int numberOfItems;
                 if (qty >= 0) {
                 CompareCartItemAutomatedLine item = null;
                 for (CompareCartItemAutomatedLine scItem : items) {
-                if (scItem.getProduct().getId().
-                                                equals(automatedLine.getId())) {
+                if (scItem.getProduct().getId()==(automatedLine.getId())) {
                 if (qty != 0) {
                 // set item quantity to new value
                 scItem.setQuantity(qty);

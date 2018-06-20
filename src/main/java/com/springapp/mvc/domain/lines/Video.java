@@ -1,9 +1,10 @@
 package com.springapp.mvc.domain.lines;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -14,10 +15,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author Home
- */
 @Entity
 @Table(name="line_video", schema = "", catalog = "automated_lines")
 @XmlRootElement
@@ -28,14 +25,16 @@ public class Video implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private long id;
     @NotNull
     @Size(max = 255)
     @Column(name = "video_name")
     private String name;
     
-    @ManyToOne   
-    @JoinColumn(name = "line_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(nullable = false, name="line_model_en")
     private AutomatedLine line;
 
     public Video() {
@@ -45,6 +44,14 @@ public class Video implements Serializable {
         this.name = name;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+    
     public String getName() {
         return name;
     }

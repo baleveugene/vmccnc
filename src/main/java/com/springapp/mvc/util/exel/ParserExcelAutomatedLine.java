@@ -1,16 +1,11 @@
 package com.springapp.mvc.util.exel;
 
-//import com.springapp.mvc.domain.common.LanguageEntity;
-//import com.springapp.mvc.domain.Letter;
-import com.springapp.mvc.dao.HbmDAO;
 import com.springapp.mvc.domain.lines.AutomatedLine;
 import com.springapp.mvc.domain.lines.AutomatedLineWorkpiece;
 import com.springapp.mvc.domain.lines.Photo;
 import com.springapp.mvc.domain.lines.Video;
 import com.springapp.mvc.domain.lines.WorkpiecePhoto;
-import com.springapp.mvc.service.interfaces.PhotoService;
 
-//import com.springapp.mvc.domain.lathe.*;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
@@ -31,14 +26,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-
-
 
 public class ParserExcelAutomatedLine  {
-    
-    @Autowired  
-    private PhotoService photoService;
 
     private static Workbook getWorkbook(FileInputStream inputStream, String excelFilePath) throws IOException {
         Workbook workbook = null;
@@ -49,8 +38,7 @@ public class ParserExcelAutomatedLine  {
         }
         return workbook;
     }
-
-    
+   
        public static AutomatedLine readAutomatedLine(File file) throws IOException{
       
         FileInputStream fis = new FileInputStream(file);
@@ -75,9 +63,8 @@ public class ParserExcelAutomatedLine  {
         System.out.println(automatedLine.getModelEn());
         System.out.println(automatedLine.getModelRu());
         
-        automatedLine.setUrl(getUrl(automatedLine.getModelEn())); 
-        automatedLine.setId(getID(automatedLine.getModelEn()));
-        printInFile("readAutomatedLine.txt", "3 setUrl"  );
+        automatedLine.setUrl(getUrl(automatedLine.getModelEn()));        
+        printInFile("readAutomatedLine.txt", "3 setUrl"  );        
         
         curentRow = rowIterator.next();
         automatedLine.setManufacturerEn(df.formatCellValue(curentRow.getCell(1)).trim());
@@ -124,18 +111,15 @@ public class ParserExcelAutomatedLine  {
                 df.formatCellValue(rowIterator.next().getCell(1)).trim());
         WorkpiecePhoto workpiecePhoto1 = new WorkpiecePhoto(df.formatCellValue(rowIterator.next().getCell(1)).trim());
         WorkpiecePhoto workpiecePhoto2 = new WorkpiecePhoto(df.formatCellValue(rowIterator.next().getCell(1)).trim());        
-        if(workpiecePhoto1!=null && !workpiecePhoto1.equals("")){
-            workpiecePhoto1.setWorkpiece(workpiece);
-            workpiece.addPhoto(workpiecePhoto1);
+        if(workpiecePhoto1.getName()!=null && !workpiecePhoto1.getName().equals("")){
+            workpiecePhoto1.setWorkpiece(workpiece);          
         }
-        if(workpiecePhoto2!=null && !workpiecePhoto1.equals("")){
-            workpiecePhoto2.setWorkpiece(workpiece);
+        if(workpiecePhoto2.getName()!=null && !workpiecePhoto2.getName().equals("")){           
             workpiece.addPhoto(workpiecePhoto2);
         }       
         curentRow = rowIterator.next();
         workpiece.setWorkpieceDescriptionEn(df.formatCellValue(curentRow.getCell(1)).trim());
-        workpiece.setWorkpieceDescriptionRu(df.formatCellValue(curentRow.getCell(2)).trim());
-        workpiece.addLine(automatedLine);
+        workpiece.setWorkpieceDescriptionRu(df.formatCellValue(curentRow.getCell(2)).trim());        
         automatedLine.setWorkpiece(workpiece);
         printInFile("readAutomatedLine.txt", "11 setWorkpiece = " + workpiece.getWorkpieceEn());        
         System.out.println(workpiece.getWorkpieceEn()); 
@@ -149,16 +133,13 @@ public class ParserExcelAutomatedLine  {
         Photo photo1 = new Photo(df.formatCellValue(rowIterator.next().getCell(1)).trim());
         Photo photo2 = new Photo(df.formatCellValue(rowIterator.next().getCell(1)).trim());
         Photo photo3 = new Photo(df.formatCellValue(rowIterator.next().getCell(1)).trim());
-        if(photo1!=null && !photo1.equals("")){
-            photo1.setLine(automatedLine);
+        if(photo1.getName()!=null && !photo1.getName().equals("")){           
             automatedLine.addPhoto(photo1);
         }
-        if(photo2!=null && !photo2.equals("")){
-            photo2.setLine(automatedLine);
+        if(photo2.getName()!=null && !photo2.getName().equals("")){           
             automatedLine.addPhoto(photo2);
         }
-        if(photo3!=null && !photo3.equals("")){
-            photo3.setLine(automatedLine);
+        if(photo3.getName()!=null && !photo3.getName().equals("")){           
             automatedLine.addPhoto(photo3);
         }
         
@@ -172,16 +153,13 @@ public class ParserExcelAutomatedLine  {
         Video video2 = new Video(df.formatCellValue(rowIterator.next().getCell(1)).trim());
         Video video3 = new Video(df.formatCellValue(rowIterator.next().getCell(1)).trim());
        
-        if(video1!=null && !video1.equals("")){
-            video1.setLine(automatedLine);
+        if(video1.getName()!=null && !video1.getName().equals("")){           
             automatedLine.addVideo(video1);
         }
-        if(video2!=null && !video2.equals("")){
-            video2.setLine(automatedLine);
+        if(video2.getName()!=null && !video2.getName().equals("")){           
             automatedLine.addVideo(video2);
         }
-        if(video3!=null && !video3.equals("")){
-            video3.setLine(automatedLine);
+        if(video3.getName()!=null && !video3.getName().equals("")){          
             automatedLine.addVideo(video3);
         }
        

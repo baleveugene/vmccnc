@@ -62,7 +62,7 @@ public class AutomatedLine implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "line_id")
-    private String id;
+    private long id;
     @Size(max = 255)
     @Column(name = "url")
     private String url;
@@ -75,8 +75,7 @@ public class AutomatedLine implements Serializable {
     @NotNull
     @Size(min = 1, max = 245)
     @Column(name = "type_ru")
-    private String typeRu;
-    @Id
+    private String typeRu;   
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 250)
@@ -178,17 +177,12 @@ public class AutomatedLine implements Serializable {
     private String productivity;
     @Column(name = "price")
     private Integer price;
-    @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER,
-            mappedBy = "line")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "line")   
     private Set<Photo> photos = new HashSet<>();
-    @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER,
-            mappedBy = "line")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "line")  
     private Set<Video> videos = new HashSet<>();
-    @ManyToOne   
-    @JoinColumn(name = "workpiece_id")
-    @NotNull
+    @ManyToOne      
+    @JoinColumn(nullable = false, name="workpiece_workpiece_en")
     private AutomatedLineWorkpiece workpiece;
     @Lob
     @Size(max = 65535)
@@ -232,11 +226,11 @@ public class AutomatedLine implements Serializable {
         this.productivity = productivity;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
     
