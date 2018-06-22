@@ -1,6 +1,7 @@
 package com.springapp.mvc.web.lines;
 
 import com.springapp.mvc.domain.lines.AutomatedLine;
+import com.springapp.mvc.domain.lines.AutomatedLineWorkpiece;
 import com.springapp.mvc.service.interfaces.AutomatedLineService;
 import com.springapp.mvc.util.pdf.AutomatedLinePdf;
 import com.springapp.mvc.domain.message.Message;
@@ -63,8 +64,9 @@ public class ControllerLines extends PrintInFile {
     
         ModelAndView mv = new ModelAndView("lines/lines_one");
         AutomatedLine automatedLine = automatedLineService.getLineByUrl(url);
-        
+        AutomatedLineWorkpiece workpiece = automatedLine.getWorkpiece();
         mv.addObject("automatedLine", automatedLine);
+        mv.addObject("workpiece", workpiece);
         mv.addObject("listPhotos", automatedLine.getPhotos());
         mv.addObject("listVideos", automatedLine.getVideos());
         

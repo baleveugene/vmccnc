@@ -111,16 +111,18 @@ public class ParserExcelAutomatedLine  {
                 df.formatCellValue(rowIterator.next().getCell(1)).trim());
         WorkpiecePhoto workpiecePhoto1 = new WorkpiecePhoto(df.formatCellValue(rowIterator.next().getCell(1)).trim());
         WorkpiecePhoto workpiecePhoto2 = new WorkpiecePhoto(df.formatCellValue(rowIterator.next().getCell(1)).trim());        
-        if(workpiecePhoto1.getName()!=null && !workpiecePhoto1.getName().equals("")){
-            workpiecePhoto1.setWorkpiece(workpiece);          
+        if(workpiecePhoto1.getName()!=null && !workpiecePhoto1.getName().equals("")){            
+            workpiece.addPhoto(workpiecePhoto1);
+            workpiecePhoto1.setWorkpiece(workpiece);
         }
-        if(workpiecePhoto2.getName()!=null && !workpiecePhoto2.getName().equals("")){           
+        if(workpiecePhoto2.getName()!=null && !workpiecePhoto2.getName().equals("")){                      
             workpiece.addPhoto(workpiecePhoto2);
+            workpiecePhoto2.setWorkpiece(workpiece);
         }       
         curentRow = rowIterator.next();
         workpiece.setWorkpieceDescriptionEn(df.formatCellValue(curentRow.getCell(1)).trim());
         workpiece.setWorkpieceDescriptionRu(df.formatCellValue(curentRow.getCell(2)).trim());        
-        automatedLine.setWorkpiece(workpiece);
+        
         printInFile("readAutomatedLine.txt", "11 setWorkpiece = " + workpiece.getWorkpieceEn());        
         System.out.println(workpiece.getWorkpieceEn()); 
         
@@ -135,12 +137,15 @@ public class ParserExcelAutomatedLine  {
         Photo photo3 = new Photo(df.formatCellValue(rowIterator.next().getCell(1)).trim());
         if(photo1.getName()!=null && !photo1.getName().equals("")){           
             automatedLine.addPhoto(photo1);
+            photo1.setLine(automatedLine);
         }
         if(photo2.getName()!=null && !photo2.getName().equals("")){           
             automatedLine.addPhoto(photo2);
+            photo2.setLine(automatedLine);
         }
         if(photo3.getName()!=null && !photo3.getName().equals("")){           
             automatedLine.addPhoto(photo3);
+            photo3.setLine(automatedLine);
         }
         
         automatedLine.setPrice(intFromCell(rowIterator, df));
@@ -154,14 +159,22 @@ public class ParserExcelAutomatedLine  {
         Video video3 = new Video(df.formatCellValue(rowIterator.next().getCell(1)).trim());
        
         if(video1.getName()!=null && !video1.getName().equals("")){           
+            System.out.println(video1.getName());           
             automatedLine.addVideo(video1);
+            video1.setLine(automatedLine);
         }
         if(video2.getName()!=null && !video2.getName().equals("")){           
+            System.out.println(video2.getName()); 
             automatedLine.addVideo(video2);
+            video2.setLine(automatedLine);
         }
         if(video3.getName()!=null && !video3.getName().equals("")){          
             automatedLine.addVideo(video3);
+            video3.setLine(automatedLine);
         }
+        
+        workpiece.addLine(automatedLine);
+        automatedLine.setWorkpiece(workpiece);
        
         fis.close();
         return automatedLine;

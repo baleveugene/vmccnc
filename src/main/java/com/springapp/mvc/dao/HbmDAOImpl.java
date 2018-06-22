@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.DistinctRootEntityResultTransformer;
 import org.springframework.stereotype.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -31,9 +32,10 @@ public class HbmDAOImpl <T, pk extends Serializable>  implements HbmDAO <T, pk> 
     @Override
     public List getAll(Class entityClass) {
         Session session = sessionFactory.getCurrentSession();
-        return session.createCriteria(entityClass)
-                .list();
-    }
+        Criteria criteria = session.createCriteria(entityClass);
+        criteria.setResultTransformer(DistinctRootEntityResultTransformer.INSTANCE);
+        return criteria.list();
+        }
     
     @Override
     public List getAll(Class entityClass, List<Criterion> restrictions) {
@@ -43,7 +45,6 @@ public class HbmDAOImpl <T, pk extends Serializable>  implements HbmDAO <T, pk> 
      
         for( Criterion restr: restrictions ){
             crit.add(restr);
-            System.out.println(restr);
         }  
         return crit.list();
     }

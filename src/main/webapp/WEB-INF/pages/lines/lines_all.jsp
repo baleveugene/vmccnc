@@ -118,9 +118,9 @@
                                      <option value='' ><spring:message code="linesall.workpiece_not_selected" text="Workpiece not selected" /></option> 
                                           <!--<option disabled>Select axes</option>-->  
                                           <c:forEach items="${listLineWorkpiece}" var="aa">
-                                              <option value="${aa.workpiece}"
-                                                         <c:if test="${aa.workpiece == workpiece}">selected</c:if>                 
-                                                  > ${aa.workpiece} (${aa.num}) </option>
+                                              <option value="${aa.workpieceEn}"
+                                                         <c:if test="${aa.workpieceEn == workpieceEn}">selected</c:if>                 
+                                                  > ${aa.workpieceEn} (${aa.num}) </option>
                                           </c:forEach>
                                  </select>
                             </div>
@@ -189,7 +189,7 @@
                                 <div class="image">
                                     <!--<img alt="" src="../resources/assets/images/blank.gif" data-echo="../resources/assets/images/products/${vmc.photo1}" width="246" height="186" />-->
                                     <a href="/line-${lines.url}">
-                                     <img alt="${lines.modelEn}" src="../resources/assets/images/blank.gif" data-echo="../resources/assets/images/products/${lines.getPhotos.next()}" width="246" height="186" />
+                                     <img alt="${lines.modelEn}" src="../resources/assets/images/blank.gif" data-echo="../resources/assets/images/products/${line.photos[i.index].name}" width="246" height="186" />
                                     </a>
                                 </div>
                                 <div class="body">
@@ -200,7 +200,7 @@
                                     <div class="brand"><spring:message code="linesall.type" text="Type" />:  ${line.typeEn}</div>
 
                                     <div class="brand"> 
-                                        ${line.workpieceEn} 
+                                        ${line.workpiece.workpieceEn} 
                                     </div>
 
                                 </div>
@@ -284,7 +284,7 @@
             <div id="list-view" class="products-grid fade tab-pane ">
                 <div class="products-list">
                     
-     <c:forEach items="${listAutomatedLine}" var="lines">
+     <c:forEach items="${listAutomatedLine}" var="line">
 
         <div class="product-item product-item-holder">
             <!--<div class="ribbon red"><span>sale</span></div>--> 
@@ -292,8 +292,9 @@
             <div class="row">
                 <div class="no-margin col-xs-12 col-sm-4 image-holder">
                     <div class="image">
-                        <a href="/lines-${lines.url}">
-                        <img alt="${lines.modelEn}" src="../resources/assets/images/blank.gif" data-echo="../resources/assets/images/products/${lines.getPhotos.next()}"  width="246" height="186"/>
+                        <a href="/lines-${line.url}">
+                        <img alt="${line.modelEn}" src="../resources/assets/images/blank.gif" 
+                             data-echo="../resources/assets/images/products/${line.photos[i.index].name}"  width="246" height="186"/>
                         </a>
                     </div>
                 </div><!-- /.image-holder -->
@@ -301,10 +302,10 @@
                     <div class="body">
                         <div class="label-discount green">-10% sale</div>
                         <div class="title">
-                            <a href="/lines-${lines.url}">${lines.manufacturerEn} ${lines.modelEn}</a>
+                            <a href="/lines-${line.url}">${line.manufacturerEn} ${line.modelEn}</a>
                         </div>
-                            <div class="brand">${lines.yearOfManufacture}/ location: ${lines.machineLocationEn}
-                            <br> L*B: ${lines.length}x${lines.width}
+                            <div class="brand">${line.yearOfManufacture}/ location: ${line.machineLocationEn}
+                            <br> L*B: ${line.length}x${line.width}
                             </div>
                             <!--<div class="brand"></div>-->
                         <div class="excerpt">

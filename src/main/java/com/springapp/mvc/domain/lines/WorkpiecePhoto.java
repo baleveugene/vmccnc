@@ -35,7 +35,7 @@ public class WorkpiecePhoto implements Serializable {
     @Column(name = "photo_name")
     private String name;   
     @ManyToOne     
-    @JoinColumn(nullable = false, name="workpiece_workpiece_en")
+    @JoinColumn(nullable = false, name="workpiece_workpiece_en", referencedColumnName = "workpiece_en")
     private AutomatedLineWorkpiece workpiece;
 
     public WorkpiecePhoto() {

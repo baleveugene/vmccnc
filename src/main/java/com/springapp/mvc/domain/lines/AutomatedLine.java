@@ -177,12 +177,12 @@ public class AutomatedLine implements Serializable {
     private String productivity;
     @Column(name = "price")
     private Integer price;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "line")   
+    @OneToMany(cascade={CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "line")   
     private Set<Photo> photos = new HashSet<>();
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "line")  
+    @OneToMany(cascade={CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "line")  
     private Set<Video> videos = new HashSet<>();
     @ManyToOne      
-    @JoinColumn(nullable = false, name="workpiece_workpiece_en")
+    @JoinColumn(nullable = false, name="workpiece_workpiece_en", referencedColumnName = "workpiece_en")
     private AutomatedLineWorkpiece workpiece;
     @Lob
     @Size(max = 65535)

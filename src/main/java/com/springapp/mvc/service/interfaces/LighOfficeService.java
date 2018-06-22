@@ -10,7 +10,7 @@ import com.springapp.mvc.domain.light.LightOfficePower;
 import com.springapp.mvc.domain.light.LightOfficeSize;
 import com.springapp.mvc.domain.light.LightOfficeType;
 
-import java.util.List;
+import java.util.*;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface LighOfficeService {

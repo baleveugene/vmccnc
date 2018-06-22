@@ -35,13 +35,7 @@ public class AutomatedLineServiceImpl implements AutomatedLineService {
                 File uploadFile = UploadMultipartFileUtil.uploadFile(path, file[i]);
                 AutomatedLine automatedLine = ParserExcelAutomatedLine.readAutomatedLine(uploadFile);
                 AutomatedLineWorkpiece workpiece = automatedLine.getWorkpiece();
-                workpiece = (AutomatedLineWorkpiece) hbmDAO.getByNamedQueryName(AutomatedLineWorkpiece.class, "workpieceEn", workpiece.getWorkpieceEn(), "findByWorkpieceEn");
-                if(workpiece == null) {
-                    hbmDAO.add(workpiece);
-                    workpiece = (AutomatedLineWorkpiece) hbmDAO.getByNamedQueryName(AutomatedLineWorkpiece.class, "workpieceEn", workpiece.getWorkpieceEn(), "findByWorkpieceEn");
-                }                              
-                automatedLine.setWorkpiece(workpiece);
-                hbmDAO.add(automatedLine);
+                hbmDAO.add(workpiece);                
                 uploadFile.delete();
                 System.out.println("Successfully uploaded: " + file[i].getOriginalFilename());
             } catch (IOException e) {

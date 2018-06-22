@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
 <!DOCTYPE html>
@@ -115,10 +116,10 @@
          <div class="no-margin col-xs-12 col-sm-6 col-md-5 gallery-holder">
     <div class="product-item-holder size-big single-product-gallery small-gallery">      
         <div id="owl-single-product">
-            <c:set var="i" value="${1}" scope="request"/>
-            <c:forEach items="${listPhotos}" var="photo">
-                <c:set var="i" value="${i + 1}"  scope="request" />
-                <div class="single-product-gallery-item" id="slide${i}">         
+            
+            <c:forEach items="${listPhotos}" var="photo" step="1" varStatus="i"> 
+             
+                <div class="single-product-gallery-item" id="slide${i.index}">         
                     <a data-rel="prettyphoto" href="../resources/assets/images/products/${photo.name}">
                         <img class="img-responsive" alt="${automatedLine.modelEn}" 
                          src="../resources/assets/images/products/${photo.name}" 
@@ -126,22 +127,20 @@
                          <!--src="../resources/assets/images/blank.gif"--> 
                     </a>
                 </div><!-- /.single-product-gallery-item -->
-            </c:forEach>     
+            </c:forEach>
+     
         </div><!-- /.single-product-slider -->
 
         <div class="single-product-gallery-thumbs gallery-thumbs">
 
             <div id="owl-single-product-thumbnails">
-                <a class="horizontal-thumb active" data-target="#owl-single-product" data-slide="0" href="#slide1">                  
-                    <img width="67" alt="${automatedLine.modelEn}" src="../resources/assets/images/products/${photo.name}" data-echo="../resources/assets/images/products/${photo.name}" />
-                </a>
-                <c:set var="i" value="${1}" scope="request"/>
-                <c:forEach items="${listPhotos}" var="photo">                   
-                    <c:set var="i" value="${i + 1}"  scope="request" />
-                        <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="${i}" href="#slide${i+1}}">
+                
+                <c:forEach items="${listPhotos}" var="photo" step="1" varStatus="i">                                        
+                        <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="${i.index}" href="#slide${i.index+1}}">
                             <img width="67" alt="${automatedLine.modelEn}"  src="../resources/assets/images/products/${photo.name}" data-echo="../resources/assets/images/products/${photo.name}"  />
                         </a>                   
                 </c:forEach>
+                
             </div> 
                 <!--/#owl-single-product-thumbnails--> 
 
@@ -231,10 +230,10 @@
                 <div class="tab-pane active" id="description">
                     <p>${vmc.info1en}</p>
     <c:if test="${!empty listVideos}">
-        <c:forEach items="${listVideos}" var="video"> 
-            <iframe width="250" height="100" src="https://youtu.be/${video.name}" frameborder="0" allowfullscreen></iframe>              
+        <c:forEach items="${listVideos}" var="video" step="1" varStatus="i"> 
+            <iframe width="480" height="360" src="https://youtube.com/embed/${video.name}" frameborder="0" allow="autoplay;encrypted-media" allowfullscreen></iframe>              
         </c:forEach>
-    </c:if> 
+    </c:if>  
        
                     
                 </div> 
@@ -267,12 +266,12 @@
                         
                         <li>
                             <label><spring:message code="linescompare.workpiece" text="Workpiece"/></label>
-                            <div class="value">${automatedLine.workpieceEn}</div>
+                            <div class="value">${workpiece.workpieceEn}</div>
                         </li>
                         
                         <li>
                             <label><spring:message code="linescompare.workpieceWeight" text="Workpiece weight"/></label>
-                            <div class="value">${automatedLine.workpieceWeight}</div>
+                            <div class="value">${workpiece.workpieceWeight}</div>
                         </li>
                         
                         <li>
@@ -346,7 +345,7 @@
                         <!--<div class="ribbon red"><span>sale</span></div>--> 
                         <div class="image">
                             <a href="/lines/${lines.id}">
-                            <img alt="${lines.modelEn}" src="../resources/assets/images/blank.gif" data-echo="../resources/assets/images/products/${lines.photo1}" />
+                            <img alt="${lines.modelEn}" src="../resources/assets/images/blank.gif" data-echo="../resources/assets/images/products/${listPhotos[i.index].name}" />
                              </a>
                         </div>
                         <div class="body">

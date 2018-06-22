@@ -62,9 +62,9 @@ public class AutomatedLineWorkpiece implements Serializable {
     @Size(max = 65535)
     @Column(name = "workpiece_description_ru")
     private String workpieceDescriptionRu;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "workpiece")   
+    @OneToMany(cascade={CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "workpiece")   
     private Set<WorkpiecePhoto> photos = new HashSet<>();
-    @OneToMany( fetch = FetchType.EAGER, mappedBy = "workpiece")   
+    @OneToMany(cascade={CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "workpiece")   
     private Set<AutomatedLine> lines = new HashSet<>();
 
     public AutomatedLineWorkpiece() {

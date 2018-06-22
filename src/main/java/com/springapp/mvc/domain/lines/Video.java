@@ -34,7 +34,7 @@ public class Video implements Serializable {
     private String name;
     
     @ManyToOne
-    @JoinColumn(nullable = false, name="line_model_en")
+    @JoinColumn(nullable = false, name="line_model_en", referencedColumnName = "model_en")
     private AutomatedLine line;
 
     public Video() {
