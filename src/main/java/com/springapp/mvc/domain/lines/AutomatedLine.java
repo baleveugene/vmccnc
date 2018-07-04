@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.springapp.mvc.domain.lines;
 
 import java.io.Serializable;
@@ -16,9 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -55,7 +48,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "AutomatedLine.findByWidth", query = "SELECT l FROM AutomatedLine l WHERE l.width = :width"),
     @NamedQuery(name = "AutomatedLine.findByHight", query = "SELECT l FROM AutomatedLine l WHERE l.hight = :hight"),
     @NamedQuery(name = "AutomatedLine.findByWeight", query = "SELECT l FROM AutomatedLine l WHERE l.weight = :weight"),
-    @NamedQuery(name = "AutomatedLine.findByPrice", query = "SELECT l FROM AutomatedLine l WHERE l.price = :price")})
+    @NamedQuery(name = "AutomatedLine.findByPrice", query = "SELECT l FROM AutomatedLine l WHERE l.price = :price"),
+    @NamedQuery(name = "AutomatedLine.findByWorkpieceEn", query = "SELECT l FROM AutomatedLine l WHERE l.workpieceEn = :workpieceEn"),
+    @NamedQuery(name = "AutomatedLine.findByWorkpieceRu", query = "SELECT l FROM AutomatedLine l WHERE l.workpieceRu = :workpieceRu")})
 public class AutomatedLine implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -181,9 +176,6 @@ public class AutomatedLine implements Serializable {
     private Set<Photo> photos = new HashSet<>();
     @OneToMany(cascade={CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "line")  
     private Set<Video> videos = new HashSet<>();
-    @ManyToOne      
-    @JoinColumn(nullable = false, name="workpiece_workpiece_en", referencedColumnName = "workpiece_en")
-    private AutomatedLineWorkpiece workpiece;
     @Lob
     @Size(max = 65535)
     @Column(name = "description_en")
@@ -192,6 +184,26 @@ public class AutomatedLine implements Serializable {
     @Size(max = 65535)
     @Column(name = "description_ru")
     private String descriptionRu;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
+    @Column(name = "workpiece_en")
+    private String workpieceEn;
+    @Basic(optional = false)
+    @Size(min = 1, max = 255)
+    @Column(name = "workpiece_ru")
+    private String workpieceRu;
+    @Basic(optional = false)   
+    @Column(name = "workpiece_weight")
+    private String workpieceWeight;
+    @Lob
+    @Size(max = 65535)
+    @Column(name = "workpiece_description_en")
+    private String workpieceDescriptionEn;
+    @Lob
+    @Size(max = 65535)
+    @Column(name = "workpiece_description_ru")
+    private String workpieceDescriptionRu;
 
     public AutomatedLine() {
     }
@@ -457,14 +469,6 @@ public class AutomatedLine implements Serializable {
     public void addVideo(Video video) {
         this.videos.add(video);
     }
-    
-    public AutomatedLineWorkpiece getWorkpiece() {
-        return workpiece;
-    }
-
-    public void setWorkpiece(AutomatedLineWorkpiece workpiece) {
-        this.workpiece = workpiece;
-    }
 
     public String getDescriptionEn() {
         return descriptionEn;
@@ -480,6 +484,46 @@ public class AutomatedLine implements Serializable {
 
     public void setDescriptionRu(String descriptionRu) {
         this.descriptionRu = descriptionRu;
+    }
+    
+    public String getWorkpieceEn() {
+        return workpieceEn;
+    }
+
+    public void setWorkpieceEn(String workpieceEn) {
+        this.workpieceEn = workpieceEn;
+    }
+    
+    public String getWorkpieceRu() {
+        return workpieceRu;
+    }
+
+    public void setWorkpieceRu(String workpieceRu) {
+        this.workpieceRu = workpieceRu;
+    }
+    
+    public String getWorkpieceWeight() {
+        return workpieceWeight;
+    }
+
+    public void setWorkpieceWeight(String workpieceWeight) {
+        this.workpieceWeight = workpieceWeight;
+    }
+    
+    public String getWorkpieceDescriptionEn() {
+        return workpieceDescriptionEn;
+    }
+
+    public void setWorkpieceDescriptionEn(String workpieceDescriptionEn) {
+        this.workpieceDescriptionEn = workpieceDescriptionEn;
+    }
+    
+    public String getWorkpieceDescriptionRu() {
+        return workpieceDescriptionRu;
+    }
+
+    public void setWorkpieceDescriptionRu(String workpieceDescriptionRu) {
+        this.workpieceDescriptionRu = workpieceDescriptionRu;
     }
 
     @Override

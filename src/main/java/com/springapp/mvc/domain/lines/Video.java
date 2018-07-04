@@ -19,7 +19,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name="line_video", schema = "", catalog = "automated_lines")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Video.findAll", query = "SELECT l FROM Video l")
+    @NamedQuery(name = "Video.findAll", query = "SELECT l FROM Video l"),
+    @NamedQuery(name = "Video.findByName", query = "SELECT l FROM Video l WHERE l.name = :name")
     })
 public class Video implements Serializable {
 

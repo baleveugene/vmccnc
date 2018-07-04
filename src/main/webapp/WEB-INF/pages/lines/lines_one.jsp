@@ -266,12 +266,12 @@
                         
                         <li>
                             <label><spring:message code="linescompare.workpiece" text="Workpiece"/></label>
-                            <div class="value">${workpiece.workpieceEn}</div>
+                            <div class="value">${automatedLine.workpieceEn}</div>
                         </li>
                         
                         <li>
                             <label><spring:message code="linescompare.workpieceWeight" text="Workpiece weight"/></label>
-                            <div class="value">${workpiece.workpieceWeight}</div>
+                            <div class="value">${automatedLine.workpieceWeight}</div>
                         </li>
                         
                         <li>

@@ -1,10 +1,9 @@
 package com.springapp.mvc.util.exel;
 
+import com.springapp.mvc.dao.HbmDAO;
 import com.springapp.mvc.domain.lines.AutomatedLine;
-import com.springapp.mvc.domain.lines.AutomatedLineWorkpiece;
 import com.springapp.mvc.domain.lines.Photo;
 import com.springapp.mvc.domain.lines.Video;
-import com.springapp.mvc.domain.lines.WorkpiecePhoto;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.DataFormatter;
@@ -28,7 +27,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ParserExcelAutomatedLine  {
-
+    
     private static Workbook getWorkbook(FileInputStream inputStream, String excelFilePath) throws IOException {
         Workbook workbook = null;
         if (excelFilePath.endsWith("xlsx")) {
@@ -46,25 +45,25 @@ public class ParserExcelAutomatedLine  {
         Sheet firstSheet = workbook.getSheetAt(0);
         Iterator<Row> rowIterator = firstSheet.iterator();
         DataFormatter df = new DataFormatter();
-
+ 
         AutomatedLine automatedLine = new AutomatedLine();
      
-        Row curentRow = rowIterator.next();                      
+        Row curentRow = rowIterator.next();
         automatedLine.setTypeEn(df.formatCellValue(curentRow.getCell(1)).trim());
         automatedLine.setTypeRu(df.formatCellValue(curentRow.getCell(2)).trim());
         printInFile("readAutomatedLine.txt", "1 setType = " + automatedLine.getTypeEn());
         System.out.println(automatedLine.getTypeEn());
         System.out.println(automatedLine.getTypeRu());
-        
+ 
         curentRow = rowIterator.next();
         automatedLine.setModelEn(df.formatCellValue(curentRow.getCell(1)).trim()); 
         automatedLine.setModelRu(df.formatCellValue(curentRow.getCell(2)).trim());
         printInFile("readAutomatedLine.txt", "2 setSubType = " + automatedLine.getModelEn());
         System.out.println(automatedLine.getModelEn());
         System.out.println(automatedLine.getModelRu());
-        
+      
         automatedLine.setUrl(getUrl(automatedLine.getModelEn()));        
-        printInFile("readAutomatedLine.txt", "3 setUrl"  );        
+        printInFile("readAutomatedLine.txt", "3 setUrl"  );   
         
         curentRow = rowIterator.next();
         automatedLine.setManufacturerEn(df.formatCellValue(curentRow.getCell(1)).trim());
@@ -105,26 +104,33 @@ public class ParserExcelAutomatedLine  {
         automatedLine.setYearOfManufacture(intFromCell(rowIterator, df)); 
         
         curentRow = rowIterator.next();
-        AutomatedLineWorkpiece workpiece = new AutomatedLineWorkpiece(
-                df.formatCellValue(curentRow.getCell(1)).trim(), 
-                df.formatCellValue(curentRow.getCell(2)).trim(),
-                df.formatCellValue(rowIterator.next().getCell(1)).trim());
-        WorkpiecePhoto workpiecePhoto1 = new WorkpiecePhoto(df.formatCellValue(rowIterator.next().getCell(1)).trim());
-        WorkpiecePhoto workpiecePhoto2 = new WorkpiecePhoto(df.formatCellValue(rowIterator.next().getCell(1)).trim());        
-        if(workpiecePhoto1.getName()!=null && !workpiecePhoto1.getName().equals("")){            
-            workpiece.addPhoto(workpiecePhoto1);
-            workpiecePhoto1.setWorkpiece(workpiece);
+        automatedLine.setWorkpieceEn(df.formatCellValue(curentRow.getCell(1)).trim());
+        automatedLine.setWorkpieceRu(df.formatCellValue(curentRow.getCell(2)).trim());
+        
+        automatedLine.setWorkpieceWeight(df.formatCellValue(rowIterator.next().getCell(1)).trim());
+        
+        String path = getPath(automatedLine);
+        String fotoName1 = path + df.formatCellValue(rowIterator.next().getCell(1)).trim();
+        String fotoName2 = path + df.formatCellValue(rowIterator.next().getCell(1)).trim();
+            
+        if(fotoName1!=null && !fotoName1.equals("")){
+            Photo workpiecePhoto1 = new Photo(fotoName1);
+            workpiecePhoto1.setName(fotoName1);
+            automatedLine.addPhoto(workpiecePhoto1);
+            workpiecePhoto1.setLine(automatedLine);
         }
-        if(workpiecePhoto2.getName()!=null && !workpiecePhoto2.getName().equals("")){                      
-            workpiece.addPhoto(workpiecePhoto2);
-            workpiecePhoto2.setWorkpiece(workpiece);
+        if(fotoName2!=null && !fotoName2.equals("")){
+            Photo workpiecePhoto2 = new Photo(fotoName2);
+            workpiecePhoto2.setName(fotoName2);
+            automatedLine.addPhoto(workpiecePhoto2);
+            workpiecePhoto2.setLine(automatedLine);
         }       
         curentRow = rowIterator.next();
-        workpiece.setWorkpieceDescriptionEn(df.formatCellValue(curentRow.getCell(1)).trim());
-        workpiece.setWorkpieceDescriptionRu(df.formatCellValue(curentRow.getCell(2)).trim());        
+        automatedLine.setWorkpieceDescriptionEn(df.formatCellValue(curentRow.getCell(1)).trim());
+        automatedLine.setWorkpieceDescriptionRu(df.formatCellValue(curentRow.getCell(2)).trim());        
         
-        printInFile("readAutomatedLine.txt", "11 setWorkpiece = " + workpiece.getWorkpieceEn());        
-        System.out.println(workpiece.getWorkpieceEn()); 
+        printInFile("readAutomatedLine.txt", "11 setWorkpiece = " + automatedLine.getWorkpieceEn());        
+        System.out.println(automatedLine.getWorkpieceEn()); 
         
         automatedLine.setLength(intFromCell(rowIterator, df)); 
         automatedLine.setWidth(intFromCell(rowIterator, df));
@@ -132,18 +138,25 @@ public class ParserExcelAutomatedLine  {
         automatedLine.setNumOfWorkingStaff(intFromCell(rowIterator, df));
         automatedLine.setProductivity(df.formatCellValue(rowIterator.next().getCell(1)).trim());
                
-        Photo photo1 = new Photo(df.formatCellValue(rowIterator.next().getCell(1)).trim());
-        Photo photo2 = new Photo(df.formatCellValue(rowIterator.next().getCell(1)).trim());
-        Photo photo3 = new Photo(df.formatCellValue(rowIterator.next().getCell(1)).trim());
-        if(photo1.getName()!=null && !photo1.getName().equals("")){           
+        fotoName1 = path + df.formatCellValue(rowIterator.next().getCell(1)).trim();
+        fotoName2 = path + df.formatCellValue(rowIterator.next().getCell(1)).trim();
+        String fotoName3 = path + df.formatCellValue(rowIterator.next().getCell(1)).trim();
+       
+        if(fotoName1!=null && !fotoName1.equals("")){           
+            Photo photo1 = new Photo(fotoName1);
+            photo1.setName(fotoName1);
             automatedLine.addPhoto(photo1);
             photo1.setLine(automatedLine);
         }
-        if(photo2.getName()!=null && !photo2.getName().equals("")){           
+        if(fotoName2!=null && !fotoName2.equals("")){           
+            Photo photo2 = new Photo(fotoName2);
+            photo2.setName(fotoName2);
             automatedLine.addPhoto(photo2);
             photo2.setLine(automatedLine);
         }
-        if(photo3.getName()!=null && !photo3.getName().equals("")){           
+        if(fotoName3!=null && !fotoName3.equals("")){           
+            Photo photo3 = new Photo(fotoName3);
+            photo3.setName(fotoName3);
             automatedLine.addPhoto(photo3);
             photo3.setLine(automatedLine);
         }
@@ -154,27 +167,28 @@ public class ParserExcelAutomatedLine  {
         automatedLine.setDescriptionEn(df.formatCellValue(curentRow.getCell(1)).trim());
         automatedLine.setDescriptionRu(df.formatCellValue(curentRow.getCell(2)).trim());
         
-        Video video1 = new Video(df.formatCellValue(rowIterator.next().getCell(1)).trim());
-        Video video2 = new Video(df.formatCellValue(rowIterator.next().getCell(1)).trim());
-        Video video3 = new Video(df.formatCellValue(rowIterator.next().getCell(1)).trim());
+        String videoName1 = df.formatCellValue(rowIterator.next().getCell(1)).trim();
+        String videoName2 = df.formatCellValue(rowIterator.next().getCell(1)).trim();
+        String videoName3 = df.formatCellValue(rowIterator.next().getCell(1)).trim();
        
-        if(video1.getName()!=null && !video1.getName().equals("")){           
-            System.out.println(video1.getName());           
+        if(videoName1!=null && !videoName1.equals("")){
+            Video video1 = new Video(videoName1);
+            video1.setName(videoName1);                      
             automatedLine.addVideo(video1);
             video1.setLine(automatedLine);
         }
-        if(video2.getName()!=null && !video2.getName().equals("")){           
-            System.out.println(video2.getName()); 
+        if(videoName2!=null && !videoName2.equals("")){           
+            Video video2 = new Video(videoName2);
+            video2.setName(videoName2); 
             automatedLine.addVideo(video2);
             video2.setLine(automatedLine);
         }
-        if(video3.getName()!=null && !video3.getName().equals("")){          
+        if(videoName3!=null && !videoName3.equals("")){           
+            Video video3 = new Video(videoName3);
+            video3.setName(videoName3);          
             automatedLine.addVideo(video3);
             video3.setLine(automatedLine);
-        }
-        
-        workpiece.addLine(automatedLine);
-        automatedLine.setWorkpiece(workpiece);
+        }      
        
         fis.close();
         return automatedLine;
@@ -199,7 +213,7 @@ public class ParserExcelAutomatedLine  {
                     .replaceAll("--", "-")
                     .replaceAll("--", "-") ;
        }
-       
+      
        private static String getID (String str){
         return   str.replaceAll(" ", "")
                     .replaceAll("'", "")
@@ -229,6 +243,17 @@ public class ParserExcelAutomatedLine  {
                     tt = Integer.parseInt( df.formatCellValue(tmp.getCell(1)).trim());
                    }        
          return tt;
+       }
+    
+    private static String getPath (AutomatedLine automatedLine){                  
+        String absPath = automatedLine.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+        String[] absPathAfterSplit = absPath.split("WEB-INF");
+        File folder = new File(absPathAfterSplit[0]
+                +"/resources/assets/images/products/automated_lines/" + automatedLine.getUrl());
+        if(!folder.exists()){
+            folder.mkdirs();
+        }       
+        return automatedLine.getUrl()+"/";    
        }
        
     static void printInFile(String fileName, String str){    // For Check             

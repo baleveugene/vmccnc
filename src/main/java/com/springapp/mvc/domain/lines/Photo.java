@@ -1,5 +1,6 @@
 package com.springapp.mvc.domain.lines;
 
+import java.io.File;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -20,7 +21,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name="line_photo", schema = "", catalog = "automated_lines")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Photo.findAll", query = "SELECT l FROM Photo l")
+    @NamedQuery(name = "Photo.findAll", query = "SELECT l FROM Photo l"),
+    @NamedQuery(name = "Photo.findByName", query = "SELECT l FROM Photo l WHERE l.name = :name")
     })
 public class Photo implements Serializable {
 

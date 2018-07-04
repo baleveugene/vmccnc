@@ -50,30 +50,13 @@ public class AutomatedLineWorkpiece implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "workpiece_ru")
     private String workpieceRu;
-    @Basic(optional = false)
-    @NotNull   
-    @Column(name = "workpiece_weight")
-    private String workpieceWeight;
-    @Lob
-    @Size(max = 65535)
-    @Column(name = "workpiece_description_en")
-    private String workpieceDescriptionEn;
-    @Lob
-    @Size(max = 65535)
-    @Column(name = "workpiece_description_ru")
-    private String workpieceDescriptionRu;
-    @OneToMany(cascade={CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "workpiece")   
-    private Set<WorkpiecePhoto> photos = new HashSet<>();
-    @OneToMany(cascade={CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "workpiece")   
-    private Set<AutomatedLine> lines = new HashSet<>();
 
     public AutomatedLineWorkpiece() {
     }
 
-    public AutomatedLineWorkpiece(String workpieceEn, String workpieceRu, String workpieceWeight) {
+    public AutomatedLineWorkpiece(String workpieceEn, String workpieceRu) {
         this.workpieceEn = workpieceEn;
-        this.workpieceRu = workpieceRu;
-        this.workpieceWeight = workpieceWeight;
+        this.workpieceRu = workpieceRu;     
     }
 
     public long getId() {
@@ -100,14 +83,6 @@ public class AutomatedLineWorkpiece implements Serializable {
         this.workpieceRu = workpieceRu;
     }
 
-    public String getWorkpieceWeight() {
-        return workpieceWeight;
-    }
-
-    public void setWorkpieceWeight(String workpieceWeight) {
-        this.workpieceWeight = workpieceWeight;
-    }
-    
     public Integer getNum() {
         return num;
     }
@@ -116,46 +91,6 @@ public class AutomatedLineWorkpiece implements Serializable {
         this.num = num;
     }
     
-    public String getWorkpieceDescriptionEn() {
-        return workpieceDescriptionEn;
-    }
-
-    public void setWorkpieceDescriptionEn(String workpieceDescriptionEn) {
-        this.workpieceDescriptionEn = workpieceDescriptionEn;
-    }
-    
-    public String getWorkpieceDescriptionRu() {
-        return workpieceDescriptionRu;
-    }
-
-    public void setWorkpieceDescriptionRu(String workpieceDescriptionRu) {
-        this.workpieceDescriptionRu = workpieceDescriptionRu;
-    }
-    
-    public Set<WorkpiecePhoto> getPhotos() {
-        return photos;
-    }
-
-    public void setPhotos(Set<WorkpiecePhoto> photos) {
-        this.photos = photos;
-    }
-    
-    public void addPhoto(WorkpiecePhoto photo) {
-        this.photos.add(photo);
-    }
-    
-    public Set<AutomatedLine> getLines() {
-        return lines;
-    }
-
-    public void setLines(Set<AutomatedLine> lines) {
-        this.lines = lines;
-    }
-    
-    public void addLine(AutomatedLine line) {
-        this.lines.add(line);
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;

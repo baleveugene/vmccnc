@@ -63,10 +63,8 @@ public class ControllerLines extends PrintInFile {
     public ModelAndView lines_one(@PathVariable ("url") String url, HttpSession session) {
     
         ModelAndView mv = new ModelAndView("lines/lines_one");
-        AutomatedLine automatedLine = automatedLineService.getLineByUrl(url);
-        AutomatedLineWorkpiece workpiece = automatedLine.getWorkpiece();
-        mv.addObject("automatedLine", automatedLine);
-        mv.addObject("workpiece", workpiece);
+        AutomatedLine automatedLine = automatedLineService.getLineByUrl(url);        
+        mv.addObject("automatedLine", automatedLine);        
         mv.addObject("listPhotos", automatedLine.getPhotos());
         mv.addObject("listVideos", automatedLine.getVideos());
         

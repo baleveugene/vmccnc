@@ -189,7 +189,8 @@
                                 <div class="image">
                                     <!--<img alt="" src="../resources/assets/images/blank.gif" data-echo="../resources/assets/images/products/${vmc.photo1}" width="246" height="186" />-->
                                     <a href="/line-${lines.url}">
-                                     <img alt="${lines.modelEn}" src="../resources/assets/images/blank.gif" data-echo="../resources/assets/images/products/${line.photos[i.index].name}" width="246" height="186" />
+                                     <img alt="${lines.modelEn}" src="../resources/assets/images/blank.gif" 
+                                          data-echo="../resources/assets/images/products/${line.photos[i.index].name}" width="246" height="186" />
                                     </a>
                                 </div>
                                 <div class="body">
@@ -200,7 +201,7 @@
                                     <div class="brand"><spring:message code="linesall.type" text="Type" />:  ${line.typeEn}</div>
 
                                     <div class="brand"> 
-                                        ${line.workpiece.workpieceEn} 
+                                        ${line.workpieceEn} 
                                     </div>
 
                                 </div>

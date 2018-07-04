@@ -28,6 +28,12 @@ public class HbmDAOImpl <T, pk extends Serializable>  implements HbmDAO <T, pk> 
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(t);
     }
+    
+    @Override
+    public void update(T t) {
+        Session session = sessionFactory.getCurrentSession();
+        session.update(t);
+    }
 
     @Override
     public List getAll(Class entityClass) {
@@ -60,6 +66,13 @@ public class HbmDAOImpl <T, pk extends Serializable>  implements HbmDAO <T, pk> 
         Session session = sessionFactory.getCurrentSession();       
         return (T)session.getNamedQuery(entityClass.getSimpleName()+".findByUrl")
                 .setParameter("url", url).uniqueResult();
+    }
+    
+    @Override
+    public T getByName(Class entityClass, pk name) {
+        Session session = sessionFactory.getCurrentSession();       
+        return (T)session.getNamedQuery(entityClass.getSimpleName()+".findByName")
+                .setParameter("name", name).uniqueResult();
     }
     
     @Override

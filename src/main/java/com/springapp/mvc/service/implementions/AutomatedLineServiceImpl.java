@@ -4,6 +4,8 @@ import com.springapp.mvc.dao.HbmDAO;
 
 import com.springapp.mvc.domain.lines.AutomatedLine;
 import com.springapp.mvc.domain.lines.AutomatedLineWorkpiece;
+import com.springapp.mvc.domain.lines.Photo;
+import com.springapp.mvc.domain.lines.Video;
 import com.springapp.mvc.service.interfaces.AutomatedLineService;
 
 import com.springapp.mvc.util.ImageUtil;
@@ -32,10 +34,15 @@ public class AutomatedLineServiceImpl implements AutomatedLineService {
     public void uploadAutomatedLine(String path, MultipartFile[] file) {
         for (int i = 0; i < file.length; i++) {
             try {
-                File uploadFile = UploadMultipartFileUtil.uploadFile(path, file[i]);
+                File uploadFile = UploadMultipartFileUtil.uploadFile(path, file[i]);              
                 AutomatedLine automatedLine = ParserExcelAutomatedLine.readAutomatedLine(uploadFile);
-                AutomatedLineWorkpiece workpiece = automatedLine.getWorkpiece();
-                hbmDAO.add(workpiece);                
+                AutomatedLine automatedLineFromDB = (AutomatedLine)hbmDAO.getByUrl(AutomatedLine.class, automatedLine.getUrl());
+                if(automatedLineFromDB != null){
+                    automatedLineFromDB = setValuesForUpdate(automatedLineFromDB, automatedLine);
+                    hbmDAO.add(automatedLineFromDB);
+                } else {
+                    hbmDAO.add(automatedLine); 
+                }                                                            
                 uploadFile.delete();
                 System.out.println("Successfully uploaded: " + file[i].getOriginalFilename());
             } catch (IOException e) {
@@ -44,9 +51,57 @@ public class AutomatedLineServiceImpl implements AutomatedLineService {
         }
     }
     
+    private AutomatedLine setValuesForUpdate(AutomatedLine automatedLineFromDB, AutomatedLine automatedLine){
+        automatedLineFromDB.setCncEn(automatedLine.getCncEn());
+        automatedLineFromDB.setCncFullEn(automatedLine.getCncFullEn());
+        automatedLineFromDB.setCncFullRu(automatedLine.getCncFullRu());
+        automatedLineFromDB.setCncRu(automatedLine.getCncRu());
+        automatedLineFromDB.setCountryEn(automatedLine.getCountryEn());
+        automatedLineFromDB.setCountryRu(automatedLine.getCountryRu());
+        automatedLineFromDB.setDescriptionEn(automatedLine.getDescriptionEn());
+        automatedLineFromDB.setDescriptionRu(automatedLine.getDescriptionRu());
+        automatedLineFromDB.setHight(automatedLine.getHight());
+        automatedLineFromDB.setLength(automatedLine.getLength());
+        automatedLineFromDB.setMachineConditionEn(automatedLine.getMachineConditionEn());
+        automatedLineFromDB.setMachineConditionRu(automatedLine.getMachineConditionRu());
+        automatedLineFromDB.setMachineLocationEn(automatedLine.getMachineLocationEn());
+        automatedLineFromDB.setMachineLocationRu(automatedLine.getMachineLocationRu());
+        automatedLineFromDB.setManufacturerEn(automatedLine.getManufacturerEn());
+        automatedLineFromDB.setManufacturerRu(automatedLine.getManufacturerRu());
+        automatedLineFromDB.setModelEn(automatedLine.getModelEn());
+        automatedLineFromDB.setModelRu(automatedLine.getModelRu());
+        automatedLineFromDB.setNumOfWorkingStaff(automatedLine.getNumOfWorkingStaff());
+        automatedLineFromDB.setPrice(automatedLine.getPrice());
+        automatedLineFromDB.setProductivity(automatedLine.getProductivity());
+        automatedLineFromDB.setUrl(automatedLine.getUrl());
+        automatedLineFromDB.setWeight(automatedLine.getWeight());
+        automatedLineFromDB.setWidth(automatedLine.getWidth());
+        automatedLineFromDB.setWorkpieceDescriptionEn(automatedLine.getWorkpieceDescriptionEn());
+        automatedLineFromDB.setWorkpieceDescriptionRu(automatedLine.getWorkpieceDescriptionRu());
+        automatedLineFromDB.setWorkpieceEn(automatedLine.getWorkpieceEn());
+        automatedLineFromDB.setWorkpieceRu(automatedLine.getWorkpieceRu());
+        automatedLineFromDB.setWorkpieceWeight(automatedLine.getWorkpieceWeight());
+        automatedLineFromDB.setYearOfManufacture(automatedLine.getYearOfManufacture());
+        Set<Photo> photos = automatedLine.getPhotos();
+        for(Photo photo : photos){
+            Photo photoFromDB = (Photo)hbmDAO.getByName(Photo.class, photo.getName());
+            if(photoFromDB == null){
+                automatedLineFromDB.addPhoto(photo);
+            }           
+        }
+        Set<Video> videos = automatedLine.getVideos();
+        for(Video video : videos){
+            Video videoFromDB = (Video)hbmDAO.getByName(Video.class, video.getName());
+            if(videoFromDB == null){
+                automatedLineFromDB.addVideo(video);
+            }                   
+        }
+        return automatedLineFromDB;
+    }
+    
     @Override @Transactional
     public List<AutomatedLine> getListAutomatedLine() {
-    return  hbmDAO.getAll(AutomatedLine.class);
+        return  hbmDAO.getAll(AutomatedLine.class);
     }           
     
     @Override @Transactional
@@ -55,14 +110,12 @@ public class AutomatedLineServiceImpl implements AutomatedLineService {
     }          
     
     @Override @Transactional
-    public Set<AutomatedLine> getListAutomatedLine(String workpiece) { 
-        
+    public List<AutomatedLine> getListAutomatedLine(String workpiece) {        
         List<Criterion> restrictions = new ArrayList();
         if (workpiece != null && !workpiece.equals("")){
             restrictions.add(Restrictions.eq("workpieceEn", workpiece));                  
         }
-        AutomatedLineWorkpiece lineWorkpiece = (AutomatedLineWorkpiece)hbmDAO.getAll(AutomatedLineWorkpiece.class, restrictions).iterator().next();
-        return  lineWorkpiece.getLines();
+        return  hbmDAO.getAll(AutomatedLineWorkpiece.class, restrictions);
     }   
    
     @Override @Transactional

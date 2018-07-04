@@ -25,7 +25,7 @@ public interface AutomatedLineService {
     public List<AutomatedLine> getListLineFromSearch(String word);
 //    public List<Wesold> getListWesold();
     public List<AutomatedLine> getListAutomatedLine();
-    public Set<AutomatedLine> getListAutomatedLine(String workpiece);
+    public List<AutomatedLine> getListAutomatedLine(String workpiece);
     public void uploadAutomatedLine(String path, MultipartFile[] file);
           
     public List<AutomatedLineWorkpiece> getListAutomatedLineWorkpiece();
