@@ -118,9 +118,16 @@
                                      <option value='' ><spring:message code="linesall.workpiece_not_selected" text="Workpiece not selected" /></option> 
                                           <!--<option disabled>Select axes</option>-->  
                                           <c:forEach items="${listLineWorkpiece}" var="aa">
+                                              <c:if test="${sessionScope.lang == 'en' || sessionScope.lang == ''}">
                                               <option value="${aa.workpieceEn}"
                                                          <c:if test="${aa.workpieceEn == workpieceEn}">selected</c:if>                 
-                                                  > ${aa.workpieceEn} (${aa.num}) </option>
+                                                  > ${aa.workpieceEn}(${aa.num}) </option>  
+                                              </c:if>
+                                              <c:if test="${sessionScope.lang == 'russia'}">
+                                              <option value="${aa.workpieceRu}"
+                                                         <c:if test="${aa.workpieceRu == workpieceRu}">selected</c:if>                 
+                                                  > ${aa.workpieceRu}(${aa.num}) </option>  
+                                              </c:if>                           
                                           </c:forEach>
                                  </select>
                             </div>
@@ -154,23 +161,12 @@
 
             
   <section id="gaming">
-    <div class="grid-list-products">
-        
-        <!--<h2 class="section-title">Vertical machinig centers</h2>-->
-        
+    <div class="grid-list-products">       
         <div class="control-bar">
-
-<!--            <div id="item-count" class="le-select">
-                <select>
-                    <option value="1">9 per page</option>
-                     <option value="2">48 per page</option>
-                </select>
-            </div>-->
-
             <div class="grid-list-buttons">
                 <ul>
-                    <li class="grid-list-button-item active"><a data-toggle="tab" href="#grid-view"><i class="fa fa-th-large"></i> Grid</a></li>
-                    <li class="grid-list-button-item "><a data-toggle="tab" href="#list-view"><i class="fa fa-th-list"></i> List</a></li>
+                    <li class="grid-list-button-item active"><a data-toggle="tab" href="#grid-view"><i class="fa fa-th-large"></i><spring:message code="linesall.grid" text="Grid" /></a></li>
+                    <li class="grid-list-button-item "><a data-toggle="tab" href="#list-view"><i class="fa fa-th-list"></i><spring:message code="linesall.list" text="List" /></a></li>
                 </ul>
             </div>
         </div>
@@ -182,15 +178,17 @@
                     <div class="row no-margin">
                         
                         
-            <c:forEach items="${listAutomatedLine}" var="line"> 
+            <c:forEach items="${listAutomatedLine}" var="line" varStatus="i"> 
                         <div class="col-xs-12 col-sm-4 no-margin product-item-holder hover">
                             <div class="product-item">
                             
                                 <div class="image">
                                     <!--<img alt="" src="../resources/assets/images/blank.gif" data-echo="../resources/assets/images/products/${vmc.photo1}" width="246" height="186" />-->
-                                    <a href="/line-${lines.url}">
-                                     <img alt="${lines.modelEn}" src="../resources/assets/images/blank.gif" 
-                                          data-echo="../resources/assets/images/products/${line.photos[i.index].name}" width="246" height="186" />
+                                    <a href="/line-${line.url}">
+                                        <c:forEach var="photo" items="${line.photos}" begin="0" end="0">
+                                            <img alt="${line.modelEn}" src="../resources/assets/images/blank.gif" 
+                                            data-echo="../resources/assets/images/products/${photo.name}" width="246" height="186" />
+                                        </c:forEach>
                                     </a>
                                 </div>
                                 <div class="body">
@@ -212,11 +210,11 @@
                                 </div>
                                 <div class="hover-area">
                                     <div class="add-cart-button">
-                                        <a href="add-product-to-customer-basket?id=${line.id}&model=${line.modelEn}" class="le-button"><spring:message code="line.addtocart" text="add to cart" /></a>-->
+                                        <a href="add-product-to-customer-basket?id=${line.id}&model=${line.modelEn}" class="le-button"><spring:message code="line.addtocart" text="add to cart" /></a>
                                     </div>
                                     <div class="wish-compare">
                                         <!--<a class="btn-add-to-wishlist" href="add-product-to-wish-list?id=${vmc.id}">add to wishlist</a>-->
-                                        <a class="btn-add-to-compare" href="/compare-line-add?id=${line.id}&pagereturn=${currentpagewithpage}"><spring:message code="linesall.compare" text="Compare" /></a>
+                                        <a class="btn-add-to-compare" href="/compare-lines-add?id=${line.id}&pagereturn=${currentpagewithpage}"><spring:message code="linesall.compare" text="Compare" /></a>
                                     </div>
                                 </div>
                                 

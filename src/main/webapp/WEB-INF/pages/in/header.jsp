@@ -129,6 +129,14 @@
     </div>
 </c:if>
 
+<c:if test="${compareCartLines.numberOfItems>0}" >
+    <div class="compare">
+        <a href="/compare-lines">
+            <i class="fa fa-exchange"></i> Lines <span class="value">${compareCartLines.numberOfItems}</span> 
+        </a>
+    </div>
+</c:if>
+
 <c:if test="${compareCartApartment.numberOfItems>0}" >
     <div class="compare">
         <a href="/compare-apartment">
@@ -149,7 +157,7 @@
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                 <div class="basket-item-count">
                     <span class="count">${cart.numberOfItems}</span>
-                    <img src="${pageContext.request.contextPath}/resources/images/icon-cart.png" alt="" />
+                    <img src="${pageContext.request.contextPath}/resources/assets/images/icon-cart.png" alt="" />
                 </div>
 
                 <div class="total-price-basket"> 

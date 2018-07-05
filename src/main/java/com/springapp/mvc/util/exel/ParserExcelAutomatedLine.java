@@ -247,9 +247,9 @@ public class ParserExcelAutomatedLine  {
     
     private static String getPath (AutomatedLine automatedLine){                  
         String absPath = automatedLine.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
-        String[] absPathAfterSplit = absPath.split("WEB-INF");
+        String[] absPathAfterSplit = absPath.split("target");
         File folder = new File(absPathAfterSplit[0]
-                +"/resources/assets/images/products/automated_lines/" + automatedLine.getUrl());
+                +"src/main/webapp/resources/assets/images/products/automated_lines/" + automatedLine.getUrl());
         if(!folder.exists()){
             folder.mkdirs();
         }       

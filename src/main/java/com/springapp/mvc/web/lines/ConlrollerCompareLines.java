@@ -64,7 +64,7 @@ final private String COMPARE_LINES = "compare-lines";
 //        @RequestMapping(value =  "/compare/light/add" , method = RequestMethod.GET)
         @RequestMapping(value =  "/compare-lines-add" , method = RequestMethod.GET)
     public String addProductToCompareList( 
-            @RequestParam(value = "id") String id, 
+            @RequestParam(value = "id") long id, 
             @RequestParam(value = "pagereturn") String pagereturn, 
             HttpSession session ) {
        

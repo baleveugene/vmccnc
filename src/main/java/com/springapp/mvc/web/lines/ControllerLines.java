@@ -33,7 +33,8 @@ public class ControllerLines extends PrintInFile {
     
     @RequestMapping(value="/lines", method = RequestMethod.GET)
     public ModelAndView lines_all(  
-                                    @RequestParam(value = "workpiece", required = false) String workpiece,                 
+                                    @RequestParam(value = "workpiece", required = false) String workpiece,
+                                    @RequestParam(value = "lang", defaultValue = "en") String lang,
                                     HttpSession session ) {
         
         ModelAndView mv = new ModelAndView("lines/lines_all"); 
@@ -45,6 +46,8 @@ public class ControllerLines extends PrintInFile {
         mv.addObject("listLineWorkpiece", automatedLineService.getListAutomatedLineWorkpiece());
         
         mv.addObject("workpiece", workpiece); // it is need for feed back !!!!!!
+        
+        session.setAttribute("lang", lang);
          
         mv.addObject("message", new Message()); // it is need for feed back !!!!!!
         session.setAttribute("search", "lines"); // for search

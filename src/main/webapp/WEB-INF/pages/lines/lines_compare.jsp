@@ -12,10 +12,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
         <meta name="description" content="">
         <meta name="author" content="">
-        <meta name="keywords" content="Bearings compare">
+        <meta name="keywords" content="Lines compare">
         <meta name="robots" content="all">
 
-        <title>Bearings compare</title>
+        <title>Lines compare</title>
 
         <!-- Bootstrap Core CSS -->
         <link rel="stylesheet" href="../resources/assets/css/bootstrap.min.css">
@@ -92,11 +92,11 @@
                           <%@include file="/WEB-INF/pages/in/breadcrumb_item.jsp" %>
                         <!--</li>--> 
                         <li class="breadcrumb-item current">
-                            <a href="/bearings">Bearings</a>
+                            <a href="/lines">Lines</a>
                         </li> 
                         <li class="breadcrumb-item current gray">
                             <!--<a href="index.php?page=compaore">Product Comparison</a>-->
-                            <a href="#">Bearings Comparison</a>
+                            <a href="#">Lines Comparison</a>
                         </li>
                     </ul>
                 </li> 
@@ -112,7 +112,7 @@
         <div class="inner-xs">
             <div class="page-header">
                 <h2 class="page-title">
-                    Bearings Comparison            
+                    Lines Comparison            
                 </h2>
             </div>
         </div><!-- /.section-page-title -->
@@ -128,13 +128,13 @@
                     <tr>
                         <td>&nbsp;</td>
                        
-                   <c:forEach items="${listBearings}" var="item1">
+                   <c:forEach items="${listAutomatedLine}" var="item1">
                        
                         <td class="text-center">
 
                             <div class="image-wrap">
                                 
-                                <a data-product_id="39" href="/compare-bearings-del-${item1.id}" class="remove-link">
+                                <a data-product_id="39" href="/compare-lines-del-${item1.id}" class="remove-link">
                                     <i class="fa fa-times-circle">  </i>
                                 </a>
                                 
@@ -159,9 +159,9 @@
                     </tr>
                     
                     
-<!--                    <tr class="tr-add-to-cart">
+                    <tr class="tr-add-to-cart">
                         <td>&nbsp;</td>
-                    <c:forEach items="${listBearings}" var="item1">
+                    <c:forEach items="${listAutomatedLine}" var="item1">
                         <td class="text-center">
                             <div class="add-cart-button">
                                 <a class="le-button add_to_cart_button  product_type_simple" href="/add-product-to-customer-basket.htm?id=${item1.id}&model=${item1.model}">Add to cart</a>
@@ -169,7 +169,7 @@
                         </td>
                    </c:forEach>
 
-                    </tr>-->
+                    </tr>
                     
                     
                 </thead>
@@ -177,135 +177,25 @@
                 <tbody>
                                                                                                      
                   <tr class="comparison-item price">   
-                        <th><spring:message code="bearingscompare.manufacturer" text="Manufacturer"/></th>
-                     <c:forEach items="${listBearings}" var="item1">
+                        <th><spring:message code="linescompare.manufacturer" text="Manufacturer"/></th>
+                     <c:forEach items="${listAutomatedLine}" var="item1">
                         <td class="comparison-item-cell odd product_39">
-                            <span class="amount">${item1.manufacturer}</span>                        
+                            <span class="amount">${item1.manufacturerEn}</span>                        
                         </td>
                      </c:forEach>
 
                     </tr>
-                                                                                            
-                    <tr class="comparison-item description">
-                        <th><spring:message code="bearingscompare.type" text="Type"/></th>
-                                <c:forEach items="${listBearings}" var="item1">
-                                    <td class="comparison-item-cell odd product_39">
-                                        <p> ${item1.type} </p>
-                                    </td>
-                                </c:forEach>
-                        
-
-                    </tr>
-                        
-                    
+           
                     <tr class="comparison-item price">
-                        <th><spring:message code="bearingscompare.сountry" text="Country"/> </th>
-                     <c:forEach items="${listBearings}" var="item1">
+                        <th><spring:message code="linescompare.сountry" text="Country"/> </th>
+                     <c:forEach items="${listAutomatedLine}" var="item1">
                         <td class="comparison-item-cell odd product_39">
                             <!--<span class="amount">${item1.country}</span>-->                        
                             <p>${item1.country}</p>                        
                         </td>
                      </c:forEach>
-                    </tr>
-                    
-                    
-                    <tr class="comparison-item description">
-                        <th><spring:message code="bearingscompare.basic_dynamic_load_rating" text="Basic dynamic load rating, r/min"/></th>
-                                <c:forEach items="${listBearings}" var="item1">
-                                    <td class="comparison-item-cell odd product_39">
-                                        <p> ${item1.basicDymamicLoadRating} </p>
-                                    </td>
-                                </c:forEach>
-                    </tr>
-                                    
-                     <tr class="comparison-item price">
-                        <th><spring:message code="bearingscompare.basic_static_load_rating" text="Basic static load rating, r/min"/></th>
-                     <c:forEach items="${listBearings}" var="item1">
-                        <td class="comparison-item-cell odd product_39">                                           
-                            <p>${item1.basicStaticLoadRating}</p>                        
-                        </td>
-                     </c:forEach>
-                    </tr>                         
-                    
-                    
-                    <tr class="comparison-item description">
-                        <th><spring:message code="bearingscompare.fatique_load_limit" text="Fatique load limit"/></th>
-                                <c:forEach items="${listBearings}" var="item1">
-                                    <td class="comparison-item-cell odd product_39">
-                                        <p> ${item1.fatiqueLoadLimit} </p>
-                                    </td>
-                                </c:forEach>
-                    </tr> 
-                    
-                    <tr class="comparison-item price">
-                        <th><spring:message code="bearingscompare.reference_speed" text="Reference speed"/></th>
-                     <c:forEach items="${listBearings}" var="item1">
-                        <td class="comparison-item-cell odd product_39">                                           
-                            <p>${item1.referenceSpeed}</p>                        
-                        </td>
-                     </c:forEach>
-                    </tr>    
-                  
-                     <tr class="comparison-item description">
-                        <th><spring:message code="bearingscompare.limiting_speed" text="Limiting speed"/></th>
-                     <c:forEach items="${listBearings}" var="item1">
-                        <td class="comparison-item-cell odd product_39">                                           
-                            <p>${item1.limitingSpeed}</p>                        
-                        </td>
-                     </c:forEach>
-                    </tr>                         
-                    
-                       <tr class="comparison-item price">
-                        <th><spring:message code="bearingscompare.size" text="size"/></th>
-                                <c:forEach items="${listBearings}" var="item1">
-                                    <td class="comparison-item-cell odd product_39">
-                                        <p> ${item1.size}</p>
-                                    </td>
-                                </c:forEach>
-                    </tr>                                                                       
-
-                                   <tr class="comparison-item description">
-                                        <th><spring:message code="bearingscompare.weight" text="weight, kg"/></th>
-                                     <c:forEach items="${listBearings}" var="item1">
-                                        <td class="comparison-item-cell odd product_39">                                           
-                                            <p>${item1.weight}</p>                        
-                                        </td>
-                                     </c:forEach>
-                                    </tr>                         
-                    
-                       <tr class="comparison-item description">
-                        <th><spring:message code="bearingscompare.work_temperature" text="Work temperature"/> </th>
-                                <c:forEach items="${listBearings}" var="item1">
-                                    <td class="comparison-item-cell odd product_39">
-                                        <p> ${item1.temperatureWork} </p>
-                                    </td>
-                                </c:forEach>
-                       </tr>   
-                       
-                       
-<tr class="comparison-item description">
-<th><spring:message code="bearingscompare.guarantee" text="guarantee, years"/> </th>
-        <c:forEach items="${listBearings}" var="item1">
-            <td class="comparison-item-cell odd product_39">
-                <p> ${item1.guarantee} </p>
-            </td>
-        </c:forEach>
-</tr>   
-              
-           <!--                     <sec:authorize access="hasRole('ROLE_USER')">
-                                        <tr class="comparison-item description">
-                                        <th>Price (EXW)</th>
-                                            <c:forEach items="${compareCartVmc.items}" var="item1">
-                                                <td class="comparison-item-cell odd product_39">
-                                                    <p> ${item1.product.price} </p>
-                                                </td>
-                                            </c:forEach>
-                                        </tr>  
-                                </sec:authorize>-->
-                       
-                       
-                       
-                       
+                    </tr>                 
+             
                        
 <!--                    <tr class="comparison-item stock">
                         <th>Availability</th>

@@ -138,7 +138,7 @@ public class AutomatedLineServiceImpl implements AutomatedLineService {
     
     
     @Override @Transactional
-    public AutomatedLine getLineById(String id) {
+    public AutomatedLine getLineById(long id) {
         return  (AutomatedLine) hbmDAO.getById(AutomatedLine.class, id);
     }
     

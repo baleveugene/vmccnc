@@ -94,7 +94,7 @@
         <div class="col-xs-12 no-margin">
             
                 <!--<form action="checkout.htm" method="POST">-->
-<form:form action="${pageContext.request.contextPath}/checkout" method="POST" commandName="order">
+<form:form action="${pageContext.request.contextPath}/checkout" method="POST" name="order">
             <div class="billing-address">
                 <h2 class="border h1">billing address</h2>
                     <div class="row field-row">
@@ -150,36 +150,10 @@
                              <form:input  class="le-input"  path="phone" name="phone" type="text"/> <br/> <form:errors style="color:red;" path="phone" cssClass="error" ></form:errors>
                         </div>
                     </div><!-- /.field-row -->
-
-<!--                    <div class="row field-row">
-                        <div id="create-account" class="col-xs-12">
-                            <input  class="le-checkbox big" type="checkbox"  />
-                            <a class="simple-link bold" href="#">Create Account?</a> - you will receive email with temporary generated password after login you need to change it.
-                        </div>
-                    </div>-->
-                    <!-- /.field-row -->
-
-            
-            </div><!-- /.billing-address -->
-
-
-<!--            <section id="shipping-address">
-                <h2 class="border h1">shipping address</h2>
-                <form>
-                    <div class="row field-row">
-                        <div class="col-xs-12">
-                            <input  class="le-checkbox big" type="checkbox"  />
-                            <a class="simple-link bold" href="#">ship to different address?</a>
-                        </div>
-                    </div> /.field-row 
-                </form>
-            </section>-->
-            <!-- /#shipping-address -->
-
+                </div><!-- /.billing-address -->
 
             <section id="your-order">
-                <h2 class="border h1">your order</h2>
-                
+                <h2 class="border h1">your order</h2>              
                     <c:forEach var="item" items="${cart.items}">
                         <div class="row no-margin order-item">
                             <div class="col-xs-12 col-sm-1 no-margin">
@@ -194,44 +168,11 @@
 
                             <div class="col-xs-12 col-sm-2 no-margin">
                                 <sec:authorize access="hasRole('ROLE_USER')">
-                                <div class="price">${item.total} </div>
+                                    <div class="price">${item.total} </div>
                                 </sec:authorize>
                             </div>
                         </div><!-- /.order-item -->
                     </c:forEach>
-
-<!--                  <div class="row no-margin order-item">
-                        <div class="col-xs-12 col-sm-1 no-margin">
-                            <a href="#" class="qty">1 x</a>
-                        </div>
-
-                        <div class="col-xs-12 col-sm-9 ">
-                            <div class="title"><a href="#">white lumia 9001 </a></div>
-                            <div class="brand">sony</div>
-                        </div>
-
-                        <div class="col-xs-12 col-sm-2 no-margin">
-                            <div class="price">$2000.00</div>
-                        </div>
-                    </div> -->
-                    <!--/.order-item--> 
-<!--  
-                    <div class="row no-margin order-item">
-                        <div class="col-xs-12 col-sm-1 no-margin">
-                            <a href="#" class="qty">1 x</a>
-                        </div>
-
-                        <div class="col-xs-12 col-sm-9 ">
-                            <div class="title"><a href="#">white lumia 9001 </a></div>
-                            <div class="brand">sony</div>
-                        </div>
-
-                        <div class="col-xs-12 col-sm-2 no-margin">
-                            <div class="price">$2000.00</div>
-                        </div>
-                    </div>-->
-                    <!-- /.order-item -->
-              
             </section><!-- /#your-order -->
 
             <div id="total-area" class="row no-margin">
@@ -240,8 +181,8 @@
                         <ul class="tabled-data inverse-bold no-border">
                             <li>
                                 <label>cart subtotal</label>
-                            <sec:authorize access="hasRole('ROLE_USER')">
-                                <div class="value ">${cart.subtotal}</div>
+                                <sec:authorize access="hasRole('ROLE_USER')">
+                                    <div class="value ">${cart.subtotal}</div>
                                 </sec:authorize>
                             </li>
                             <li>

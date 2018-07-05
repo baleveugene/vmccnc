@@ -18,7 +18,7 @@ public interface AutomatedLineService {
  
     public void uploadImagesLine(String path, MultipartFile[] images);
 //    public Wesold getWesold(int id);
-    public AutomatedLine getLineById(String id);
+    public AutomatedLine getLineById(long id);
     public AutomatedLine getLineByUrl(String url);
     
     public List<AutomatedLine> getListLinesByIds(String ids);

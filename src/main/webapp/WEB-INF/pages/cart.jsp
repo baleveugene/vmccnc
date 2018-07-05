@@ -132,7 +132,7 @@
                               <form>
             <a class="minus" href="#reduce" onclick="window.location.assign('/updatequantity?id=${item.product.id}&model=${item.product.model}&quantity=${item.quantity-1}');"></a>
                                 <!--<a class="minus" href="#reduce"></a>-->
-            <input name="quantity" readonly="readonly" type="text"  value="${item.quantity}" /> </a> 
+            <input name="quantity" readonly="readonly" type="text"  value="${item.quantity}" /> 
         <!--<input name="quantity" readonly="readonly" type="text" value="${item.quantity}" />-->
                                 <!--<a class="plus" href="#add"></a>-->
             <a class="plus" href="#add"  onclick="window.location.assign('/updatequantity?id=${item.product.id}&model=${item.product.model}&quantity=${item.quantity+1}');"></a> 
