@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
-//@Service 
+@Service 
 public class CompareCartAutomatedLine {
     
    List<CompareCartItemAutomatedLine> items;
@@ -25,7 +25,7 @@ int numberOfItems;
                         for (CompareCartItemAutomatedLine scItem : items) {
                         if (scItem.getProduct().getId()==(automatedLine.getId())) {
                         newItem = false;
-//                        scItem.incrementQuantity();
+                        scItem.incrementQuantity();
                 }
                 }
 

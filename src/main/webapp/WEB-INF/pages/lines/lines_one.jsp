@@ -15,7 +15,7 @@
         <meta name="keywords" content="${vmc.model} for sale, ${vmc.model}, ${vmc.model} price, ${vmc.model} buy">
         <meta name="robots" content="all">
 
-         <title> ${lines.modelEn} for sale | VMC & HMC </title>
+         <title> ${automatedLine.modelEn} for sale | VMC & HMC </title>
   
 
         <!-- Bootstrap Core CSS -->
@@ -67,10 +67,10 @@
 <!-- ============================================================= TOP NAVIGATION : END ============================================================= -->       <!-- ============================================================= HEADER ============================================================= -->
 <%@include file="/WEB-INF/pages/in/header.jsp" %>
 <!-- ============================================================= HEADER : END ============================================================= --><div class="animate-dropdown"><!-- ========================================= BREADCRUMB ========================================= -->
-
     
     <div id="top-mega-nav">
     <div class="container">
+        <c:set var="localeCode" value="${pageContext.response.locale}" />
         <nav>
             <ul class="inline">
                 <!--<li class="dropdown le-dropdown">-->
@@ -85,11 +85,25 @@
                         <!--</li>--> 
   
                              <li class="breadcrumb-item">
-                            <a href="/lines?type=${automatedLine.typeEn}">Line - ${automatedLine.typeEn}</a>
+                            <a href="/lines?type=${automatedLine.typeEn}">
+                                <c:if test="${localeCode == 'en'}">
+                                    ${automatedLine.typeEn}
+                                </c:if>
+                                <c:if test="${localeCode == 'russia'}">
+                                    ${automatedLine.typeRu}
+                                </c:if>                                
+                            </a>
                         </li> 
                         
                        <li class="breadcrumb-item current">
-                            <a href="">${automatedLine.manufacturerEn} - ${automatedLine.modelEn}</a>
+                            <a href="">
+                                <c:if test="${localeCode == 'en'}">
+                                    ${automatedLine.manufacturerEn} - ${automatedLine.modelEn}
+                                </c:if>
+                                <c:if test="${localeCode == 'russia'}">
+                                    ${automatedLine.manufacturerRu} - ${automatedLine.modelRu}
+                                </c:if> 
+                            </a>
                         </li> 
                     </ul>
                 </li><!-- /.breadcrumb-nav-holder --> 
@@ -162,24 +176,62 @@
         <div class="no-margin col-xs-12 col-sm-7 body-holder">
     <div class="body">
         <!--<div class="star-holder inline"><div class="star" data-score="4"></div></div>-->
-        <div class="availability"><label>Availability:</label><span class="available">  in stock</span></div>
-
-        <div class="title"><a href="#">${automatedLine.modelEn}</a></div>
-        <div class="brand">  Type: ${automatedLine.typeEn}</div>
+        <div class="availability">
+            <label><spring:message code="linesone.availability" text="Availability" />:</label>
+            <span class="available">  
+                <spring:message code="linesone.instock" text="in stock" />
+            </span>
+        </div>
+        <div class="title">
+            <a href="#">
+                <c:if test="${localeCode == 'en'}">
+                    ${automatedLine.modelEn}
+                </c:if>
+                <c:if test="${localeCode == 'russia'}">
+                    ${automatedLine.modelRu}
+                </c:if>                
+            </a>
+        </div>
+        
+        <div class="brand">           
+            <c:if test="${localeCode == 'en'}">
+                <spring:message code="linesall.type" text="Type" />:
+                ${automatedLine.typeEn}<br>
+                <spring:message code="linesall.manufacturer" text="Manufacturer" />:
+                ${automatedLine.manufacturerEn}<br>
+                <spring:message code="linesall.workpiece_short" text="Workpiece" />:
+                ${automatedLine.workpieceEn}               
+            </c:if>
+            <c:if test="${localeCode == 'russia'}">
+                <spring:message code="linesall.type" text="Type" />:
+                ${automatedLine.typeRu}<br>
+                <spring:message code="linesall.manufacturer" text="Manufacturer" />:
+                ${automatedLine.manufacturerRu}<br>
+                <spring:message code="linesall.workpiece_short" text="Workpiece" />:
+                ${automatedLine.workpieceRu}
+            </c:if>
+        </div>                             
 
         <div class="social-row">
             <span class="st_facebook_hcount"></span>
             <span class="st_twitter_hcount"></span>
             <span class="st_pinterest_hcount"></span>
         </div>
-
+<!--
         <div class="buttons-holder">
-            <!--<a class="btn-add-to-wishlist" href="add-product-to-wish-list?id=${bearingsIndustrial.id}">add to wishlist</a>-->
-            <!--<a class="btn-add-to-compare" href="/compare/vmc/add?id=${bearingsIndustrial.id}">add to compare list</a>-->
+            <a class="btn-add-to-wishlist" href="add-product-to-wish-list?id=${automatedLine.id}">add to wishlist</a>
+            <a class="btn-add-to-compare" href="/compare/line/add?id=${automatedLine.id}">add to compare list</a>
         </div>
-
+-->
         <div class="excerpt">
-            <p>${automatedLine.descriptionEn}</p>
+            <p>
+                <c:if test="${localeCode == 'en'}">
+                    ${automatedLine.descriptionEn}
+                </c:if>
+                <c:if test="${localeCode == 'russia'}">
+                    ${automatedLine.descriptionRu}
+                </c:if>     
+            </p>
         </div>
         
         
@@ -231,7 +283,7 @@
                     <p>${vmc.info1en}</p>
     <c:if test="${!empty listVideos}">
         <c:forEach items="${listVideos}" var="video" step="1" varStatus="i"> 
-            <iframe width="480" height="360" src="https://youtube.com/embed/${video.name}" frameborder="0" allow="autoplay;encrypted-media" allowfullscreen></iframe>              
+            <iframe width="720" height="540" src="https://youtube.com/embed/${video.name}" frameborder="0" allow="autoplay;encrypted-media" allowfullscreen></iframe>              
         </c:forEach>
     </c:if>  
        
@@ -239,46 +291,91 @@
                 </div> 
              
                 <div class="tab-pane" id="additional-info">
-                    <ul class="tabled-data">
-             
+                    <ul class="tabled-data">             
                         <li>
                             <label><spring:message code="linescompare.type" text="type" /></label>
-                            <div class="value">${automatedLine.typeEn}</div>
-                            
+                            <div class="value">
+                                <c:if test="${localeCode == 'en'}">
+                                    ${automatedLine.typeEn}
+                                </c:if>
+                                <c:if test="${localeCode == 'russia'}">
+                                    ${automatedLine.typeRu}
+                                </c:if>
+                           </div>
                         </li>
                         <li>
-                            <label><spring:message code="bearingscompare.manufacturer" text="Manufacturer" /></label>
-                            <div class="value">${automatedLine.manufacturerEn}</div>
-                            
+                            <label><spring:message code="linescompare.manufacturer" text="Manufacturer" /></label>
+                            <div class="value">
+                                <c:if test="${localeCode == 'en'}">
+                                    ${automatedLine.manufacturerEn}
+                                </c:if>
+                                <c:if test="${localeCode == 'russia'}">
+                                    ${automatedLine.manufacturerRu}
+                                </c:if>
+                           </div>                           
                         </li>
                         <li>
-                            <label><spring:message code="bearingscompare.country" text="Country" /></label>
-                            <div class="value">${automatedLine.countryEn}</div>
+                            <label><spring:message code="linescompare.country" text="Country" /></label>
+                            <div class="value">
+                                <c:if test="${localeCode == 'en'}">
+                                    ${automatedLine.countryEn}
+                                </c:if>
+                                <c:if test="${localeCode == 'russia'}">
+                                    ${automatedLine.countryRu}
+                                </c:if>
+                           </div>                            
                         </li>
                         <li>
                             <label><spring:message code="linescompare.cnc" text="CNC"/></label>
-                            <div class="value">${automatedLine.cncEn}</div>
+                            <div class="value">
+                                <c:if test="${localeCode == 'en'}">
+                                    ${automatedLine.cncEn}
+                                </c:if>
+                                <c:if test="${localeCode == 'russia'}">
+                                    ${automatedLine.cncRu}
+                                </c:if>                               
+                            </div>
                         </li>
                         <li>
                             <label><spring:message code="linescompare.cncFull" text="CNC full"/></label>
-                            <div class="value">${automatedLine.cncFullEn}</div>
-                        </li>
-                        
+                            <div class="value">
+                                <c:if test="${localeCode == 'en'}">
+                                    ${automatedLine.cncFullEn}
+                                </c:if>
+                                <c:if test="${localeCode == 'russia'}">
+                                    ${automatedLine.cncFullRu}
+                                </c:if>                                
+                            </div>
+                        </li>                        
                         <li>
                             <label><spring:message code="linescompare.workpiece" text="Workpiece"/></label>
-                            <div class="value">${automatedLine.workpieceEn}</div>
-                        </li>
-                        
+                            <div class="value">
+                                <c:if test="${localeCode == 'en'}">
+                                    ${automatedLine.workpieceEn}
+                                </c:if>
+                                <c:if test="${localeCode == 'russia'}">
+                                    ${automatedLine.workpieceRu}
+                                </c:if>                                
+                            </div>
+                        </li>                        
                         <li>
-                            <label><spring:message code="linescompare.workpieceWeight" text="Workpiece weight"/></label>
-                            <div class="value">${automatedLine.workpieceWeight}</div>
-                        </li>
-                        
+                            <label><spring:message code="linescompare.workpiece_weight" text="Workpiece weight"/></label>
+                            <div class="value">                               
+                                ${automatedLine.workpieceWeight}
+                            </div>
+                        </li>                       
                         <li>
                             <label><spring:message code="linescompare.size" text="Size"/></label>
-                            <div class="value">${automatedLine.length}x${automatedLine.width}</div>
+                            <div class="value">
+                                ${automatedLine.length}x${automatedLine.width}
+                            </div>
                         </li>
-                                   
+                        <li>
+                            <label><spring:message code="linescompare.weight" text="Weight"/></label>
+                            <div class="value">
+                                ${automatedLine.weight}
+                            </div>
+                        </li>    
                     </ul><!-- /.tabled-data -->
 
 <!--                    <div class="meta-row">

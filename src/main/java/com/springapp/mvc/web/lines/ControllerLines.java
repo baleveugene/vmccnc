@@ -1,7 +1,6 @@
 package com.springapp.mvc.web.lines;
 
 import com.springapp.mvc.domain.lines.AutomatedLine;
-import com.springapp.mvc.domain.lines.AutomatedLineWorkpiece;
 import com.springapp.mvc.service.interfaces.AutomatedLineService;
 import com.springapp.mvc.util.pdf.AutomatedLinePdf;
 import com.springapp.mvc.domain.message.Message;
@@ -24,19 +23,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-
 @Controller
 public class ControllerLines extends PrintInFile {
 
     @Autowired  AutomatedLineService automatedLineService;
- 
     
     @RequestMapping(value="/lines", method = RequestMethod.GET)
-    public ModelAndView lines_all(  
-                                    @RequestParam(value = "workpiece", required = false) String workpiece,
-                                    @RequestParam(value = "lang", defaultValue = "en") String lang,
-                                    HttpSession session ) {
-        
+    public ModelAndView lines_all(@RequestParam(value = "workpiece", required = false) String workpiece,
+                                  HttpSession session ) {        
         ModelAndView mv = new ModelAndView("lines/lines_all"); 
         if(workpiece==null) {
             mv.addObject("listAutomatedLine", automatedLineService.getListAutomatedLine());
@@ -47,8 +41,6 @@ public class ControllerLines extends PrintInFile {
         
         mv.addObject("workpiece", workpiece); // it is need for feed back !!!!!!
         
-        session.setAttribute("lang", lang);
-         
         mv.addObject("message", new Message()); // it is need for feed back !!!!!!
         session.setAttribute("search", "lines"); // for search
 

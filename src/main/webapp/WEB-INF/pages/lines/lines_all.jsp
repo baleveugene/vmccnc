@@ -84,7 +84,7 @@
                         <!--</li>--> 
   
                        <li class="breadcrumb-item current">
-                            <a href="#">Automated Lines</a>
+                            <a href="#"><spring:message code="linesall.title" text="Automated Lines" /></a>
                         </li> 
                     </ul>
                 </li><!-- /.breadcrumb-nav-holder -->
@@ -96,13 +96,14 @@
 </div><!-- /#top-mega-nav -->
 <!-- ========================================= BREADCRUMB : END ========================================= --></div>     <section id="category-grid">
     <div class="container">
-        
+    <c:set var="localeCode" value="${pageContext.response.locale}" />    
         <!-- ========================================= SIDEBAR ========================================= -->
         <div class="col-xs-12 col-sm-3 no-margin sidebar narrow">
 
 
             <!-- ========================================= PRODUCT FILTER ========================================= -->
-<div class="widget">
+            
+            <div class="widget">
     <h1><spring:message code="linesall.productfilters" text="Product Filters" /></h1>
     <div class="body bordered"> <!-- body -->
         
@@ -118,14 +119,14 @@
                                      <option value='' ><spring:message code="linesall.workpiece_not_selected" text="Workpiece not selected" /></option> 
                                           <!--<option disabled>Select axes</option>-->  
                                           <c:forEach items="${listLineWorkpiece}" var="aa">
-                                              <c:if test="${sessionScope.lang == 'en' || sessionScope.lang == ''}">
+                                              <c:if test="${localeCode == 'en'}">
                                               <option value="${aa.workpieceEn}"
                                                          <c:if test="${aa.workpieceEn == workpieceEn}">selected</c:if>                 
                                                   > ${aa.workpieceEn}(${aa.num}) </option>  
                                               </c:if>
-                                              <c:if test="${sessionScope.lang == 'russia'}">
-                                              <option value="${aa.workpieceRu}"
-                                                         <c:if test="${aa.workpieceRu == workpieceRu}">selected</c:if>                 
+                                              <c:if test="${localeCode == 'russia'}">
+                                              <option value="${aa.workpieceEn}"
+                                                         <c:if test="${aa.workpieceEn == workpieceEn}">selected</c:if>                 
                                                   > ${aa.workpieceRu}(${aa.num}) </option>  
                                               </c:if>                           
                                           </c:forEach>
@@ -178,7 +179,7 @@
                     <div class="row no-margin">
                         
                         
-            <c:forEach items="${listAutomatedLine}" var="line" varStatus="i"> 
+            <c:forEach items="${listAutomatedLine}" var="line"> 
                         <div class="col-xs-12 col-sm-4 no-margin product-item-holder hover">
                             <div class="product-item">
                             
@@ -196,10 +197,29 @@
                                     <div class="title">
                                         <a href="/line-${line.url}"> ${line.modelEn}  </a>
                                     </div>
-                                    <div class="brand"><spring:message code="linesall.type" text="Type" />:  ${line.typeEn}</div>
-
-                                    <div class="brand"> 
-                                        ${line.workpieceEn} 
+                                    <div class="brand"><spring:message code="linesall.type" text="Type" />:
+                                        <c:if test="${localeCode == 'en'}">
+                                        ${line.typeEn}
+                                        </c:if>
+                                        <c:if test="${localeCode == 'russia'}">
+                                        ${line.typeRu}
+                                        </c:if>
+                                    </div>
+                                    <div class="brand"><spring:message code="linesall.manufacturer" text="Manufacturer" />:
+                                        <c:if test="${localeCode == 'en'}">
+                                        ${line.manufacturerEn}
+                                        </c:if>
+                                        <c:if test="${localeCode == 'russia'}">
+                                        ${line.manufacturerRu}
+                                        </c:if>
+                                    </div>                             
+                                    <div class="brand"><spring:message code="linesall.workpiece_short" text="Workpiece" />: 
+                                        <c:if test="${localeCode == 'en'}">
+                                        ${line.workpieceEn}
+                                        </c:if>
+                                        <c:if test="${localeCode == 'russia'}">
+                                        ${line.workpieceRu}
+                                        </c:if>            
                                     </div>
 
                                 </div>
@@ -221,7 +241,7 @@
                                 
                             </div><!-- /.product-item -->
                         </div><!-- /.product-item-holder -->
-                                </c:forEach>
+                </c:forEach>
                         
                         
 
@@ -233,7 +253,7 @@
                 <div class="inner-xs">
                     <div class="page-header">
                         <h2 class="page-title">
-                            <spring:message code="lines.noMachines" text="There are no automated lines with such parameters<br/>Please, change the filter parameters."/>
+                            <spring:message code="linesall.nolines" text="There are no automated lines with such parameters<br/>Please, change the filter parameters."/>
                         </h2>
                     </div>
                 </div>
@@ -284,16 +304,17 @@
                 <div class="products-list">
                     
      <c:forEach items="${listAutomatedLine}" var="line">
-
         <div class="product-item product-item-holder">
             <!--<div class="ribbon red"><span>sale</span></div>--> 
             <div class="ribbon blue"><span>new!</span></div>
             <div class="row">
                 <div class="no-margin col-xs-12 col-sm-4 image-holder">
                     <div class="image">
-                        <a href="/lines-${line.url}">
-                        <img alt="${line.modelEn}" src="../resources/assets/images/blank.gif" 
-                             data-echo="../resources/assets/images/products/${line.photos[i.index].name}"  width="246" height="186"/>
+                        <a href="/line-${line.url}">
+                            <c:forEach var="photo" items="${line.photos}" begin="0" end="0">
+                                <img alt="${line.modelEn}" src="../resources/assets/images/blank.gif" 
+                                data-echo="../resources/assets/images/products/${photo.name}" width="246" height="186" />
+                            </c:forEach>
                         </a>
                     </div>
                 </div><!-- /.image-holder -->
@@ -301,10 +322,25 @@
                     <div class="body">
                         <div class="label-discount green">-10% sale</div>
                         <div class="title">
-                            <a href="/lines-${line.url}">${line.manufacturerEn} ${line.modelEn}</a>
+                            <a href="/line-${line.url}">
+                                <c:if test="${localeCode == 'en'}">
+                                    ${line.manufacturerEn} ${line.modelEn}
+                                </c:if>
+                                <c:if test="${localeCode == 'russia'}">
+                                    ${line.manufacturerRu} ${line.modelRu}
+                                </c:if>                                
+                            </a>
                         </div>
-                            <div class="brand">${line.yearOfManufacture}/ location: ${line.machineLocationEn}
-                            <br> L*B: ${line.length}x${line.width}
+                            <div class="brand">
+                                <spring:message code="linesall.yearofmanuf" text="year"/>: ${line.yearOfManufacture}/
+                                <spring:message code="linesall.location" text="location"/> 
+                                <c:if test="${localeCode == 'en'}">
+                                    ${line.machineLocationEn}
+                                </c:if>
+                                <c:if test="${localeCode == 'russia'}">
+                                    ${line.machineLocationRu}
+                                </c:if>                          
+                                <br> L*B: ${line.length}x${line.width}
                             </div>
                             <!--<div class="brand"></div>-->
                         <div class="excerpt">
@@ -347,7 +383,7 @@
                         
                         <div class="col-xs-12 col-sm-6">
                             <div class="result-counter">
-                                Showing <span>1-9?</span> of <span>${itemsNum}</span> results
+                                Showing <span>1-9</span> of <span>${itemsNum}</span> results
                             </div>
                         </div>
 

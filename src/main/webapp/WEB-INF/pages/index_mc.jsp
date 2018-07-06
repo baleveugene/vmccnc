@@ -321,7 +321,9 @@
 <!--                    <div class="small fadeInDown-2">
                     </div>-->
                        <div class="button-holder fadeInDown-3">
-                        <a href="/vmc" class="big le-button ">View all vertical CNC machines</a>
+                        <a href="/vmc" class="big le-button ">
+                            <spring:message code="index.viewallcnc" text="View all vertical CNC machines" />
+                        </a>
                     </div>
                 </div>
             </div>
@@ -342,7 +344,9 @@
 <!--                    <div class="small fadeInDown-2">
                     </div>-->
                        <div class="button-holder fadeInDown-3">
-                        <a href="/lathe" class="big le-button ">View all CNC lathes</a>
+                        <a href="/lathe" class="big le-button ">View all CNC lathes
+                            <spring:message code="index.viewallcnc" text="View all CNC lathes" />
+                        </a>
                     </div>
                 </div>
             </div>
@@ -476,7 +480,7 @@
         <div class="tab-holder">
              <!--Nav tabs--> 
             <ul class="nav nav-tabs" >
-                <li class="active"><a href="#featured" data-toggle="tab"> <spring:message code="index.randomvmc" text="Random VMC" /> </a></li>
+                <li class="active"><a href="#featured" data-toggle="tab"> <spring:message code="index.randommachines" text="Random VMC" /> </a></li>
                <!--<li ><a href="#new-arrivals" data-toggle="tab"><spring:message code="index.newarrivals" text="new arrivals" /></a></li>-->
    <!--              <li><a href="#top-sales" data-toggle="tab">top sales</a></li>-->
             </ul>

@@ -57,7 +57,7 @@
 <div class="search-area">
     <form action="/searchmachines" method="GET">
         <div class="control-group">
-            <input class="search-field" name="search" placeholder="<spring:message code="header.searchformodelortype" text="Search by model for " /> ${search} " />
+            <input class="search-field" name="search" placeholder="<spring:message code="header.searchformodelortype" text="Search by model" />" />
 
 <!--            <ul class="categories-filter animate-dropdown">
                 <li class="dropdown">

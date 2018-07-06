@@ -110,12 +110,12 @@ public class AutomatedLineServiceImpl implements AutomatedLineService {
     }          
     
     @Override @Transactional
-    public List<AutomatedLine> getListAutomatedLine(String workpiece) {        
+    public List<AutomatedLine> getListAutomatedLine(String workpiece) {
         List<Criterion> restrictions = new ArrayList();
         if (workpiece != null && !workpiece.equals("")){
             restrictions.add(Restrictions.eq("workpieceEn", workpiece));                  
         }
-        return  hbmDAO.getAll(AutomatedLineWorkpiece.class, restrictions);
+        return  hbmDAO.getAll(AutomatedLine.class, restrictions);
     }   
    
     @Override @Transactional
