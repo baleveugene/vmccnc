@@ -26,8 +26,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "BearingsIndustrialCountry.findAll", query = "SELECT l FROM BearingsIndustrialCountry l"),
-    @NamedQuery(name = "BearingsIndustrialCountry.findByCountry", query = "SELECT l FROM BearingsIndustrialCountry l WHERE l.country = :country"),
- //   @NamedQuery(name = "BearingsIndustrialCountry.findByCountryRu", query = "SELECT l FROM BearingsIndustrialCountry l WHERE l.countryRu = :countryRu"),
+    @NamedQuery(name = "BearingsIndustrialCountry.findByCountryEn", query = "SELECT l FROM BearingsIndustrialCountry l WHERE l.countryEn = :countryEn"),
+    @NamedQuery(name = "BearingsIndustrialCountry.findByCountryRu", query = "SELECT l FROM BearingsIndustrialCountry l WHERE l.countryRu = :countryRu"),
     @NamedQuery(name = "BearingsIndustrialCountry.findByNum", query = "SELECT l FROM BearingsIndustrialCountry l WHERE l.num = :num")})
 public class BearingsIndustrialCountry implements Serializable {
 
@@ -36,13 +36,13 @@ public class BearingsIndustrialCountry implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
-    @Column(name = "country")
-    private String country;
-/*    @Basic(optional = false)
+    @Column(name = "country_en")
+    private String countryEn;
+    @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "country_ru")
-    private String countryRu; */
+    private String countryRu;
     @Column(name = "num")
     private Integer num;
 
@@ -50,26 +50,26 @@ public class BearingsIndustrialCountry implements Serializable {
     }
 
     public BearingsIndustrialCountry(String countryEn) {
-        this.country = countryEn;
+        this.countryEn = countryEn;
    //     this.countryRu = countryRu;
     }
 
-    public String getCountry() {
-        return country;
+    public String getCountryEn() {
+        return countryEn;
     }
 
-    public void setCountry(String countryEn) {
-        this.country = countryEn;
+    public void setCountryEn(String countryEn) {
+        this.countryEn = countryEn;
     }
     
-/*    public String getCountryRu() {
+    public String getCountryRu() {
         return countryRu;
     }
 
     public void setCountryRu(String countryRu) {
         this.countryRu = countryRu;
     }
-*/
+
     public Integer getNum() {
         return num;
     }
@@ -81,7 +81,7 @@ public class BearingsIndustrialCountry implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (country != null ? country.hashCode() : 0);
+        hash += (countryEn != null ? countryEn.hashCode() : 0);
         return hash;
     }
 
@@ -92,7 +92,7 @@ public class BearingsIndustrialCountry implements Serializable {
             return false;
         }
         BearingsIndustrialCountry other = (BearingsIndustrialCountry) object;
-        if ((this.country == null && other.country != null) || (this.country != null && !this.country.equals(other.country))) {
+        if ((this.countryEn == null && other.countryEn != null) || (this.countryEn != null && !this.countryEn.equals(other.countryEn))) {
             return false;
         }
         return true;
@@ -100,7 +100,7 @@ public class BearingsIndustrialCountry implements Serializable {
 
     @Override
     public String toString() {
-        return "com.springapp.bearings.domain.BearingsIndustrialCountry[ country=" + country + " ]";
+        return "com.springapp.mvc.domain.bearings.BearingsIndustrialCountry[ country=" + countryEn + " ]";
     }
     
 }

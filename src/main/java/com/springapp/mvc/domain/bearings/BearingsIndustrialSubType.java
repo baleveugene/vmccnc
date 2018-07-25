@@ -17,7 +17,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "BearingsIndustrialSubType.findAll", query = "SELECT l FROM BearingsIndustrialSubType l"),
-    @NamedQuery(name = "BearingsIndustrialSubType.findBySubType", query = "SELECT l FROM BearingsIndustrialSubType l WHERE l.subType = :subType"),
+    @NamedQuery(name = "BearingsIndustrialSubType.findBySubTypeEn", query = "SELECT l FROM BearingsIndustrialSubType l WHERE l.subTypeEn = :subTypeEn"),
+    @NamedQuery(name = "BearingsIndustrialSubType.findBySubType", query = "SELECT l FROM BearingsIndustrialSubType l WHERE l.subTypeRu = :subTypeRu"),
     @NamedQuery(name = "BearingsIndustrialSubType.findByNum", query = "SELECT l FROM BearingsIndustrialSubType l WHERE l.num = :num")})
 public class BearingsIndustrialSubType implements Serializable {
 
@@ -26,8 +27,13 @@ public class BearingsIndustrialSubType implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
-    @Column(name = "subtype")
-    private String subType;
+    @Column(name = "subtype_en")
+    private String subTypeEn;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
+    @Column(name = "subtype_ru")
+    private String subTypeRu;
     @Column(name = "num")
     private Integer num;
 
@@ -35,15 +41,23 @@ public class BearingsIndustrialSubType implements Serializable {
     }
 
     public BearingsIndustrialSubType(String subType) {
-        this.subType = subType;
+        this.subTypeEn = subType;
     }
 
-    public String getSubType() {
-        return subType;
+    public String getSubTypeEn() {
+        return subTypeEn;
     }
 
-    public void setSubType(String subType) {
-        this.subType = subType;
+    public void setSubTypeEn(String subType) {
+        this.subTypeEn = subType;
+    }
+    
+    public String getSubTypeRu() {
+        return subTypeRu;
+    }
+
+    public void setSubTypeRu(String subType) {
+        this.subTypeRu = subType;
     }
 
     public Integer getNum() {
@@ -57,7 +71,7 @@ public class BearingsIndustrialSubType implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (subType != null ? subType.hashCode() : 0);
+        hash += (subTypeEn != null ? subTypeEn.hashCode() : 0);
         return hash;
     }
 
@@ -68,7 +82,7 @@ public class BearingsIndustrialSubType implements Serializable {
             return false;
         }
         BearingsIndustrialSubType other = (BearingsIndustrialSubType) object;
-        if ((this.subType == null && other.subType != null) || (this.subType != null && !this.subType.equals(other.subType))) {
+        if ((this.subTypeEn == null && other.subTypeEn != null) || (this.subTypeEn != null && !this.subTypeEn.equals(other.subTypeEn))) {
             return false;
         }
         return true;
@@ -76,7 +90,7 @@ public class BearingsIndustrialSubType implements Serializable {
 
     @Override
     public String toString() {
-        return "com.springapp.bearings.domain.BearingsIndustrialSubType[ subType=" + subType + " ]";
+        return "com.springapp.mvc.domain.bearings.BearingsIndustrialSubType[ subType=" + subTypeEn + " ]";
     }
     
 }

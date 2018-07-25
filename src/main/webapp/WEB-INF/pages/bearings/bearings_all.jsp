@@ -70,6 +70,7 @@
     
     <div id="top-mega-nav">
     <div class="container">
+        <c:set var="localeCode" value="${pageContext.response.locale}" />
         <nav>
             <ul class="inline">
                 <!--<li class="dropdown le-dropdown">-->
@@ -84,7 +85,7 @@
                         <!--</li>--> 
   
                        <li class="breadcrumb-item current">
-                            <a href="#">Bearings</a>
+                            <a href="#"><spring:message code="bearingsall.title" text="Bearings" /></a>
                         </li> 
                     </ul>
                 </li><!-- /.breadcrumb-nav-holder -->
@@ -113,15 +114,24 @@
                 <div class="category-filter">
                     <h2><spring:message code="bearingsall.type" text="Type" /></h2>
                     <ul>
-                        <c:forEach items="${listBearingsType}" var="types">
-                            <li>
-                                           <input class="le-checkbox" 
-                                           <c:forTokens items="${type}" delims=" " var="role">
-                                                 <c:if test="${types.type==role}">checked</c:if> 
-                                            </c:forTokens>
-                                     name="type" type="checkbox" value="${types.type}"/>
-                                
-                                <label>${types.type} (${types.num}) </label>
+                        <c:forEach items="${listBearingsType}" var="type">
+                            <li>                               
+                                <c:if test="${localeCode == 'en'}">
+                                    <input class="le-checkbox"
+                                    <c:forTokens items="${type}" delims=" " var="role">
+                                        <c:if test="${type.typeEn==role}">checked</c:if> 
+                                    </c:forTokens>
+                                    name="type" type="checkbox" value="${type.typeEn}"/>                                
+                                    <label>${type.typeEn} (${type.num}) </label>
+                                </c:if>
+                                <c:if test="${localeCode == 'russia'}">
+                                    <input class="le-checkbox"
+                                    <c:forTokens items="${type}" delims=" " var="role">
+                                        <c:if test="${type.typeRu==role}">checked</c:if> 
+                                    </c:forTokens>
+                                    name="type" type="checkbox" value="${type.typeRu}"/>                                
+                                    <label>${type.typeRu} (${type.num}) </label>
+                                </c:if>
                             </li>
                         </c:forEach>
                     </ul>
@@ -133,15 +143,24 @@
                 <div class="category-filter">
                     <h2><spring:message code="bearingsall.subtype" text="Subtype" /></h2>
                     <ul>
-                        <c:forEach items="${listBearingsSubType}" var="subtypes">
-                            <li>
-                                           <input class="le-checkbox" 
-                                           <c:forTokens items="${subtype}" delims=" " var="role">
-                                                 <c:if test="${subtypes.subType==role}">checked</c:if> 
-                                            </c:forTokens>
-                                     name="subtype" type="checkbox" value="${subtypes.subType}"/>
-                                
-                                <label>${subtypes.subType} (${subtypes.num}) </label>
+                        <c:forEach items="${listBearingsSubType}" var="subtype">
+                            <li>                                                              
+                                <c:if test="${localeCode == 'en'}">
+                                    <input class="le-checkbox"
+                                    <c:forTokens items="${subtype}" delims=" " var="role">
+                                        <c:if test="${subtype.subTypeEn==role}">checked</c:if> 
+                                    </c:forTokens>
+                                    name="subtype" type="checkbox" value="${subtype.subTypeEn}"/>                                
+                                    <label>${subtype.subTypeEn} (${subtype.num}) </label>
+                                </c:if>
+                                <c:if test="${localeCode == 'russia'}">
+                                    <input class="le-checkbox"
+                                    <c:forTokens items="${subtype}" delims=" " var="role">
+                                        <c:if test="${subtype.subTypeRu==role}">checked</c:if> 
+                                    </c:forTokens>
+                                    name="subtype" type="checkbox" value="${subtype.subTypeRu}"/>                                
+                                    <label>${subtype.subTypeRu} (${subtype.num}) </label>
+                                </c:if>
                             </li>
                         </c:forEach>
                     </ul>
@@ -158,9 +177,16 @@
                                      <option value='' ><spring:message code="bearingsall.manufacturer_not_selected" text="Manufacturer not selected" /></option> 
                                           <!--<option disabled>Select axes</option>-->  
                                           <c:forEach items="${listBearingsManufacturer}" var="aa">
-                                              <option value="${aa.manufacturer}"
-                                                         <c:if test="${aa.manufacturer == manufacturer}">selected</c:if>                 
-                                                  > ${aa.manufacturer} (${aa.num}) </option>
+                                              <c:if test="${localeCode == 'en'}">
+                                              <option value="${aa.manufacturerEn}"
+                                                         <c:if test="${aa.manufacturerEn == manufacturerEn}">selected</c:if>                 
+                                                  > ${aa.manufacturerEn}(${aa.num}) </option>  
+                                              </c:if>
+                                              <c:if test="${localeCode == 'russia'}">
+                                              <option value="${aa.manufacturerEn}"
+                                                         <c:if test="${aa.manufacturerEn == manufacturerEn}">selected</c:if>                 
+                                                  > ${aa.manufacturerRu}(${aa.num}) </option>  
+                                              </c:if>                                                   
                                           </c:forEach>
                                  </select>
                             </div>
@@ -177,9 +203,16 @@
                                      <option value='' ><spring:message code="bearingsall.country_not_selected" text="Country not selected" /></option> 
                                           <!--<option disabled>Select axes</option>-->  
                                           <c:forEach items="${listBearingsCountry}" var="aa">
-                                              <option value="${aa.country}"
-                                                         <c:if test="${aa.country == country}">selected</c:if>                 
-                                                  > ${aa.country} (${aa.num}) </option>
+                                              <c:if test="${localeCode == 'en'}">
+                                              <option value="${aa.countryEn}"
+                                                         <c:if test="${aa.countryEn == countryEn}">selected</c:if>                 
+                                                  > ${aa.countryEn}(${aa.num}) </option>  
+                                              </c:if>
+                                              <c:if test="${localeCode == 'russia'}">
+                                              <option value="${aa.countryEn}"
+                                                         <c:if test="${aa.countryEn == countryEn}">selected</c:if>                 
+                                                  > ${aa.countryRu}(${aa.num}) </option>  
+                                              </c:if>                                             
                                           </c:forEach>
                                  </select>
                             </div>
@@ -195,7 +228,7 @@
                                  <select name="innerDiameter">  
                                      <option value='' ><spring:message code="bearingsall.innerdiameter_not_selected" text="Inner Diameter not selected" /></option> 
                                           <!--<option disabled>Select axes</option>-->  
-                                          <c:forEach items="${listBearingsInnerDiameter}" var="aa">
+                                          <c:forEach items="${listBearingsInnerDiameter}" var="aa">                                             
                                               <option value="${aa.innerDiameter}"
                                                          <c:if test="${aa.innerDiameter == innerDiameter}">selected</c:if>                 
                                                   >${aa.innerDiameter}</option>
@@ -284,8 +317,8 @@
 
             <div class="grid-list-buttons">
                 <ul>
-                    <li class="grid-list-button-item active"><a data-toggle="tab" href="#grid-view"><i class="fa fa-th-large"></i> Grid</a></li>
-                    <li class="grid-list-button-item "><a data-toggle="tab" href="#list-view"><i class="fa fa-th-list"></i> List</a></li>
+                    <li class="grid-list-button-item active"><a data-toggle="tab" href="#grid-view"><i class="fa fa-th-large"></i><spring:message code="linesall.grid" text="Grid" /></a></li>
+                    <li class="grid-list-button-item "><a data-toggle="tab" href="#list-view"><i class="fa fa-th-list"></i><spring:message code="linesall.list" text="List" /></a></li>
                 </ul>
             </div>
         </div>
@@ -304,24 +337,41 @@
                                 <div class="image">
                                     <!--<img alt="" src="../resources/assets/images/blank.gif" data-echo="../resources/assets/images/products/${vmc.photo1}" width="246" height="186" />-->
                                     <a href="/bearings-${bearings.url}">
-                                     <img alt="${bearings.model}" src="../resources/assets/images/blank.gif" data-echo="../resources/assets/images/products/${bearings.photo1}" width="246" height="186" />
+                                        <c:forEach var="photo" items="${bearings.photos}" begin="0" end="0">
+                                            <img alt="${bearings.modelEn}" src="../resources/assets/images/blank.gif" 
+                                            data-echo="../resources/assets/images/products/${photo.name}" width="246" height="186" />
+                                        </c:forEach>                                    
                                     </a>
                                 </div>
                                 <div class="body">
                                     <!--<div class="label-discount green">-10 % sale</div>-->
                                     <div class="title">
-                                        <a href="/bearings-${bearings.url}"> ${bearings.model}  </a>
+                                        <a href="/bearings-${bearings.url}"> ${bearings.modelEn}  </a>
                                     </div>
-                                    <div class="brand"><spring:message code="bearingsall.type" text="Type" />:  ${bearings.typeEn}</div>
-
-                                    <div class="brand"> 
-                                        ${bearings.basicDynamicLoadRating} <spring:message code="bearingsall.kN" text="kN" />, 
-                                        ${bearings.basicStaticLoadRating} <spring:message code="bearingsall.kN" text="kN" />,  
-                                        ${bearings.referenceSpeed} <spring:message code="bearingsall.r_min" text="r/min" />, 
-                                        ${bearings.limitingSpeed} <spring:message code="bearingsall.r_min" text="r/min" />
+                                    <div class="brand"><spring:message code="bearingsall.type" text="Type" />:
+                                        <c:if test="${localeCode == 'en'}">
+                                            ${bearings.typeEn}
+                                        </c:if>
+                                        <c:if test="${localeCode == 'russia'}">
+                                            ${bearings.typeRu}
+                                        </c:if>
                                     </div>
-
+                                    <div class="brand"><spring:message code="bearingsall.subtype" text="Subtype" />:
+                                        <c:if test="${localeCode == 'en'}">
+                                            ${bearings.subTypeEn}
+                                        </c:if>
+                                        <c:if test="${localeCode == 'russia'}">
+                                            ${bearings.subTypeRu}
+                                        </c:if>
+                                    </div>
+                                    <div class="brand">
+                                        C: ${bearings.basicDynamicLoadRating} <spring:message code="bearingsall.kN" text="kN" />, 
+                                        Со: ${bearings.basicStaticLoadRating} <spring:message code="bearingsall.kN" text="kN" />,  
+                                        fnom: ${bearings.referenceSpeed} <spring:message code="bearingsall.r_min" text="r/min" />, 
+                                        flim: ${bearings.limitingSpeed} <spring:message code="bearingsall.r_min" text="r/min" />
+                                    </div>
                                 </div>
+                                
                                 <div class="prices">
                                     <sec:authorize access="hasRole('ROLE_USER')">
                                         <!--<div class="price-prev">${bearings.price}</div>-->
@@ -330,7 +380,7 @@
                                 </div>
                                 <div class="hover-area">
                                     <div class="add-cart-button">
-                                        <a href="add-product-to-customer-basket?id=${bearings.id}&model=${bearings.model}" class="le-button"><spring:message code="bearingsIndustrial.addtocart" text="add to cart" /></a>-->
+                                        <a href="add-product-to-customer-basket?id=${bearings.id}&model=${bearings.modelEn}" class="le-button"><spring:message code="bearingsall.addtocart" text="add to cart" /></a>-->
                                     </div>
                                     <div class="wish-compare">
                                         <!--<a class="btn-add-to-wishlist" href="add-product-to-wish-list?id=${vmc.id}">add to wishlist</a>-->
@@ -353,7 +403,7 @@
                 <div class="inner-xs">
                     <div class="page-header">
                         <h2 class="page-title">
-                            <spring:message code="bearings.noMachines" text="There are no bearings with such parameters<br/>Please, change the filter parameters."/>
+                            <spring:message code="bearings.nobearings" text="There are no bearings with such parameters<br/>Please, change the filter parameters."/>
                         </h2>
                     </div>
                 </div>
@@ -412,7 +462,10 @@
                 <div class="no-margin col-xs-12 col-sm-4 image-holder">
                     <div class="image">
                         <a href="/bearings-${bearings.url}">
-                        <img alt="${bearings.model}" src="../resources/assets/images/blank.gif" data-echo="../resources/assets/images/products/${bearings.photo1}"  width="246" height="186"/>
+                            <c:forEach var="photo" items="${bearings.photos}" begin="0" end="0">
+                                <img alt="${bearings.modelEn}" src="../resources/assets/images/blank.gif" 
+                                data-echo="../resources/assets/images/products/${photo.name}" width="246" height="186" />
+                            </c:forEach>                       
                         </a>
                     </div>
                 </div><!-- /.image-holder -->
@@ -420,12 +473,30 @@
                     <div class="body">
                         <div class="label-discount green">-10% sale</div>
                         <div class="title">
-                            <a href="/bearings-${bearings.url}">${bearings.manufacturerEn} ${bearings.model}</a>
-                        </div>
-                            <div class="brand">${product.year}/ location: ${product.machinelocation}
-                            <br> d*D*B: ${bearings.innerDiameter}x${bearings.outerDiameter}x${bearings.width}
-                            </div>
-                            <!--<div class="brand"></div>-->
+                                        <a href="/bearings-${bearings.url}"> ${bearings.modelEn}  </a>
+                                    </div>
+                                    <div class="brand"><spring:message code="bearingsall.type" text="Type" />:
+                                        <c:if test="${localeCode == 'en'}">
+                                            ${bearings.typeEn}
+                                        </c:if>
+                                        <c:if test="${localeCode == 'russia'}">
+                                            ${bearings.typeRu}
+                                        </c:if>
+                                    </div>
+                                    <div class="brand"><spring:message code="bearingsall.subtype" text="Subtype" />:
+                                        <c:if test="${localeCode == 'en'}">
+                                            ${bearings.subTypeEn}
+                                        </c:if>
+                                        <c:if test="${localeCode == 'russia'}">
+                                            ${bearings.subTypeRu}
+                                        </c:if>
+                                    </div>
+                                    <div class="brand">
+                                        C: ${bearings.basicDynamicLoadRating} <spring:message code="bearingsall.kN" text="kN" />, 
+                                        Со: ${bearings.basicStaticLoadRating} <spring:message code="bearingsall.kN" text="kN" />,  
+                                        fnom: ${bearings.referenceSpeed} <spring:message code="bearingsall.r_min" text="r/min" />, 
+                                        flim: ${bearings.limitingSpeed} <spring:message code="bearingsall.r_min" text="r/min" />
+                                    </div>
                         <div class="excerpt">
                             <p> </p>
                         </div>

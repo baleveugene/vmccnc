@@ -17,17 +17,23 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "BearingsIndustrialType.findAll", query = "SELECT l FROM BearingsIndustrialType l"),
-    @NamedQuery(name = "BearingsIndustrialType.findByType", query = "SELECT l FROM BearingsIndustrialType l WHERE l.type = :type"),
+    @NamedQuery(name = "BearingsIndustrialType.findByTypeEn", query = "SELECT l FROM BearingsIndustrialType l WHERE l.typeEn = :typeEn"),
+    @NamedQuery(name = "BearingsIndustrialType.findByTypeRu", query = "SELECT l FROM BearingsIndustrialType l WHERE l.typeRu = :typeRu"),
     @NamedQuery(name = "BearingsIndustrialType.findByNum", query = "SELECT l FROM BearingsIndustrialType l WHERE l.num = :num")})
 public class BearingsIndustrialType implements Serializable {
-
+    
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
-    @Column(name = "type")
-    private String type;
+    @Column(name = "type_en")
+    private String typeEn;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
+    @Column(name = "type_ru")
+    private String typeRu;
     @Column(name = "num")
     private Integer num;
 
@@ -35,15 +41,23 @@ public class BearingsIndustrialType implements Serializable {
     }
 
     public BearingsIndustrialType(String type) {
-        this.type = type;
+        this.typeEn = type;
     }
 
-    public String getType() {
-        return type;
+    public String getTypeEn() {
+        return typeEn;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setTypeEn(String type) {
+        this.typeEn = type;
+    }
+    
+    public String getTypeRu() {
+        return typeRu;
+    }
+
+    public void setTypeRu(String type) {
+        this.typeRu = type;
     }
 
     public Integer getNum() {
@@ -57,7 +71,7 @@ public class BearingsIndustrialType implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (type != null ? type.hashCode() : 0);
+        hash += (typeEn != null ? typeEn.hashCode() : 0);
         return hash;
     }
 
@@ -68,7 +82,7 @@ public class BearingsIndustrialType implements Serializable {
             return false;
         }
         BearingsIndustrialType other = (BearingsIndustrialType) object;
-        if ((this.type == null && other.type != null) || (this.type != null && !this.type.equals(other.type))) {
+        if ((this.typeEn == null && other.typeEn != null) || (this.typeEn != null && !this.typeEn.equals(other.typeEn))) {
             return false;
         }
         return true;
@@ -76,7 +90,7 @@ public class BearingsIndustrialType implements Serializable {
 
     @Override
     public String toString() {
-        return "com.springapp.bearings.domain.BearingsIndustrialType[ type=" + type + " ]";
+        return "com.springapp.mvc.domain.bearingsBearingsIndustrialType[ type=" + typeEn + " ]";
     }
     
 }
