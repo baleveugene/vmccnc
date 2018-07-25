@@ -8,8 +8,10 @@ import com.springapp.mvc.domain.bearings.BearingsIndustrialInnerDiameter;
 import com.springapp.mvc.domain.bearings.BearingsIndustrialOuterDiameter;
 import com.springapp.mvc.domain.bearings.BearingsIndustrialWidth;
 import com.springapp.mvc.domain.bearings.BearingsIndustrialManufacturer;
+import com.springapp.mvc.domain.bearings.BearingsIndustrialPhoto;
 import com.springapp.mvc.domain.bearings.BearingsIndustrialType;
 import com.springapp.mvc.domain.bearings.BearingsIndustrialSubType;
+import com.springapp.mvc.domain.bearings.BearingsIndustrialVideo;
 import com.springapp.mvc.service.interfaces.BearingsIndustrialService;
 
 import com.springapp.mvc.util.ImageUtil;
@@ -20,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,13 +42,62 @@ public class BearingsIndustrialServiceImpl implements BearingsIndustrialService 
             try {
                 File uploadFile = UploadMultipartFileUtil.uploadFile(path, file[i]);
                 BearingsIndustrial bearingsIndustrial = ParserExcelBearingsIndustrial.readBearingsIndustrial(uploadFile);
-                hbmDAO.add(bearingsIndustrial);
+                BearingsIndustrial bearingsIndustrialFromDB = (BearingsIndustrial)hbmDAO.getByUrl(BearingsIndustrial.class, bearingsIndustrial.getUrl());
+                if(bearingsIndustrialFromDB != null){
+                    bearingsIndustrialFromDB = setValuesForUpdate(bearingsIndustrialFromDB, bearingsIndustrial);
+                    hbmDAO.add(bearingsIndustrialFromDB);
+                } else {
+                    hbmDAO.add(bearingsIndustrial); 
+                }                         
                 uploadFile.delete();
                 System.out.println("Successfully uploaded: " + file[i].getOriginalFilename());
             } catch (IOException e) {
                 System.out.println("Failed to upload file: " + e.getMessage());
             }
         }
+    }
+    
+    private BearingsIndustrial setValuesForUpdate(BearingsIndustrial bearingsIndustrialFromDB, BearingsIndustrial bearingsIndustrial){
+        bearingsIndustrialFromDB.setBasicDynamicLoadRating(bearingsIndustrial.getBasicDynamicLoadRating());
+        bearingsIndustrialFromDB.setBasicStaticLoadRating(bearingsIndustrial.getBasicStaticLoadRating());
+        bearingsIndustrialFromDB.setCountryEn(bearingsIndustrial.getCountryEn());
+        bearingsIndustrialFromDB.setCountryRu(bearingsIndustrial.getCountryRu());
+        bearingsIndustrialFromDB.setDescriptionEn(bearingsIndustrial.getDescriptionEn());
+        bearingsIndustrialFromDB.setDescriptionRu(bearingsIndustrial.getDescriptionRu());
+        bearingsIndustrialFromDB.setFatiqueLoadLimit(bearingsIndustrial.getFatiqueLoadLimit());
+        bearingsIndustrialFromDB.setGuarantee(bearingsIndustrial.getGuarantee());
+        bearingsIndustrialFromDB.setInnerDiameter(bearingsIndustrial.getInnerDiameter());
+        bearingsIndustrialFromDB.setLimitingSpeed(bearingsIndustrial.getLimitingSpeed());
+        bearingsIndustrialFromDB.setManufacturerEn(bearingsIndustrial.getManufacturerEn());
+        bearingsIndustrialFromDB.setManufacturerRu(bearingsIndustrial.getManufacturerRu());
+        bearingsIndustrialFromDB.setModelEn(bearingsIndustrial.getModelEn());
+        bearingsIndustrialFromDB.setModelRu(bearingsIndustrial.getModelRu());
+        bearingsIndustrialFromDB.setOuterDiameter(bearingsIndustrial.getOuterDiameter());
+        bearingsIndustrialFromDB.setPrice(bearingsIndustrial.getPrice());
+        bearingsIndustrialFromDB.setReferenceSpeed(bearingsIndustrial.getReferenceSpeed());
+        bearingsIndustrialFromDB.setSubTypeEn(bearingsIndustrial.getSubTypeEn());
+        bearingsIndustrialFromDB.setSubTypeRu(bearingsIndustrial.getSubTypeRu());
+        bearingsIndustrialFromDB.setTemperatureWork(bearingsIndustrial.getTemperatureWork());
+        bearingsIndustrialFromDB.setTypeEn(bearingsIndustrial.getTypeEn());
+        bearingsIndustrialFromDB.setTypeRu(bearingsIndustrial.getTypeRu());
+        bearingsIndustrialFromDB.setUrl(bearingsIndustrial.getUrl());
+        bearingsIndustrialFromDB.setWeight(bearingsIndustrial.getWeight());
+        bearingsIndustrialFromDB.setWidth(bearingsIndustrial.getWidth());       
+        Set<BearingsIndustrialPhoto> photos = bearingsIndustrial.getPhotos();
+        for(BearingsIndustrialPhoto photo : photos){
+            BearingsIndustrialPhoto photoFromDB = (BearingsIndustrialPhoto)hbmDAO.getByName(BearingsIndustrialPhoto.class, photo.getName());
+            if(photoFromDB == null){
+                bearingsIndustrialFromDB.addPhoto(photo);
+            }           
+        }
+        Set<BearingsIndustrialVideo> videos = bearingsIndustrial.getVideos();
+        for(BearingsIndustrialVideo video : videos){
+            BearingsIndustrialVideo videoFromDB = (BearingsIndustrialVideo)hbmDAO.getByName(BearingsIndustrialVideo.class, video.getName());
+            if(videoFromDB == null){
+                bearingsIndustrialFromDB.addVideo(video);
+            }                   
+        }
+        return bearingsIndustrialFromDB;
     }
     
     @Override @Transactional

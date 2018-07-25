@@ -93,7 +93,7 @@ public class ControllerBearings extends PrintInFile {
         BearingsIndustrial bearingsIndustrial = bearingsIndustrialService.getBearingsByUrl(url);
         mv.addObject("bearingsIndustrial", bearingsIndustrial);
         
-        mv.addObject("message", new Message("Bearings " +bearingsIndustrial.getTypeEn() , bearingsIndustrial.getModel())); // it is need for feed back !!!!!!
+        mv.addObject("message", new Message("Bearings " +bearingsIndustrial.getTypeEn() , bearingsIndustrial.getModelEn())); // it is need for feed back !!!!!!
         session.setAttribute("search", "bearings"); // for search
         session.setAttribute("currentpagewithpage", "/bearings-" + url);
         return mv;
@@ -128,7 +128,7 @@ BearingsIndustrial bearings = bearingsIndustrialService.getBearingsByUrl(url);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType("application/pdf"));
-        String filename = "Bearings-" + bearings.getModel() + ".pdf";
+        String filename = "Bearings-" + bearings.getModelEn() + ".pdf";
         headers.setContentDispositionFormData(filename, filename);
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
         return new ResponseEntity<byte[]>(contents, headers, HttpStatus.OK);

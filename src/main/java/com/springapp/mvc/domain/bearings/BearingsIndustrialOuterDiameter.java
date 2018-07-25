@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.springapp.mvc.domain.bearings;
 
 import java.io.Serializable;
@@ -17,12 +12,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author Home
- */
 @Entity
-@Table(name="bearings_industrial_outer_diameter", schema = "", catalog = "light_test")
+@Table(name="bearings_industrial_outer_diameter", schema = "", catalog = "bearings_industrial")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "BearingsIndustrialOuterDiameter.findAll", query = "SELECT l FROM BearingsIndustrialOuterDiameter l"),

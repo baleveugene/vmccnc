@@ -1,10 +1,9 @@
 package com.springapp.mvc.util.exel;
 
-//import com.springapp.mvc.domain.common.LanguageEntity;
-//import com.springapp.mvc.domain.Letter;
 import com.springapp.mvc.domain.bearings.BearingsIndustrial;
+import com.springapp.mvc.domain.bearings.BearingsIndustrialPhoto;
+import com.springapp.mvc.domain.bearings.BearingsIndustrialVideo;
 
-//import com.springapp.mvc.domain.lathe.*;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
@@ -67,11 +66,13 @@ public class ParserExcelBearingsIndustrial  {
         System.out.println(bearingsIndustrial.getSubTypeEn());
         System.out.println(bearingsIndustrial.getSubTypeRu());
         
-        bearingsIndustrial.setModel(df.formatCellValue(rowIterator.next().getCell(1)).trim()); 
-        printInFile("readBearingsIndustrial.txt", "4 getModel = " + bearingsIndustrial.getModel());             
-        System.out.println(bearingsIndustrial.getModel());
+        curentRow = rowIterator.next();
+        bearingsIndustrial.setModelEn(df.formatCellValue(curentRow.getCell(1)).trim()); 
+        bearingsIndustrial.setModelRu(df.formatCellValue(curentRow.getCell(2)).trim());        
+        printInFile("readBearingsIndustrial.txt", "4 getModel = " + bearingsIndustrial.getModelEn());             
+        System.out.println(bearingsIndustrial.getModelEn());
         
-        bearingsIndustrial.setUrl(getUrl(bearingsIndustrial.getModel())); bearingsIndustrial.setId(getID(bearingsIndustrial.getModel()));
+        bearingsIndustrial.setUrl(getUrl(bearingsIndustrial.getModelEn()));
         printInFile("readLightOffice.txt", "5 setUrl"  );
         
         curentRow = rowIterator.next();
@@ -101,19 +102,36 @@ public class ParserExcelBearingsIndustrial  {
         bearingsIndustrial.setGuarantee(df.formatCellValue(rowIterator.next().getCell(1)).trim()); 
         printInFile("readBearingsIndustrial.txt", "16 setGuarantee = " + bearingsIndustrial.getGuarantee());
 
-        rowIterator.next();     
+        rowIterator.next();
         
-        bearingsIndustrial.setPhoto1(df.formatCellValue(rowIterator.next().getCell(1)).trim());
-        bearingsIndustrial.setPhoto2(df.formatCellValue(rowIterator.next().getCell(1)).trim());
-/*        bearingsIndustrial.setPhoto3(df.formatCellValue(rowIterator.next().getCell(1)).trim());
-        bearingsIndustrial.setPhoto4(df.formatCellValue(rowIterator.next().getCell(1)).trim());
-        bearingsIndustrial.setPhoto5(df.formatCellValue(rowIterator.next().getCell(1)).trim()); */
+        String path = getPath(bearingsIndustrial);
+        String fotoName1 = path + df.formatCellValue(rowIterator.next().getCell(1)).trim();
+        String fotoName2 = path + df.formatCellValue(rowIterator.next().getCell(1)).trim();
+            
+        if(fotoName1!=null && !fotoName1.equals("")){
+            BearingsIndustrialPhoto photo1 = new BearingsIndustrialPhoto(fotoName1);
+            photo1.setName(fotoName1);
+            bearingsIndustrial.addPhoto(photo1);
+            photo1.setBearings(bearingsIndustrial);
+        }
+        if(fotoName2!=null && !fotoName2.equals("")){
+            BearingsIndustrialPhoto photo2 = new BearingsIndustrialPhoto(fotoName2);
+            photo2.setName(fotoName2);
+            bearingsIndustrial.addPhoto(photo2);
+            photo2.setBearings(bearingsIndustrial);
+        }      
 
         curentRow = rowIterator.next();
         bearingsIndustrial.setDescriptionEn(df.formatCellValue(curentRow.getCell(1)).trim());
         bearingsIndustrial.setDescriptionRu(df.formatCellValue(curentRow.getCell(2)).trim());
-        bearingsIndustrial.setVideo1(df.formatCellValue(rowIterator.next().getCell(1)).trim());
         
+        String videoName1 = df.formatCellValue(rowIterator.next().getCell(1)).trim();
+        if(videoName1!=null && !videoName1.equals("")){
+            BearingsIndustrialVideo video1 = new BearingsIndustrialVideo(videoName1);
+            video1.setName(videoName1);                      
+            bearingsIndustrial.addVideo(video1);
+            video1.setBearings(bearingsIndustrial);
+        }       
         fis.close();
         return bearingsIndustrial;
     }
@@ -167,6 +185,17 @@ public class ParserExcelBearingsIndustrial  {
                     tt = Integer.parseInt( df.formatCellValue(tmp.getCell(1)).trim());
                    }        
          return tt;
+       }
+    
+    private static String getPath (BearingsIndustrial bearingsIndustrial){                  
+        String absPath = bearingsIndustrial.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+        String[] absPathAfterSplit = absPath.split("target");
+        File folder = new File(absPathAfterSplit[0]
+                +"src/main/webapp/resources/assets/images/products/bearings/" + bearingsIndustrial.getUrl());
+        if(!folder.exists()){
+            folder.mkdirs();
+        }       
+        return bearingsIndustrial.getUrl()+"/";    
        }
        
     static void printInFile(String fileName, String str){    // For Check             

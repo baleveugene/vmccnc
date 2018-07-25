@@ -23,8 +23,8 @@ int numberOfItems;
 
                         boolean newItem = true;
                         for (CompareCartItemBearings scItem : items) {
-                        if (scItem.getProduct().getId().
-                                                        equals(bearingsIndustrial.getId())) {
+                        if (scItem.getProduct().getUrl().
+                                                        equals(bearingsIndustrial.getUrl())) {
                         newItem = false;
 //                        scItem.incrementQuantity();
                 }
@@ -45,8 +45,8 @@ int numberOfItems;
                 if (qty >= 0) {
                 CompareCartItemBearings item = null;
                 for (CompareCartItemBearings scItem : items) {
-                if (scItem.getProduct().getId().
-                                                equals( bearingsIndustrial.getId())) {
+                if (scItem.getProduct().getUrl().
+                                                equals( bearingsIndustrial.getUrl())) {
                 if (qty != 0) {
                 // set item quantity to new value
                 scItem.setQuantity(qty);

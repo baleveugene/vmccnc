@@ -1,6 +1,5 @@
 package com.springapp.mvc.util.exel;
 
-import com.springapp.mvc.dao.HbmDAO;
 import com.springapp.mvc.domain.lines.AutomatedLine;
 import com.springapp.mvc.domain.lines.Photo;
 import com.springapp.mvc.domain.lines.Video;

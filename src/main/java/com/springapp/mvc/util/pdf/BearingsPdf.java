@@ -5,6 +5,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.springapp.mvc.domain.bearings.BearingsIndustrial;
+import com.springapp.mvc.domain.bearings.BearingsIndustrialPhoto;
 
 //import dao.vmc.Vmc;
 //import com.springapp.mvc.domain.hmc.Hmc;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Set;
 
 public class BearingsPdf {
 
@@ -136,25 +138,17 @@ public class BearingsPdf {
 
         
         
-
-
+    Set<BearingsIndustrialPhoto> photos = bearings.getPhotos();
+    for(BearingsIndustrialPhoto photo: photos){
         try {
-            img = Image.getInstance(path + "/assets/images/products/" + bearings.getPhoto1());
+            img = Image.getInstance(path + "/assets/images/products/" + photo.getName());
             img.setScaleToFitHeight(false);
             itemCells[0] = new PdfPCell(img, true);
         } catch (Exception e) {
             itemCells[0] = new PdfPCell(new Paragraph(""));
         }
-        
-        try {
-            img = Image.getInstance(path + "/assets/images/products/" + bearings.getPhoto2());
-            img.setScaleToFitHeight(false);
-            itemCells[1] = new PdfPCell(img, true);
-        } catch (Exception e) {
-            itemCells[1] = new PdfPCell(new Paragraph(""));
-        }
-        
-        
+    }
+                
 //        for (int i = 0; i < 2; i++) {
         for (int i = 0; i < 2; i++) {
             itemCells[i].setPadding(1);
@@ -302,21 +296,7 @@ public class BearingsPdf {
 //        }
         
         
-                try {
-            img = Image.getInstance(path + "/assets/images/products/" + bearings.getPhoto3());
-            img.setScaleToFitHeight(false);
-            itemCells[0] = new PdfPCell(img, true);
-        } catch (Exception e) {
-            itemCells[0] = new PdfPCell(new Paragraph(""));
-        }
-        
-//        try {
-//            img = Image.getInstance(path + "/assets/images/products/" + light.getPhoto4());
-//            img.setScaleToFitHeight(false);
-//            itemCells[1] = new PdfPCell(img, true);
-//        } catch (Exception e) {
-//            itemCells[1] = new PdfPCell(new Paragraph(""));
-//        }                         
+                     
         return itemTable;
     }
 
@@ -349,7 +329,7 @@ public class BearingsPdf {
 
     public static String createPdfBearings(String path, BearingsIndustrial bearings, String company, String director, boolean showPrice) throws Exception {
      
-        model = bearings.getModel();
+        model = bearings.getModelEn();
         type = bearings.getTypeEn();
 //        year = light.getYear();
         

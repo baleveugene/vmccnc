@@ -87,13 +87,13 @@ private BearingsIndustrialService bearingsService;
     
 
     
-        @RequestMapping(value = "/compare-bearings-del-{id}", method = RequestMethod.GET)
-    public String delfromcompare(@PathVariable("id") String id, HttpSession session) {
+        @RequestMapping(value = "/compare-bearings-del-{url}", method = RequestMethod.GET)
+    public String delfromcompare(@PathVariable("url") String url, HttpSession session) {
    
     CompareCartBearings compareCartBearings = (CompareCartBearings) session.getAttribute("compareCartBearings");
     if (compareCartBearings==null)  compareCartBearings = new CompareCartBearings();
     BearingsIndustrial bearingsIndustrial =  new BearingsIndustrial();
-    bearingsIndustrial.setId(id);
+    bearingsIndustrial.setUrl(url);
 
     compareCartBearings.update(bearingsIndustrial, "0"); // delete from compare
     session.setAttribute("compareCartBearings", compareCartBearings);

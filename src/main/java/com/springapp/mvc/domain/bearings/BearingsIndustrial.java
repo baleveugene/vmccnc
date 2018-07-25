@@ -1,18 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.springapp.mvc.domain.bearings;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.FilterDef;
@@ -23,26 +25,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
-@Table(name="bearings_industrial", schema = "", catalog = "light_test")
-@FilterDef(name="filter", parameters={
-		@ParamDef( name="minInnerDiameter", type="string" ),
-		@ParamDef( name="maxInnerDiameter", type="string" ),
-		@ParamDef( name="minOuterDiameter", type="string" ),
-		@ParamDef( name="maxOuterDiameter", type="string" ),
-                @ParamDef( name="minWidth", type="string" ),
-		@ParamDef( name="maxWidth", type="string" ),
-                @ParamDef( name="type", type="string" ),
-                @ParamDef( name="subtype", type="string" ),
-                @ParamDef( name="manufacturer", type="string" ),
-                @ParamDef( name="country", type="string" ),
-})
-@Filters( {
-    @Filter(name="filter", condition=":type <= type_en  and :subtype <= subtype_en "
-            + "and :country <= country_en and :manufacturer <= manufacturer_en "
-            + "and :minInnerDiameter <= d_inner_diameter and :maxInnerDiameter >= d_inner_diameter "
-            + "and :minOuterDiameter <= D_outer_diameter and :maxOuterDiameter >= D_outer_diameter "
-            + "and :minWidth <= B_width and :maxWidth >= B_width")
-} )
+@Table(name="bearings_industrial", schema = "", catalog = "bearings_industrial")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "BearingsIndustrial.findAll", query = "SELECT l FROM BearingsIndustrial l"),
@@ -52,7 +35,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "BearingsIndustrial.findByTypeRu", query = "SELECT l FROM BearingsIndustrial l WHERE l.typeRu = :typeRu"),
     @NamedQuery(name = "BearingsIndustrial.findBySubTypeEn", query = "SELECT l FROM BearingsIndustrial l WHERE l.subTypeEn = :subTypeEn"),
     @NamedQuery(name = "BearingsIndustrial.findBySubTypeRu", query = "SELECT l FROM BearingsIndustrial l WHERE l.subTypeRu = :subTypeRu"),
-    @NamedQuery(name = "BearingsIndustrial.findByModel", query = "SELECT l FROM BearingsIndustrial l WHERE l.model = :model"),
+    @NamedQuery(name = "BearingsIndustrial.findByModelEn", query = "SELECT l FROM BearingsIndustrial l WHERE l.modelEn = :modelEn"),
+    @NamedQuery(name = "BearingsIndustrial.findByModelRu", query = "SELECT l FROM BearingsIndustrial l WHERE l.modelRu = :modelRu"),
     @NamedQuery(name = "BearingsIndustrial.findByManufacturerEn", query = "SELECT l FROM BearingsIndustrial l WHERE l.manufacturerEn = :manufacturerEn"),
     @NamedQuery(name = "BearingsIndustrial.findByManufacturerRu", query = "SELECT l FROM BearingsIndustrial l WHERE l.manufacturerRu = :manufacturerRu"),
     @NamedQuery(name = "BearingsIndustrial.findByCountryEn", query = "SELECT l FROM BearingsIndustrial l WHERE l.countryEn = :countryEn"),
@@ -68,17 +52,14 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "BearingsIndustrial.findByWeight", query = "SELECT l FROM BearingsIndustrial l WHERE l.weight = :weight"),
     @NamedQuery(name = "BearingsIndustrial.findByTemperatureWork", query = "SELECT l FROM BearingsIndustrial l WHERE l.temperatureWork = :temperatureWork"),
     @NamedQuery(name = "BearingsIndustrial.findByGuarantee", query = "SELECT l FROM BearingsIndustrial l WHERE l.guarantee = :guarantee"),
-    @NamedQuery(name = "BearingsIndustrial.findByPrice", query = "SELECT l FROM BearingsIndustrial l WHERE l.price = :price"),
-    @NamedQuery(name = "BearingsIndustrial.findByPhoto1", query = "SELECT l FROM BearingsIndustrial l WHERE l.photo1 = :photo1"),
-    @NamedQuery(name = "BearingsIndustrial.findByPhoto2", query = "SELECT l FROM BearingsIndustrial l WHERE l.photo2 = :photo2"),
-    @NamedQuery(name = "BearingsIndustrial.findByPhoto3", query = "SELECT l FROM BearingsIndustrial l WHERE l.photo3 = :photo3"),
-    @NamedQuery(name = "BearingsIndustrial.findByVideo1", query = "SELECT l FROM BearingsIndustrial l WHERE l.video1 = :video1")})
+    @NamedQuery(name = "BearingsIndustrial.findByPrice", query = "SELECT l FROM BearingsIndustrial l WHERE l.price = :price")})
 public class BearingsIndustrial implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Size(max = 255)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private String id;
+    private long id;
     @Size(max = 255)
     @Column(name = "url")
     private String url;
@@ -102,12 +83,16 @@ public class BearingsIndustrial implements Serializable {
     @Size(min = 1, max = 245)
     @Column(name = "subType_ru")
     private String subTypeRu;
-    @Id
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 250)
-    @Column(name = "model")
-    private String model;
+    @Column(name = "model_en")
+    private String modelEn;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 250)
+    @Column(name = "model_ru")
+    private String modelRu;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
@@ -176,22 +161,7 @@ public class BearingsIndustrial implements Serializable {
     @Column(name = "guarantee")
     private String guarantee;  
     @Column(name = "price")
-    private Integer price;
-    @Size(max = 245)
-    @Column(name = "photo1")
-    private String photo1;
-    @Size(max = 245)
-    @Column(name = "photo2")
-    private String photo2;
-    @Size(max = 245)
-    @Column(name = "photo3")
-    private String photo3;
-    @Size(max = 245)
-    @Column(name = "photo4")
-    private String photo4;
-    @Size(max = 245)
-    @Column(name = "photo5")
-    private String photo5;
+    private Integer price;   
     @Lob
     @Size(max = 65535)
     @Column(name = "description_en")
@@ -200,24 +170,26 @@ public class BearingsIndustrial implements Serializable {
     @Size(max = 65535)
     @Column(name = "description_ru")
     private String descriptionRu;
-    @Size(max = 255)
-    @Column(name = "video1")
-    private String video1;
+    @OneToMany(cascade={CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "bearings")   
+    private Set<BearingsIndustrialPhoto> photos = new HashSet<>();
+    @OneToMany(cascade={CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "bearings")  
+    private Set<BearingsIndustrialVideo> videos = new HashSet<>();
 
     public BearingsIndustrial() {
     }
 
-    public BearingsIndustrial(String model) {
-        this.model = model;
+    public BearingsIndustrial(String modelEn) {
+        this.modelEn = modelEn;
     }
 
-    public BearingsIndustrial(String model, String typeEn, String subTypeEn, 
+    public BearingsIndustrial(String modelEn, String modelRu, String typeEn, String subTypeEn, 
             String manufacturerEn, String countryEn, String typeRu, String subTypeRu, 
             String manufacturerRu, String countryRu, int basicDynamicLoadRating, 
             int basicStaticLoadRating, int fatiqueLoadLimit, int referenceSpeed, 
             int limitingSpeed, int innerDiameter, int outerDiameter, int width, String weight, String temperatureWork, 
             String guarantee) {
-        this.model = model;
+        this.modelEn = modelEn;
+        this.modelRu = modelRu;
         this.typeEn = typeEn;
         this.subTypeEn = subTypeEn;
         this.manufacturerEn = manufacturerEn;
@@ -239,11 +211,11 @@ public class BearingsIndustrial implements Serializable {
         this.guarantee = guarantee;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
     
@@ -287,12 +259,20 @@ public class BearingsIndustrial implements Serializable {
         this.subTypeRu = subTypeRu;
     }
 
-    public String getModel() {
-        return model;
+    public String getModelEn() {
+        return modelEn;
     }
 
-    public void setModel(String model) {
-        this.model = model;
+    public void setModelEn(String model) {
+        this.modelEn = model;
+    }
+    
+    public String getModelRu() {
+        return modelRu;
+    }
+
+    public void setModelRu(String model) {
+        this.modelRu = model;
     }
 
     public String getManufacturerEn() {
@@ -423,44 +403,28 @@ public class BearingsIndustrial implements Serializable {
         this.price = price;
     }
 
-    public String getPhoto1() {
-        return "bearings/industrial/" +   photo1;
+    public Set<BearingsIndustrialPhoto> getPhotos() {
+        return photos;
     }
 
-    public void setPhoto1(String photo1) {
-        this.photo1 = photo1;
-    }
-
-    public String getPhoto2() {
-        return "bearings/industrial/" +   photo2;
-    }
-
-    public void setPhoto2(String photo2) {
-        this.photo2 = photo2;
-    }
-
-    public String getPhoto3() {
-        return "bearings/industrial/" +   photo3;
-    }
-
-    public void setPhoto3(String photo3) {
-        this.photo3 = photo3; 
+    public void setPhotos(Set<BearingsIndustrialPhoto> photos) {
+        this.photos = photos;
     }
     
-     public String getPhoto4() {
-        return "bearings/industrial/" +  photo4;
+    public void addPhoto(BearingsIndustrialPhoto photo) {
+        this.photos.add(photo);
+    }
+    
+    public Set<BearingsIndustrialVideo> getVideos() {
+        return videos;
     }
 
-    public void setPhoto4(String photo4) {
-        this.photo4 = photo4;
+    public void setVideos(Set<BearingsIndustrialVideo> videos) {
+        this.videos = videos;
     }
-
-    public String getPhoto5() {
-        return "bearings/industrial/" +  photo5;
-    }
-
-    public void setPhoto5(String photo5) {
-        this.photo5 = photo5;
+    
+    public void addVideo(BearingsIndustrialVideo video) {
+        this.videos.add(video);
     }
 
     public String getDescriptionEn() {
@@ -479,18 +443,10 @@ public class BearingsIndustrial implements Serializable {
         this.descriptionRu = descriptionRu;
     }
 
-    public String getVideo1() {
-        return video1;
-    }
-
-    public void setVideo1(String video1) {
-        this.video1 = video1;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (model != null ? model.hashCode() : 0);
+        hash += (modelEn != null ? modelEn.hashCode() : 0);
         return hash;
     }
 
@@ -501,7 +457,7 @@ public class BearingsIndustrial implements Serializable {
             return false;
         }
         BearingsIndustrial other = (BearingsIndustrial) object;
-        if ((this.model == null && other.model != null) || (this.model != null && !this.model.equals(other.model))) {
+        if ((this.modelEn == null && other.modelEn != null) || (this.modelEn != null && !this.modelEn.equals(other.modelEn))) {
             return false;
         }
         return true;
@@ -509,6 +465,6 @@ public class BearingsIndustrial implements Serializable {
 
     @Override
     public String toString() {
-        return "com.springapp.bearings.domain.BearingsIndustrial[ model=" + model + " ]";
+        return "com.springapp.mvc.domain.bearings.BearingsIndustrial[ model=" + modelEn + " ]";
     }
 }
