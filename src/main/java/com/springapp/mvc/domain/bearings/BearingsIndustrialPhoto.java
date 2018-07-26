@@ -1,6 +1,5 @@
 package com.springapp.mvc.domain.bearings;
 
-import java.io.File;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -27,12 +26,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class BearingsIndustrialPhoto implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
+    @Id   
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
     @Basic(optional = false)
-    @NotNull
     @Size(max = 255)
     @Column(name = "photo_name")
     private String name;
@@ -46,8 +44,8 @@ public class BearingsIndustrialPhoto implements Serializable {
 
     public BearingsIndustrialPhoto(String name) {
         this.name = name;
-    }
-
+    }  
+    
     public long getId() {
         return id;
     }

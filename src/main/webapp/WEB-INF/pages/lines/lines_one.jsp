@@ -131,8 +131,7 @@
     <div class="product-item-holder size-big single-product-gallery small-gallery">      
         <div id="owl-single-product">
             
-            <c:forEach items="${listPhotos}" var="photo" step="1" varStatus="i"> 
-             
+            <c:forEach items="${listPhotos}" var="photo" step="1" varStatus="i">              
                 <div class="single-product-gallery-item" id="slide${i.index}">         
                     <a data-rel="prettyphoto" href="../resources/assets/images/products/${photo.name}">
                         <img class="img-responsive" alt="${automatedLine.modelEn}" 
@@ -422,7 +421,9 @@
         <div class="carousel-holder hover">
             
             <div class="title-nav">
-                <h2 class="h1">Random Automated line</h2>
+                <h2 class="h1">
+                    <spring:message code="linesone.random" text="Random Automated line"/>                    
+                </h2>
                 <div class="nav-holder">
                     <a href="#prev" data-target="#owl-recently-viewed" class="slider-prev btn-prev fa fa-angle-left"></a>
                     <a href="#next" data-target="#owl-recently-viewed" class="slider-next btn-next fa fa-angle-right"></a>

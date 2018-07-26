@@ -87,11 +87,12 @@ public class ParserExcelBearingsIndustrial  {
         printInFile("readBearingsIndustrial.txt", "7 setCountry = " + bearingsIndustrial.getCountryEn());        
         System.out.println(bearingsIndustrial.getCountryEn());
          
-        bearingsIndustrial.setBasicDynamicLoadRating(intFromCell(rowIterator, df)); 
-        bearingsIndustrial.setBasicStaticLoadRating(intFromCell(rowIterator, df));
-        bearingsIndustrial.setFatiqueLoadLimit(intFromCell(rowIterator, df));
         bearingsIndustrial.setReferenceSpeed(intFromCell(rowIterator, df));
         bearingsIndustrial.setLimitingSpeed(intFromCell(rowIterator, df));
+        bearingsIndustrial.setFatiqueLoadLimit(intFromCell(rowIterator, df));
+        bearingsIndustrial.setBasicDynamicLoadRating(intFromCell(rowIterator, df)); 
+        bearingsIndustrial.setBasicStaticLoadRating(intFromCell(rowIterator, df));        
+        
         bearingsIndustrial.setInnerDiameter(intFromCell(rowIterator, df));
         bearingsIndustrial.setOuterDiameter(intFromCell(rowIterator, df));
         bearingsIndustrial.setWidth(intFromCell(rowIterator, df));          

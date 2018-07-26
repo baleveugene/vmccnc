@@ -14,7 +14,7 @@
         <meta name="keywords" content="${vmc.model} for sale, ${vmc.model}, ${vmc.model} price, ${vmc.model} buy">
         <meta name="robots" content="all">
 
-         <title> ${bearings.model} for sale | VMC & HMC </title>
+         <title> ${bearingsIndustrial.modelEn} for sale | VMC & HMC </title>
   
 
         <!-- Bootstrap Core CSS -->
@@ -83,12 +83,26 @@
                           <%@include file="/WEB-INF/pages/in/breadcrumb_item.jsp" %>
                         <!--</li>--> 
   
-                             <li class="breadcrumb-item">
-                            <a href="/bearings?type=${bearingsIndustrial.typeEn}">Bearings - ${bearingsIndustrial.typeEn}</a>
+                        <li class="breadcrumb-item">
+                            <a href="/bearings?type=${bearingsIndustrial.typeEn}">
+                                <c:if test="${localeCode == 'en'}">
+                                    ${bearingsIndustrial.typeEn}
+                                </c:if>
+                                <c:if test="${localeCode == 'russia'}">
+                                    ${bearingsIndustrial.typeRu}
+                                </c:if>                            
+                            </a>
                         </li> 
                         
                        <li class="breadcrumb-item current">
-                            <a href="">${bearingsIndustrial.manufacturerEn} - ${bearingsIndustrial.model}</a>
+                            <a href="">
+                                <c:if test="${localeCode == 'en'}">
+                                    ${bearingsIndustrial.manufacturerEn} - ${bearingsIndustrial.modelEn}
+                                </c:if>
+                                <c:if test="${localeCode == 'russia'}">
+                                    ${bearingsIndustrial.manufacturerRu} - ${bearingsIndustrial.modelRu}
+                                </c:if>                               
+                            </a>
                         </li> 
                     </ul>
                 </li><!-- /.breadcrumb-nav-holder --> 
@@ -116,81 +130,26 @@
     <div class="product-item-holder size-big single-product-gallery small-gallery">
 
         <div id="owl-single-product">
-            <div class="single-product-gallery-item" id="slide1">         
-                <a data-rel="prettyphoto" href="../resources/assets/images/products/${bearingsIndustrial.photo1}">
-                    <img class="img-responsive" alt="${bearingsIndustrial.model}" 
-                         src="../resources/assets/images/products/${bearingsIndustrial.photo1}" 
-                         data-echo="../resources/assets/images/products/${bearingsIndustrial.photo1}" />                       
+            <c:forEach items="${listPhotos}" var="photo" step="1" varStatus="i">              
+                <div class="single-product-gallery-item" id="slide${i.index}">         
+                    <a data-rel="prettyphoto" href="../resources/assets/images/products/${photo.name}">
+                        <img class="img-responsive" alt="${bearingsIndustrial.modelEn}" 
+                         src="../resources/assets/images/products/${photo.name}" 
+                         data-echo="../resources/assets/images/products/${photo.name}" />                       
                          <!--src="../resources/assets/images/blank.gif"--> 
-                </a>
-            </div><!-- /.single-product-gallery-item -->
-            
-            <div class="single-product-gallery-item" id="slide2">
-                <a data-rel="prettyphoto" href="../resources/assets/images/products/${bearingsIndustrial.photo2}">
-                    <img class="img-responsive" alt="${bearingsIndustrial.model}" 
-                         src="../resources/assets/images/products/${bearingsIndustrial.photo2}" 
-                         data-echo="../resources/assets/images/products/${bearingsIndustrial.photo2}" />
-                         <!--src="../resources/assets/images/blank.gif"--> 
-                </a>
-            </div><!-- /.single-product-gallery-item -->
-            
-           <div class="single-product-gallery-item" id="slide3">
-                <a data-rel="prettyphoto" href="../resources/assets/images/products/${bearingsIndustrial.photo3}">
-                    <img class="img-responsive" alt="${bearingsIndustrial.model}" 
-                         src="../resources/assets/images/products/${bearingsIndustrial.photo3}" 
-                         data-echo="../resources/assets/images/products/${bearingsIndustrial.photo3}" />
-                         <!--src="../resources/assets/images/blank.gif"--> 
-                </a>
-            </div><!-- /.single-product-gallery-item -->
-            
-            <div class="single-product-gallery-item" id="slide4">
-                <a data-rel="prettyphoto" href="../resources/assets/images/products/${bearingsIndustrial.photo4}">
-                    <img class="img-responsive" alt="${bearingsIndustrial.model}" 
-                         src="../resources/assets/images/products/${bearingsIndustrial.photo4}" 
-                         data-echo="../resources/assets/images/products/${bearingsIndustrial.photo4}" />
-                         <!--src="../resources/assets/images/blank.gif"--> 
-                </a>
-            </div><!-- /.single-product-gallery-item -->
-            
-            <div class="single-product-gallery-item" id="slide5">
-                <a data-rel="prettyphoto" href="../resources/assets/images/products/${bearingsIndustrial.photo5}">
-                    <img class="img-responsive" alt="${bearingsIndustrial.model}" 
-                         src="../resources/assets/images/products/${bearingsIndustrial.photo5}" 
-                         data-echo="../resources/assets/images/products/${bearingsIndustrial.photo5}" />
-                         <!--src="../resources/assets/images/blank.gif"--> 
-                </a>
-            </div><!-- /.single-product-gallery-item -->
- 
+                    </a>
+                </div><!-- /.single-product-gallery-item -->
+            </c:forEach>           
         </div><!-- /.single-product-slider -->
 
 
         <div class="single-product-gallery-thumbs gallery-thumbs">
-
             <div id="owl-single-product-thumbnails">
-                <a class="horizontal-thumb active" data-target="#owl-single-product" data-slide="0" href="#slide1">                  
-                    <img width="67" alt="${bearingsIndustrial.model}" src="../resources/assets/images/products/${bearingsIndustrial.photo1}" data-echo="../resources/assets/images/products/${bearingsIndustrial.photo1}" />
-                </a>
-
-   
-                <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="1" href="#slide2">
-                    <!--<img width="67" alt="" src="../resources/assets/images/blank.gif" data-echo="../resources/assets/images/products/bearingsIndustrialgallery-thumb-01.jpg" />-->
-                    <img width="67" alt="${bearingsIndustrial.model}"  src="../resources/assets/images/products/${bearingsIndustrial.photo2}" data-echo="../resources/assets/images/products/${bearingsIndustrial.photo2}"  />
-                </a>
-
-                <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="2" href="#slide3">
-                    <!--<img width="67" alt="" src="../resources/assets/images/blank.gif" data-echo="../resources/assets/images/products/bearingsIndustrialbench${bearingsIndustrial.id}.jpg" />-->
-                    <img width="67" alt="${bearingsIndustrial.model}"  src="../resources/assets/images/products/${bearingsIndustrial.photo3}" data-echo="../resources/assets/images/products/${bearingsIndustrial.photo3}"  />
-                </a>
-
-                <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="3" href="#slide4">
-                    <img width="67" alt="${bearingsIndustrial.model}"  src="../resources/assets/images/products/${bearingsIndustrial.photo4}" data-echo="../resources/assets/images/products/${bearingsIndustrial.photo4}"  />
-                </a>
-
-                <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="4" href="#slide5">                  
-                    <img width="67" alt="${bearingsIndustrial.model}"  src="../resources/assets/images/products/${bearingsIndustrial.photo5}" data-echo="../resources/assets/images/products/${bearingsIndustrial.photo5}"  />
-                </a>
-
-                
+                <c:forEach items="${listPhotos}" var="photo" step="1" varStatus="i">                                        
+                        <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="${i.index}" href="#slide${i.index+1}}">
+                            <img width="67" alt="${bearingsIndustrial.modelEn}"  src="../resources/assets/images/products/${photo.name}" data-echo="../resources/assets/images/products/${photo.name}"  />
+                        </a>                   
+                </c:forEach>               
             </div> 
                 <!--/#owl-single-product-thumbnails--> 
 
@@ -212,10 +171,41 @@
         <div class="no-margin col-xs-12 col-sm-7 body-holder">
     <div class="body">
         <!--<div class="star-holder inline"><div class="star" data-score="4"></div></div>-->
-        <div class="availability"><label>Availability:</label><span class="available">  in stock</span></div>
+        <div class="availability">
+            <label><spring:message code="linesone.availability" text="Availability" />:</label>
+            <span class="available">  
+                <spring:message code="linesone.instock" text="in stock" />
+            </span>
+        </div>
 
-        <div class="title"><a href="#">${bearingsIndustrial.model}</a></div>
-        <div class="brand">  Type: ${bearingsIndustrial.typeEn}</div>
+        <div class="title">
+            <a href="#">
+                <c:if test="${localeCode == 'en'}">
+                    ${bearingsIndustrial.modelEn}
+                </c:if>
+                <c:if test="${localeCode == 'russia'}">
+                    ${bearingsIndustrial.modelRu}
+                </c:if>  
+            </a>
+        </div>
+        <div class="brand">           
+            <c:if test="${localeCode == 'en'}">
+                <spring:message code="linesall.type" text="Type" />:
+                ${bearingsIndustrial.typeEn}<br>
+                <spring:message code="linesall.manufacturer" text="Manufacturer" />:
+                ${bearingsIndustrial.manufacturerEn}<br>
+                <spring:message code="linesall.workpiece_short" text="Workpiece" />:
+                ${bearingsIndustrial.countryEn}               
+            </c:if>
+            <c:if test="${localeCode == 'russia'}">
+                <spring:message code="linesall.type" text="Type" />:
+                ${bearingsIndustrial.typeRu}<br>
+                <spring:message code="linesall.manufacturer" text="Manufacturer" />:
+                ${bearingsIndustrial.manufacturerRu}<br>
+                <spring:message code="linesall.workpiece_short" text="Workpiece" />:
+                ${bearingsIndustrial.countryRu}
+            </c:if>
+        </div>
 
         <div class="social-row">
             <span class="st_facebook_hcount"></span>
@@ -229,12 +219,16 @@
         </div>
 
         <div class="excerpt">
-            <p>${bearingsIndustrial.descriptionEn}</p>
+            <p>
+                <c:if test="${localeCode == 'en'}">
+                    ${bearingsIndustrial.descriptionEn}
+                </c:if>
+                <c:if test="${localeCode == 'russia'}">
+                    ${bearingsIndustrial.descriptionRu}
+                </c:if>
+            </p>
         </div>
-        
-        
-        
-   
+  
         <div class="prices">
 <!--            <div class="price-current">$1740.00</div>
             <div class="price-prev">$2199.00</div>-->
@@ -281,38 +275,50 @@
                 <div class="tab-pane active" id="description">
                     <p>${vmc.info1en}</p>
                  
-                    
-    <c:choose>
-        
-        <c:when test="${empty bearingsIndustrial.video1}">
-            <iframe width="853" height="480" src="https://www.youtube.com/embed/mQ205po5vk4" frameborder="0" allowfullscreen></iframe>              
-        </c:when>
-    
-        <c:otherwise>   
-            <iframe width="853" height="480" src="${bearingsIndustrial.video1}" frameborder="0" allowfullscreen></iframe>              
-            <br>     
-        </c:otherwise>
-                
-    </c:choose>          
-                    
+        <c:if test="${!empty listVideos}">
+            <c:forEach items="${listVideos}" var="video" step="1" varStatus="i"> 
+                <iframe width="720" height="540" src="https://youtube.com/embed/${video.name}" frameborder="0" allow="autoplay;encrypted-media" allowfullscreen></iframe>              
+            </c:forEach>
+        </c:if>            
+                 
                 </div> 
              
                 <div class="tab-pane" id="additional-info">
                     <ul class="tabled-data">
              
                         <li>
-                            <label><spring:message code="bearingscompare.type" text="type" /></label>
-                            <div class="value">${bearingsIndustrial.typeEn}</div>
+                            <label><spring:message code="bearingscompare.type" text="Type" /></label>
+                            <div class="value">
+                                <c:if test="${localeCode == 'en'}">
+                                    ${bearingsIndustrial.typeEn}
+                                </c:if>
+                                <c:if test="${localeCode == 'russia'}">
+                                    ${bearingsIndustrial.typeRu}
+                                </c:if>                               
+                            </div>
                             
                         </li>
                         <li>
-                            <label><spring:message code="bearingscompare.manufacturer" text="Manufacturer" /></label>
-                            <div class="value">${bearingsIndustrial.manufacturerEn}</div>
-                            
+                            <label><spring:message code="linescompare.manufacturer" text="Manufacturer" /></label>
+                            <div class="value">
+                                <c:if test="${localeCode == 'en'}">
+                                    ${bearingsIndustrial.manufacturerEn}
+                                </c:if>
+                                <c:if test="${localeCode == 'russia'}">
+                                    ${bearingsIndustrial.manufacturerRu}
+                                </c:if>
+                           </div>                                   
                         </li>
                         <li>
-                            <label><spring:message code="bearingscompare.country" text="Country" /></label>
-                            <div class="value">${bearingsIndustrial.countryEn}</div>
+                            <label><spring:message code="linescompare.country" text="Country" /></label>
+                            <div class="value">
+                                <c:if test="${localeCode == 'en'}">
+                                    ${bearingsIndustrial.countryEn}
+                                </c:if>
+                                <c:if test="${localeCode == 'russia'}">
+                                    ${bearingsIndustrial.countryRu}
+                                </c:if>
+                           </div>   
                         </li>
                         <li>
                             <label><spring:message code="bearingscompare.basic_dynamic_load_rating" text="Basic dynamic load rating, kN"/></label>
@@ -339,12 +345,12 @@
                         </li>                                                                              
                         
                         <li>
-                            <label><spring:message code="bearingscompare.size" text="size"/></label>
+                            <label><spring:message code="bearingscompare.size" text="Size,mm"/></label>
                             <div class="value">${bearingsIndustrial.innerDiameter}x${bearingsIndustrial.outerDiameter}x${bearingsIndustrial.width}</div>
                         </li>                                              
                         
                         <li>
-                            <label><spring:message code="bearingscompare.weight" text="weight, kg"/></label>
+                            <label><spring:message code="bearingscompare.weight" text="Weight, kg"/></label>
                             <div class="value">${bearingsIndustrial.weight}</div>
                         </li>
                         
@@ -404,7 +410,9 @@
         <div class="carousel-holder hover">
             
             <div class="title-nav">
-                <h2 class="h1">Random Bearings</h2>
+                <h2 class="h1">
+                    <spring:message code="bearingsone.random" text="Random Bearings"/>                    
+                </h2>
                 <div class="nav-holder">
                     <a href="#prev" data-target="#owl-recently-viewed" class="slider-prev btn-prev fa fa-angle-left"></a>
                     <a href="#next" data-target="#owl-recently-viewed" class="slider-next btn-next fa fa-angle-right"></a>
@@ -423,15 +431,16 @@
                     <div class="product-item">
                         <!--<div class="ribbon red"><span>sale</span></div>--> 
                         <div class="image">
-                            <a href="/bearings${bearings.id}">
-                            <img alt="${bearings.model}" src="../resources/assets/images/blank.gif" data-echo="../resources/assets/images/products/${bearings.photo1}" />
-                             </a>
+                            <a href="/bearings-${bearings.url}">
+                                <c:forEach items="${listPhotos}" var="photo" step="1" varStatus="i">                                                               
+                                    <img width="67" alt="${bearingsIndustrial.modelEn}"  src="../resources/assets/images/products/${photo.name}" data-echo="../resources/assets/images/products/${photo.name}"  />                                         
+                                </c:forEach>                            
+                            </a>
                         </div>
                         <div class="body">
                             <div class="title">
-                                <a href="/bearings${bearings.id}">${bearings.model} <br>     ${bearings.manufacturerEn}</a>
-                            </div>
-                            <div class="brand">${bearings.year}</div>
+                                <a href="/bearings-${bearings.url}">${bearingsIndustrial.modelEn} <br>${bearingsIndustrial.manufacturerEn}</a>
+                            </div>            
                         </div>
 <!--                        <div class="prices">
                             <div class="price-current text-right">$1199.00</div>

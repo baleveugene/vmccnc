@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class BearingsIndustrialVideo implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
+    @Id   
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
@@ -43,8 +43,8 @@ public class BearingsIndustrialVideo implements Serializable {
 
     public BearingsIndustrialVideo(String name) {
         this.name = name;
-    }
-
+    } 
+    
     public long getId() {
         return id;
     }

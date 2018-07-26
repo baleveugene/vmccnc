@@ -68,9 +68,7 @@ public class BearingsIndustrial implements Serializable {
     @Size(min = 1, max = 245)
     @Column(name = "type_en")
     private String typeEn;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 245)
+    @Basic(optional = false)   
     @Column(name = "type_ru")
     private String typeRu;
     @Basic(optional = false)
@@ -78,9 +76,7 @@ public class BearingsIndustrial implements Serializable {
     @Size(min = 1, max = 245)
     @Column(name = "subType_en")
     private String subTypeEn;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 245)
+    @Basic(optional = false)   
     @Column(name = "subType_ru")
     private String subTypeRu;
     @Basic(optional = false)
@@ -88,9 +84,7 @@ public class BearingsIndustrial implements Serializable {
     @Size(min = 1, max = 250)
     @Column(name = "model_en")
     private String modelEn;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 250)
+    @Basic(optional = false)   
     @Column(name = "model_ru")
     private String modelRu;
     @Basic(optional = false)

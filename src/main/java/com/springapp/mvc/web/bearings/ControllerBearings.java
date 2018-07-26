@@ -92,7 +92,8 @@ public class ControllerBearings extends PrintInFile {
         ModelAndView mv = new ModelAndView("bearings/bearings_one");
         BearingsIndustrial bearingsIndustrial = bearingsIndustrialService.getBearingsByUrl(url);
         mv.addObject("bearingsIndustrial", bearingsIndustrial);
-        
+        mv.addObject("listPhotos", bearingsIndustrial.getPhotos());
+        mv.addObject("listVideos", bearingsIndustrial.getVideos());
         mv.addObject("message", new Message("Bearings " +bearingsIndustrial.getTypeEn() , bearingsIndustrial.getModelEn())); // it is need for feed back !!!!!!
         session.setAttribute("search", "bearings"); // for search
         session.setAttribute("currentpagewithpage", "/bearings-" + url);
